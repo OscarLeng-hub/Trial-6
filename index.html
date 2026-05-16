@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 歐皇神話至尊盲盒 (全皮膚真實圖片版)</title>
+    <title>CS2 歐皇神話至尊盲盒 (84款全皮膚名錄版)</title>
     <style>
         :root {
             --primary: #ff4e50;
@@ -416,14 +416,14 @@
         </div>
 
         <div class="tab-container">
-            <div class="tab active" onclick="switchMachine('guns', event)">🔫 全系槍械神兵</div>
-            <div class="tab" onclick="switchMachine('pink_purple', event)">🌸 猛男粉紫槍</div>
-            <div class="tab" onclick="switchMachine('swords', event)">⚔️ 關刀與神針</div>
-            <div class="tab" onclick="switchMachine('karambits', event)">😈 惡魔爪子刀</div>
+            <div class="tab active" onclick="switchMachine('guns')">🔫 全系槍械神兵</div>
+            <div class="tab" onclick="switchMachine('pink_purple')">🌸 猛男粉紫槍</div>
+            <div class="tab" onclick="switchMachine('swords')">⚔️ 關刀與神針</div>
+            <div class="tab" onclick="switchMachine('karambits')">😈 惡魔爪子刀</div>
         </div>
 
         <div class="machine-box">
-            <h2 id="machine-title" style="margin: 0 0 5px 0;">全系槍械神兵盛典機台</h2>
+            <h2 id="machine-title">全系槍械神兵盛典機台</h2>
             <p id="machine-cost-desc" style="color: var(--gold); font-weight: bold; margin: 0 0 10px 0;">單次抽獎：2 金幣</p>
 
             <div class="pity-container">
@@ -494,65 +494,130 @@
 
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
         const PITY_NAMES = { guns: "🔴 全系槍械神兵契合度", pink_purple: "🔴 紅色粉紫圈契合度", swords: "🔴 紅色關刀與神針契合度", karambits: "🔴 紅色爪子刀契合度" };
+        
+        // 萬用 Steam 預設圖路徑，絕對不會報錯
+        const DEFAULT_IMG = "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q";
 
-        // 整合了你上傳文件中所有機台的真實飾品名稱與真實 Steam CDN 圖片連結
+        // 84款全皮膚名稱無縫置入，完全去掉本地相片路徑
         const MACHINES = {
             guns: {
                 title: "全系槍械神兵盛典機台", cost: 2, pityLimit: 250,
-                grandPrizes: [
-                    { name: "★ M9 Bayonet | Fade (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" },
-                    { name: "★ Ursus Knife | Marble Fade (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" },
-                    { name: "★ 劍出關刀 | 屠殺之極 (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" },
-                    { name: "★ Karambit | Lore (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" }
-                ],
+                grandPrizes: [{ name: "Glock-18 | Fade", rarity: "rarity-gold" }],
                 redPrizes: [
-                    { name: "AK-47 | Fire Serpent (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL4t-klY6FkvX3b_WGlT9XvZEpju_E9N2g2VfsrkE9MTrnd9SdeAY8NFDYr1K_ye_mjsS7tIOvsw", rarity: "rarity-red" },
-                    { name: "M4A1-S | Player Two (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL4t-klY6FkvX3b_WGlT9XvZEpju_E9N2g2VfsrkE9MTrnd9SdeAY8NFDYr1K_ye_mjsS7tIOvsw", rarity: "rarity-red" },
-                    { name: "AWP | Lightning Strike (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL4t-klY6FkvX3b_WGlT9XvZEpju_E9N2g2VfsrkE9MTrnd9SdeAY8NFDYr1K_ye_mjsS7tIOvsw", rarity: "rarity-red" },
-                    { name: "M4A4 | The Emperor (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL4t-klY6FkvX3b_WGlT9XvZEpju_E9N2g2VfsrkE9MTrnd9SdeAY8NFDYr1K_ye_mjsS7tIOvsw", rarity: "rarity-red" }
+                    { name: "AK-47 | Red Baron", rarity: "rarity-red" },
+                    { name: "M4A1-S | BlackOps", rarity: "rarity-red" },
+                    { name: "AK-47 | Uniki", rarity: "rarity-red" },
+                    { name: "AWP | Typhon", rarity: "rarity-red" },
+                    { name: "AK-47 | Sakura", rarity: "rarity-red" },
+                    { name: "M4A1-S | Orchids", rarity: "rarity-red" },
+                    { name: "AK-47 | Luminax", rarity: "rarity-red" }
                 ],
                 pinkPrizes: [
-                    { name: "M4A4 | Buzz Kill (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" },
-                    { name: "AK-47 | Neon Revolution (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" },
-                    { name: "M4A1-S | Hyper Beast (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" },
-                    { name: "AK-47 | Point Disarray (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" }
+                    { name: "XM1014 | Lilies", rarity: "rarity-pink" },
+                    { name: "AUG | Overgrowth", rarity: "rarity-pink" },
+                    { name: "MAC-10 | Dahila", rarity: "rarity-pink" },
+                    { name: "SSG 08 | Labyrinth", rarity: "rarity-pink" },
+                    { name: "Clock-18 | Broken TV", rarity: "rarity-pink" },
+                    { name: "P90 | Database", rarity: "rarity-pink" },
+                    { name: "FAMAS | Medic", rarity: "rarity-pink" },
+                    { name: "M4A4 | BubblePop", rarity: "rarity-pink" },
+                    { name: "AWP | Railgun", rarity: "rarity-pink" },
+                    { name: "M4A1-S | Retro", rarity: "rarity-pink" },
+                    { name: "M4A4 | B-Hop", rarity: "rarity-pink" },
+                    { name: "M4A1-S | Phaseprint", rarity: "rarity-pink" }
                 ],
                 purplePrizes: [
-                    { name: "Galil AR | Sugar Rush (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" },
-                    { name: "Glock-18 | Vogue (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" },
-                    { name: "XM1014 | Entombed (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" },
-                    { name: "USP-S | Orion (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" }
+                    { name: "AUG | Tension", rarity: "rarity-purple" },
+                    { name: "MP9 | Paranoia", rarity: "rarity-purple" },
+                    { name: "XM1014 | Koi", rarity: "rarity-purple" },
+                    { name: "MP9 | Canyon", rarity: "rarity-purple" },
+                    { name: "Five-SeveN | Control", rarity: "rarity-purple" },
+                    { name: "USP-S | Heated", rarity: "rarity-purple" },
+                    { name: "Five-SeveN | X-Ray", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" },
+                    { name: "Dual Berettas | Tension", rarity: "rarity-purple" },
+                    { name: "P250 | Mindspill", rarity: "rarity-purple" },
+                    { name: "USP-S | Ajax", rarity: "rarity-purple" },
+                    { name: "Dual Berettas | Gilded", rarity: "rarity-purple" },
+                    { name: "P90 | Synthwave", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Circuit", rarity: "rarity-purple" },
+                    { name: "P250 | Zen", rarity: "rarity-purple" },
+                    { name: "MAC-10 | Nailgun", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Velocity", rarity: "rarity-purple" },
+                    { name: "MP9 | Graffiti", rarity: "rarity-purple" },
+                    { name: "Sawed-Off | Improvised", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Meicy", rarity: "rarity-purple" },
+                    { name: "Glock-18 | Fuji", rarity: "rarity-purple" },
+                    { name: "Galil AR | Monochrome", rarity: "rarity-purple" },
+                    { name: "SSG 08 | Mindpill", rarity: "rarity-purple" },
+                    { name: "P90 | Chromatic", rarity: "rarity-purple" }
                 ],
                 bluePrizes: [
-                    { name: "Glock-18 | Bunsen Burner (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" },
-                    { name: "MAC-10 | Oceanic (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" },
-                    { name: "PP-Bizon | High Roller (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" },
-                    { name: "P90 | Grim (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" }
+                    { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
+                    { name: "SSG 08 | Desert Strike", rarity: "rarity-blue" },
+                    { name: "Nova | Heat", rarity: "rarity-blue" },
+                    { name: "P90 | BigCat", rarity: "rarity-blue" },
+                    { name: "Galil AR | Irradiated", rarity: "rarity-blue" },
+                    { name: "XM1014 | Abstract", rarity: "rarity-blue" },
+                    { name: "Nova | Flutter", rarity: "rarity-blue" },
+                    { name: "Negev | Noctiflora", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Monarch", rarity: "rarity-blue" },
+                    { name: "Dual Berettas | Vernal", rarity: "rarity-blue" },
+                    { name: "Negev | The Jungle", rarity: "rarity-blue" },
+                    { name: "Nova | Slide", rarity: "rarity-blue" },
+                    { name: "P250 | Frutiger Aero", rarity: "rarity-blue" },
+                    { name: "USP-S | SpecOps", rarity: "rarity-blue" },
+                    { name: "Desert Eagle | Turbo", rarity: "rarity-blue" },
+                    { name: "MAC-10 | Ivory", rarity: "rarity-blue" },
+                    { name: "XM1014 | Splatter", rarity: "rarity-blue" },
+                    { name: "AUG | Predator", rarity: "rarity-blue" },
+                    { name: "MAG-7 | Vision", rarity: "rarity-blue" },
+                    { name: "Nova | Half-One", rarity: "rarity-blue" },
+                    { name: "Negev | Rotary Power", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Vice", rarity: "rarity-blue" },
+                    { name: "Sawed-Off | Panthers", rarity: "rarity-blue" },
+                    { name: "FAMAS | Wallpaper", rarity: "rarity-blue" },
+                    { name: "R8 Revolver | Bloody", rarity: "rarity-blue" },
+                    { name: "Galil AR | Feral", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Striker", rarity: "rarity-blue" },
+                    { name: "P250 | Pulse", rarity: "rarity-blue" },
+                    { name: "AUG | Hot Rod", rarity: "rarity-blue" },
+                    { name: "P250 | X-250", rarity: "rarity-blue" },
+                    { name: "SG 553 | Dynasty", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Timeless", rarity: "rarity-blue" },
+                    { name: "XM1014 | Office", rarity: "rarity-blue" },
+                    { name: "Dual Berettas | Inked", rarity: "rarity-blue" },
+                    { name: "Zeus x27 | Overcharge", rarity: "rarity-blue" },
+                    { name: "MP9 | Choke Oil", rarity: "rarity-blue" },
+                    { name: "SSG 08 | Onyx", rarity: "rarity-blue" },
+                    { name: "Galil AR | Irid", rarity: "rarity-blue" },
+                    { name: "AWP | Bird Hunt", rarity: "rarity-blue" },
+                    { name: "FAMAS | Mind", rarity: "rarity-blue" }
                 ]
             },
             pink_purple: {
                 title: "🌸 猛男粉紫專區機台", cost: 3, pityLimit: 400,
-                grandPrizes: [{ name: "★ Ursus Knife | Marble Fade (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" }],
-                redPrizes: [{ name: "M4A1-S | Player Two (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "AK-47 | Neon Revolution (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "Glock-18 | Vogue (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "MAC-10 | Oceanic (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" }]
+                grandPrizes: [{ name: "M4A4 | BubblePop", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Sakura", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "Clock-18 | Broken TV", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "Glock-18 | Fuji", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "Tec-9 | Vice", rarity: "rarity-blue" }]
             },
             swords: {
                 title: "⚔️ 關刀與神針機台", cost: 40, pityLimit: 3000,
-                grandPrizes: [{ name: "★ 劍出關刀 | 屠殺之極 (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" }],
-                redPrizes: [{ name: "AWP | Lightning Strike (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "M4A1-S | Hyper Beast (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "XM1014 | Entombed (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "PP-Bizon | High Roller (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" }]
+                grandPrizes: [{ name: "★ 絕版金槍神兵", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "M4A1-S | Orchids", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "AWP | Railgun", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "SSG 08 | Mindpill", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "SSG 08 | Onyx", rarity: "rarity-blue" }]
             },
             karambits: {
                 title: "😈 惡魔爪子刀機台", cost: 40, pityLimit: 3000,
-                grandPrizes: [{ name: "★ Karambit | Lore (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" }],
-                redPrizes: [{ name: "M4A4 | The Emperor (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "AK-47 | Point Disarray (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "USP-S | Orion (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "P90 | Grim (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" }]
+                grandPrizes: [{ name: "★ 終極夢幻收藏", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Luminax", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "M4A1-S | Retro", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "P90 | Chromatic", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "FAMAS | Mind", rarity: "rarity-blue" }]
             }
         };
 
@@ -573,7 +638,7 @@
             renderInventory();
         }
 
-        function switchMachine(type, event) {
+        function switchMachine(type) {
             if (isSpinning) return;
             currentMachine = type;
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
@@ -584,6 +649,7 @@
             document.getElementById('machine-title').innerText = MACHINES[type].title;
             document.getElementById('machine-cost-desc').innerText = `單次抽獎：${MACHINES[type].cost} 金幣`;
 
+            setupTrack();
             updateUI();
         }
 
@@ -604,18 +670,28 @@
         function getRandomSkinFromCurrent() {
             const m = MACHINES[currentMachine];
             let r = Math.random() * 100;
-            if (r < 0.02) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)];
-            if (r < 0.10) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
-            if (r < 0.50) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
-            if (r < 4.00) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+            if (r < 0.05) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)];
+            if (r < 0.5) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
+            if (r < 2.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
+            if (r < 10.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
             return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
+        }
+
+        function setupTrack() {
+            const track = document.getElementById('roulette-track');
+            track.innerHTML = '';
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0px)';
+            for(let i = 0; i < 40; i++) {
+                track.appendChild(createCard(getRandomSkinFromCurrent()));
+            }
         }
 
         function createCard(item) {
             const card = document.createElement('div');
             card.className = `skin-card ${item.rarity}`;
             card.innerHTML = `
-                <img src="${item.img}" onerror="this.src='https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q'">
+                <img src="${DEFAULT_IMG}">
                 <div class="skin-name">${item.name}</div>
             `;
             return card;
@@ -708,7 +784,7 @@
                 const div = document.createElement('div');
                 div.className = 'inv-item';
                 div.innerHTML = `
-                    <img src="${item.img}" onerror="this.src='https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q'">
+                    <img src="${DEFAULT_IMG}">
                     <div style="font-size: 11px; font-weight: bold; margin-top:5px; height: 32px; overflow:hidden;">${item.name}</div>
                     <div class="inv-actions">
                         <button class="inv-btn btn-withdraw" onclick="withdrawItem(${index})">提取道具</button>
@@ -733,7 +809,7 @@
                 card.className = `reward-card ${skin.rarity}`;
                 card.innerHTML = `
                     <div style="font-size:10px; color:#aaa;">第 ${idx + 1} 抽</div>
-                    <img src="${skin.img}" onerror="this.src='https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q'">
+                    <img src="${DEFAULT_IMG}">
                     <div class="reward-card-name">${skin.name}</div>
                 `;
                 container.appendChild(card);
@@ -748,6 +824,8 @@
         function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
         function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
 
+        // 正確初始化，不卡死
+        setupTrack();
         updateUI();
     </script>
 </body>

@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS2 歐皇神話至尊盲盒 (84款全皮膚版)</title>
+    <style>
+        :root {
+            --primary: #ff4e50;
+            --dark-bg: #0b0c10;
+            --card-bg: #14161d;
+            --border-color: #222530;
+            --gold: #fbc02d;
+            --red: #eb4b4b;
+            --pink: #d32ce6;
+            --purple: #8847ff;
+            --blue: #4b69ff;
+        }
+
+        body {
+            font-family: 'PingFang HK', 'Microsoft JhengHei', sans-serif;
+            background-color: var(--dark-bg);
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        header {
+            width: 100%;
+            background-color: #07080b;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 90;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .balance {
+            background-color: rgba(251, 192, 45, 0.1);
+            border: 1px solid var(--gold);
+            padding: 6px 15px;
+            border-radius: 20px;
+            color: var(--gold);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 95%;
+            margin: 20px auto;
+        }
+
+        .notice-banner {
+            background: linear-gradient(90deg, rgba(255,78,80,0.1) 0%, rgba(20,22,29,0.5) 100%);
+            border: 1px solid #ff4e5055;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 15px;
+            text-align: left;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .cdk-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .cdk-input {
+            background-color: #07080b;
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            width: 180px;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+        .tab-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 10px 5px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+            font-size: 11px;
+            white-space: nowrap;
+        }
+
+        .tab.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(255, 78, 80, 0.2), rgba(20, 22, 29, 0.9));
+            color: var(--primary);
+        }
+
+        .machine-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .pity-container {
+            background-color: #07080b;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #1f212a;
+        }
+
+        .pity-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .pity-bar-bg {
+            background-color: #222;
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .pity-bar-fill {
+            background: linear-gradient(90deg, var(--red), var(--primary));
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--red);
+        }
+
+        .roulette-viewport {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(to bottom, #101114, #07080a);
+            border: 2px solid #2d313d;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .pointer {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: #ffb700;
+            z-index: 10;
+            box-shadow: 0 0 10px #ffb700;
+            transform: translateX(-50%);
+        }
+
+        .roulette-track {
+            display: flex;
+            position: absolute;
+            left: 0;
+            top: 15px;
+            height: 110px;
+            transform: translateX(0px);
+        }
+
+        .skin-card {
+            width: 120px;
+            height: 110px;
+            background: rgba(30, 33, 41, 0.4);
+            margin: 0 2px;
+            flex-shrink: 0;
+            border-bottom: 5px solid #888;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5px 6px 5px;
+            box-sizing: border-box;
+            font-size: 10px;
+            text-align: center;
+        }
+
+        .skin-card img {
+            width: 85px;
+            height: 60px;
+            object-fit: contain;
+        }
+
+        .skin-name {
+            font-weight: 500;
+            color: #ced4da;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .rarity-gold { border-bottom-color: var(--gold); background: radial-gradient(circle, rgba(102,81,18,0.3) 0%, rgba(20,22,29,0) 100%); } 
+        .rarity-red { border-bottom-color: var(--red); background: radial-gradient(circle, rgba(120,24,24,0.3) 0%, rgba(20,22,29,0) 100%); }  
+        .rarity-pink { border-bottom-color: var(--pink); background: radial-gradient(circle, rgba(99,21,105,0.3) 0%, rgba(20,22,29,0) 100%); } 
+        .rarity-purple { border-bottom-color: var(--purple); background: radial-gradient(circle, rgba(54,19,102,0.3) 0%, rgba(20,22,29,0) 100%); } 
+        .rarity-blue { border-bottom-color: var(--blue); background: radial-gradient(circle, rgba(20,40,102,0.3) 0%, rgba(20,22,29,0) 100%); }  
+
+        .skip-control {
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), #d9383a);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .inventory-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .inv-item {
+            background-color: #0f1015;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .inv-item img {
+            width: 60px;
+            height: 45px;
+            object-fit: contain;
+        }
+
+        .inv-actions {
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .inv-btn {
+            width: 100%;
+            font-size: 11px;
+            padding: 6px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-weight: bold;
+        }
+
+        .btn-withdraw { background-color: var(--primary); }
+
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, rgba(20,22,29,0.98) 0%, rgba(5,5,8,1) 100%);
+            z-index: 10000;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reward-title {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--red);
+            margin-bottom: 30px;
+        }
+
+        .reward-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 90%;
+            margin-bottom: 40px;
+        }
+
+        .reward-card {
+            width: 150px;
+            height: 200px;
+            background-color: #1a1c24;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .reward-card img {
+            width: 100px;
+            height: 75px;
+            object-fit: contain;
+        }
+
+        .reward-card-name {
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            height: 32px;
+            overflow: hidden;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.85);
+            z-index: 101;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">CS2 歐皇神話至尊盲盒</div>
+        <div class="user-panel">
+            <button class="btn" style="background: #2b303d; padding: 5px 10px; font-size:12px; margin-right:10px;" onclick="showProbInfo()">📊 爆率公示</button>
+            <div class="balance" id="balance-val">0 金幣</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="notice-banner">
+            ⚠️ <b>系統重要公告與服務條款：</b><br>
+            1. 本平台提供比官方更透明的<b>「契合度保底系統」</b>，確保每一抽都有回饋。<br>
+            2. 背包內的所有武器飾品<b>「只供提取，不設回收」</b>，請知悉。<br>
+            3. 所有道具提取均由<b>「人工客服手動登記發貨」</b>，正常情況下會在 12 小時內完成報價與發送，請耐心等待。
+        </div>
+
+        <div class="cdk-section">
+            <input type="text" class="cdk-input" id="cdk-input" placeholder="輸入閒魚CDK碼">
+            <button class="btn" style="padding: 8px 15px; font-size:13px;" onclick="redeemCDK()">立即充值</button>
+        </div>
+
+        <div class="tab-container">
+            <div class="tab active" onclick="switchMachine('guns', event)">🔫 全系槍械神兵</div>
+            <div class="tab" onclick="switchMachine('pink_purple', event)">🌸 猛男粉紫槍</div>
+            <div class="tab" onclick="switchMachine('swords', event)">⚔️ 關刀與神針</div>
+            <div class="tab" onclick="switchMachine('karambits', event)">😈 惡魔爪子刀</div>
+        </div>
+
+        <div class="machine-box">
+            <h2 id="machine-title" style="margin: 0 0 5px 0;">全系槍械神兵盛典機台</h2>
+            <p id="machine-cost-desc" style="color: var(--gold); font-weight: bold; margin: 0 0 10px 0;">單次抽獎：2 金幣</p>
+
+            <div class="pity-container">
+                <div class="pity-info">
+                    <span id="pity-title-text">🔴 全系槍械神兵契合度</span>
+                    <span style="color: var(--red); font-weight: bold;" id="pity-percent-text">契合進度: 0%</span>
+                </div>
+                <div class="pity-bar-bg">
+                    <div class="pity-bar-fill" id="pity-bar-fill"></div>
+                </div>
+                <div style="font-size:10px; color:#aaa; text-align:left; margin-top:5px;">*官方開箱沒有保底，但在這裡，契合度 100% 必出本期紅色/金色大獎！*</div>
+            </div>
+
+            <div class="roulette-viewport">
+                <div class="pointer"></div>
+                <div class="roulette-track" id="roulette-track"></div>
+            </div>
+
+            <label class="skip-control">
+                <input type="checkbox" id="skip-animation-checkbox">
+                <span>⚡ 跳過抽獎滾輪動畫（快刷專用）</span>
+            </label>
+
+            <div class="btn-group">
+                <button class="btn" id="spin-btn-1" style="flex:1;" onclick="startSpin(1)">單抽</button>
+                <button class="btn" id="spin-btn-3" style="flex:1; background: linear-gradient(135deg, #7b1fa2, #e040fb);" onclick="startSpin(3)">三連抽</button>
+                <button class="btn" id="spin-btn-5" style="flex:1; background: linear-gradient(135deg, #ff4e50, #fbc02d);" onclick="startSpin(5)">五連抽</button>
+            </div>
+        </div>
+
+        <div class="inventory-section">
+            <h3 style="margin-top: 0; display:flex; justify-content:space-between; align-items:center;">
+                <span>🎒 臨時存儲背包</span>
+                <span style="font-size:11px; color:var(--primary); font-weight:normal;">*道具只供提取，不設回收*</span>
+            </h3>
+            <div class="inventory-grid" id="inventory-grid"></div>
+        </div>
+    </div>
+
+    <div class="fullscreen-modal" id="reward-fullscreen-modal">
+        <div class="reward-title">🔥 恭喜獲得道具！</div>
+        <div class="reward-container" id="fullscreen-reward-container"></div>
+        <button class="btn" style="padding: 15px 50px; font-size:18px;" onclick="closeFullscreenModal()">收下道具</button>
+    </div>
+
+    <div class="modal" id="prob-modal">
+        <div class="modal-content">
+            <h3 style="text-align: center; color: var(--gold); margin-top:0;">💎 契合度保底系統說明</h3>
+            <hr style="border-color: var(--border-color);">
+            <p style="font-size: 13px;">在本平台，我們引入了獨家的<b>「契合度保底系統」</b>：</p>
+            <ul style="font-size: 12px; padding-left: 20px;">
+                <li><b>100% 必中：</b>契合度達到上限時，紅色/金色大獎必定掉落。</li>
+                <li><b>進度透明：</b>每一抽都在累積你的契合進度，絕不白費。</li>
+            </ul>
+            <div style="background: #1e212a; padding: 10px; border-radius: 4px; font-size: 11px; color: #888; line-height: 1.6;">
+                🟡 金色：0.02% | 🔴 紅色：0.08%<br>
+                💗 粉色：0.4% | 💜 紫色：3.5% | 💙 藍色：96%
+            </div>
+            <button class="btn" style="width:100%; margin-top:15px;" onclick="closeProbModal()">確定</button>
+        </div>
+    </div>
+
+    <script>
+        let balance = parseInt(localStorage.getItem('cs_balance')) || 0;
+        let inventory = JSON.parse(localStorage.getItem('cs_inventory')) || [];
+        let pityData = JSON.parse(localStorage.getItem('cs_pity_data_v3')) || { guns: 0, pink_purple: 0, swords: 0, karambits: 0 };
+        let currentMachine = 'guns';
+
+        const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
+        const PITY_NAMES = { guns: "🔴 全系槍械神兵契合度", pink_purple: "🔴 紅色粉紫圈契合度", swords: "🔴 紅色關刀與神針契合度", karambits: "🔴 紅色爪子刀契合度" };
+
+        const MACHINES = {
+            guns: {
+                title: "全系槍械神兵盛典機台", cost: 2, pityLimit: 250,
+                grandPrizes: [{ name: "Glock-18 | Fade", img: "images/image_65.png", rarity: "rarity-gold" }],
+                redPrizes: [
+                    { name: "AK-47 | Red Baron", img: "images/image_27.png", rarity: "rarity-red" },
+                    { name: "M4A1-S | BlackOps", img: "images/image_42.png", rarity: "rarity-red" },
+                    { name: "AK-47 | Uniki", img: "images/image_21.png", rarity: "rarity-red" },
+                    { name: "AWP | Typhon", img: "images/image_75.png", rarity: "rarity-red" },
+                    { name: "AK-47 | Sakura", img: "images/image_76.png", rarity: "rarity-red" },
+                    { name: "M4A1-S | Orchids", img: "images/image_79.png", rarity: "rarity-red" },
+                    { name: "AK-47 | Luminax", img: "images/image_84.png", rarity: "rarity-red" }
+                ],
+                pinkPrizes: [
+                    { name: "XM1014 | Lilies", img: "images/image_10.png", rarity: "rarity-pink" },
+                    { name: "AUG | Overgrowth", img: "images/image_11.png", rarity: "rarity-pink" },
+                    { name: "MAC-10 | Dahila", img: "images/image_12.png", rarity: "rarity-pink" },
+                    { name: "SSG 08 | Labyrinth", img: "images/image_13.png", rarity: "rarity-pink" },
+                    { name: "Clock-18 | Broken TV", img: "images/image_25.png", rarity: "rarity-pink" },
+                    { name: "P90 | Database", img: "images/image_26.png", rarity: "rarity-pink" },
+                    { name: "FAMAS | Medic", img: "images/image_28.png", rarity: "rarity-pink" },
+                    { name: "M4A4 | BubblePop", img: "images/image_68.png", rarity: "rarity-pink" },
+                    { name: "AWP | Railgun", img: "images/image_72.png", rarity: "rarity-pink" },
+                    { name: "M4A1-S | Retro", img: "images/image_77.png", rarity: "rarity-pink" },
+                    { name: "M4A4 | B-Hop", img: "images/image_78.png", rarity: "rarity-pink" },
+                    { name: "M4A1-S | Phaseprint", img: "images/image_80.png", rarity: "rarity-pink" }
+                ],
+                purplePrizes: [
+                    { name: "AUG | Tension", img: "images/image_20.png", rarity: "rarity-purple" },
+                    { name: "MP9 | Paranoia", img: "images/image_22.png", rarity: "rarity-purple" },
+                    { name: "XM1014 | Koi", img: "images/image_23.png", rarity: "rarity-purple" },
+                    { name: "MP9 | Canyon", img: "images/image_24.png", rarity: "rarity-purple" },
+                    { name: "Five-SeveN | Control", img: "images/image_37.png", rarity: "rarity-purple" },
+                    { name: "USP-S | Heated", img: "images/image_41.png", rarity: "rarity-purple" },
+                    { name: "Five-SeveN | X-Ray", img: "images/image_50.png", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Paranoia", img: "images/image_51.png", rarity: "rarity-purple" },
+                    { name: "Dual Berettas | Tension", img: "images/image_52.png", rarity: "rarity-purple" },
+                    { name: "P250 | Mindspill", img: "images/image_53.png", rarity: "rarity-purple" },
+                    { name: "USP-S | Ajax", img: "images/image_54.png", rarity: "rarity-purple" },
+                    { name: "Dual Berettas | Gilded", img: "images/image_55.png", rarity: "rarity-purple" },
+                    { name: "P90 | Synthwave", img: "images/image_56.png", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Circuit", img: "images/image_57.png", rarity: "rarity-purple" },
+                    { name: "P250 | Zen", img: "images/image_58.png", rarity: "rarity-purple" },
+                    { name: "MAC-10 | Nailgun", img: "images/image_59.png", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Velocity", img: "images/image_60.png", rarity: "rarity-purple" },
+                    { name: "MP9 | Graffiti", img: "images/image_61.png", rarity: "rarity-purple" },
+                    { name: "Sawed-Off | Improvised", img: "images/image_62.png", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Meicy", img: "images/image_66.png", rarity: "rarity-purple" },
+                    { name: "Glock-18 | Fuji", img: "images/image_67.png", rarity: "rarity-purple" },
+                    { name: "Galil AR | Monochrome", img: "images/image_69.png", rarity: "rarity-purple" },
+                    { name: "SSG 08 | Mindpill", img: "images/image_70.png", rarity: "rarity-purple" },
+                    { name: "P90 | Chromatic", img: "images/image_71.png", rarity: "rarity-purple" }
+                ],
+                bluePrizes: [
+                    { name: "FAMAS | Arctic Camo", img: "images/image_1.png", rarity: "rarity-blue" },
+                    { name: "SSG 08 | Desert Strike", img: "images/image_2.png", rarity: "rarity-blue" },
+                    { name: "Nova | Heat", img: "images/image_3.png", rarity: "rarity-blue" },
+                    { name: "P90 | BigCat", img: "images/image_4.png", rarity: "rarity-blue" },
+                    { name: "Galil AR | Irradiated", img: "images/image_5.png", rarity: "rarity-blue" },
+                    { name: "XM1014 | Abstract", img: "images/image_6.png", rarity: "rarity-blue" },
+                    { name: "Nova | Flutter", img: "images/image_7.png", rarity: "rarity-blue" },
+                    { name: "Negev | Noctiflora", img: "images/image_8.png", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Monarch", img: "images/image_9.png", rarity: "rarity-blue" },
+                    { name: "Dual Berettas | Vernal", img: "images/image_14.png", rarity: "rarity-blue" },
+                    { name: "Negev | The Jungle", img: "images/image_15.png", rarity: "rarity-blue" },
+                    { name: "Nova | Slide", img: "images/image_16.png", rarity: "rarity-blue" },
+                    { name: "P250 | Frutiger Aero", img: "images/image_17.png", rarity: "rarity-blue" },
+                    { name: "USP-S | SpecOps", img: "images/image_18.png", rarity: "rarity-blue" },
+                    { name: "Desert Eagle | Turbo", img: "images/image_19.png", rarity: "rarity-blue" },
+                    { name: "MAC-10 | Ivory", img: "images/image_29.png", rarity: "rarity-blue" },
+                    { name: "XM1014 | Splatter", img: "images/image_30.png", rarity: "rarity-blue" },
+                    { name: "AUG | Predator", img: "images/image_31.png", rarity: "rarity-blue" },
+                    { name: "MAG-7 | Vision", img: "images/image_32.png", rarity: "rarity-blue" },
+                    { name: "Nova | Half-One", img: "images/image_33.png", rarity: "rarity-blue" },
+                    { name: "Negev | Rotary Power", img: "images/image_34.png", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Vice", img: "images/image_35.png", rarity: "rarity-blue" },
+                    { name: "Sawed-Off | Panthers", img: "images/image_36.png", rarity: "rarity-blue" },
+                    { name: "FAMAS | Wallpaper", img: "images/image_38.png", rarity: "rarity-blue" },
+                    { name: "R8 Revolver | Bloody", img: "images/image_39.png", rarity: "rarity-blue" },
+                    { name: "Galil AR | Feral", img: "images/image_40.png", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Striker", img: "images/image_43.png", rarity: "rarity-blue" },
+                    { name: "P250 | Pulse", img: "images/image_44.png", rarity: "rarity-blue" },
+                    { name: "AUG | Hot Rod", img: "images/image_45.png", rarity: "rarity-blue" },
+                    { name: "P250 | X-250", img: "images/image_46.png", rarity: "rarity-blue" },
+                    { name: "SG 553 | Dynasty", img: "images/image_47.png", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Timeless", img: "images/image_48.png", rarity: "rarity-blue" },
+                    { name: "XM1014 | Office", img: "images/image_49.png", rarity: "rarity-blue" },
+                    { name: "Dual Berettas | Inked", img: "images/image_63.png", rarity: "rarity-blue" },
+                    { name: "Zeus x27 | Overcharge", img: "images/image_64.png", rarity: "rarity-blue" },
+                    { name: "MP9 | Choke Oil", img: "images/image_73.png", rarity: "rarity-blue" },
+                    { name: "SSG 08 | Onyx", img: "images/image_74.png", rarity: "rarity-blue" },
+                    { name: "Galil AR | Irid", img: "images/image_81.png", rarity: "rarity-blue" },
+                    { name: "AWP | Bird Hunt", img: "images/image_82.png", rarity: "rarity-blue" },
+                    { name: "FAMAS | Mind", img: "images/image_83.png", rarity: "rarity-blue" }
+                ]
+            },
+            pink_purple: {
+                title: "🌸 猛男粉紫專區機台", cost: 3, pityLimit: 400,
+                grandPrizes: [{ name: "M4A4 | BubblePop", img: "images/image_68.png", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Sakura", img: "images/image_76.png", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "Clock-18 | Broken TV", img: "images/image_25.png", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "Glock-18 | Fuji", img: "images/image_67.png", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "Tec-9 | Vice", img: "images/image_35.png", rarity: "rarity-blue" }]
+            },
+            swords: {
+                title: "⚔️ 關刀與神針機台", cost: 40, pityLimit: 3000,
+                grandPrizes: [{ name: "★ 絕版金槍神兵", img: "images/image_65.png", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "M4A1-S | Orchids", img: "images/image_79.png", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "AWP | Railgun", img: "images/image_72.png", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "SSG 08 | Mindpill", img: "images/image_70.png", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "SSG 08 | Onyx", img: "images/image_74.png", rarity: "rarity-blue" }]
+            },
+            karambits: {
+                title: "😈 惡魔爪子刀機台", cost: 40, pityLimit: 3000,
+                grandPrizes: [{ name: "★ 終極夢幻收藏", img: "images/image_65.png", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Luminax", img: "images/image_84.png", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "M4A1-S | Retro", img: "images/image_77.png", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "P90 | Chromatic", img: "images/image_71.png", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "FAMAS | Mind", img: "images/image_83.png", rarity: "rarity-blue" }]
+            }
+        };
+
+        function updateUI() {
+            document.getElementById('balance-val').innerText = balance + " 金幣";
+            document.getElementById('pity-title-text').innerText = PITY_NAMES[currentMachine];
+
+            const currentLimit = MACHINES[currentMachine].pityLimit;
+            const currentPityProgress = pityData[currentMachine];
+            const percent = Math.min((currentPityProgress / currentLimit) * 100, 100).toFixed(0);
+            
+            document.getElementById('pity-bar-fill').style.width = percent + '%';
+            document.getElementById('pity-percent-text').innerText = `契合進度: ${percent}%`;
+
+            localStorage.setItem('cs_balance', balance);
+            localStorage.setItem('cs_inventory', JSON.stringify(inventory));
+            localStorage.setItem('cs_pity_data_v3', JSON.stringify(pityData));
+            renderInventory();
+        }
+
+        function switchMachine(type, event) {
+            if (isSpinning) return;
+            currentMachine = type;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+
+            document.getElementById('machine-title').innerText = MACHINES[type].title;
+            document.getElementById('machine-cost-desc').innerText = `單次抽獎：${MACHINES[type].cost} 金幣`;
+
+            updateUI();
+        }
+
+        function redeemCDK() {
+            const input = document.getElementById('cdk-input').value.trim();
+            if (VALID_CDKS[input]) {
+                const amount = VALID_CDKS[input];
+                balance += amount;
+                alert(`🎉 兌換成功！已成功充值 ${amount} 金幣。`);
+                delete VALID_CDKS[input]; 
+                document.getElementById('cdk-input').value = "";
+                updateUI();
+            } else {
+                alert("❌ 無效的 CDK，或該代碼已被使用。");
+            }
+        }
+
+        function getRandomSkinFromCurrent() {
+            const m = MACHINES[currentMachine];
+            let r = Math.random() * 100;
+            if (r < 0.05) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)];
+            if (r < 0.5) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
+            if (r < 2.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
+            if (r < 10.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+            return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
+        }
+
+        function createCard(item) {
+            const card = document.createElement('div');
+            card.className = `skin-card ${item.rarity}`;
+            card.innerHTML = `
+                <img src="${item.img}" onerror="this.src='https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q'">
+                <div class="skin-name">${item.name}</div>
+            `;
+            return card;
+        }
+
+        let isSpinning = false;
+        
+        function startSpin(multiCount = 1) {
+            if (isSpinning) return;
+            const cost = MACHINES[currentMachine].cost * multiCount;
+            const limit = MACHINES[currentMachine].pityLimit;
+
+            if (balance < cost) {
+                alert("❌ 金幣餘額不足！請先獲取CDK並在頂部充值。");
+                return;
+            }
+
+            balance -= cost;
+            let rollResults = [];
+            const m = MACHINES[currentMachine];
+
+            for (let k = 0; k < multiCount; k++) {
+                pityData[currentMachine] += MACHINES[currentMachine].cost;
+                let winSkin = null;
+
+                if (pityData[currentMachine] >= limit) {
+                    winSkin = m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)]; 
+                    pityData[currentMachine] = 0; 
+                } else {
+                    winSkin = getRandomSkinFromCurrent();
+                    if (winSkin.rarity === 'rarity-red' || winSkin.rarity === 'rarity-gold') {
+                        pityData[currentMachine] = 0;
+                    }
+                }
+                rollResults.push(winSkin);
+                inventory.push(winSkin);
+            }
+
+            updateUI();
+
+            const isSkip = document.getElementById('skip-animation-checkbox').checked;
+            if (isSkip) {
+                showFullscreenReward(rollResults);
+                return;
+            }
+
+            isSpinning = true;
+            document.getElementById('spin-btn-1').disabled = true;
+            document.getElementById('spin-btn-3').disabled = true;
+            document.getElementById('spin-btn-5').disabled = true;
+
+            const track = document.getElementById('roulette-track');
+            track.innerHTML = '';
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0px)';
+
+            const winIndex = 25;
+            const finalShowSkin = rollResults[rollResults.length - 1];
+
+            for(let i = 0; i < 35; i++) {
+                if (i === winIndex) {
+                    track.appendChild(createCard(finalShowSkin));
+                } else {
+                    track.appendChild(createCard(getRandomSkinFromCurrent()));
+                }
+            }
+
+            setTimeout(() => {
+                track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
+                track.style.transform = 'translateX(-2600px)';
+            }, 50);
+
+            setTimeout(() => {
+                isSpinning = false;
+                document.getElementById('spin-btn-1').disabled = false;
+                document.getElementById('spin-btn-3').disabled = false;
+                document.getElementById('spin-btn-5').disabled = false;
+                showFullscreenReward(rollResults);
+            }, 3600);
+        }
+
+        function renderInventory() {
+            const grid = document.getElementById('inventory-grid');
+            grid.innerHTML = '';
+            if (inventory.length === 0) {
+                grid.innerHTML = '<div style="color: #666; font-size:12px; padding: 20px; grid-column: 1/-1; text-align:center;">暫無道具，快去體驗開箱吧！</div>';
+                return;
+            }
+            inventory.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'inv-item';
+                div.innerHTML = `
+                    <img src="${item.img}" onerror="this.src='https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q'">
+                    <div style="font-size: 11px; font-weight: bold; margin-top:5px; height: 32px; overflow:hidden;">${item.name}</div>
+                    <div class="inv-actions">
+                        <button class="inv-btn btn-withdraw" onclick="withdrawItem(${index})">提取道具</button>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function withdrawItem(index) {
+            const item = inventory[index];
+            alert(`申請成功！請複製抽中道具：\n「${item.name}」\n前往聯絡客服，正常會在12小時內手動發貨！`);
+        }
+
+        function showFullscreenReward(skins) {
+            const modal = document.getElementById('reward-fullscreen-modal');
+            const container = document.getElementById('fullscreen-reward-container');
+            container.innerHTML = '';
+
+            skins.forEach((skin, idx) => {
+                const card = document.createElement('div');
+                card.className = `reward-card ${skin.rarity}`;
+                card.innerHTML = `
+                    <div style="font-size:10px; color:#aaa;">第 ${idx + 1} 抽</div>
+                    <img src="${skin.img}" onerror="this.src='https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q'">
+                    <div class="reward-card-name">${skin.name}</div>
+                `;
+                container.appendChild(card);
+            });
+            modal.style.display = 'flex';
+        }
+
+        function closeFullscreenModal() {
+            document.getElementById('reward-fullscreen-modal').style.display = 'none';
+        }
+
+        function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
+        function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
+
+        // 初始化只更新界面，絕不亂跑隨機生成卡死網頁
+        updateUI();
+    </script>
+</body>
+</html>

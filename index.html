@@ -483,7 +483,7 @@
 
         <div class="tab-container">
             <div class="tab active" id="tab-guns" onclick="switchMachine('guns')">🔫 精選槍械飾品機</div>
-            <div class="tab" id="tab-pink_purple" onclick="switchMachine('pink_purple')">🌸 猛男粉紫刀槍</div>
+            <div class="tab" id="tab-pink_purple" onclick="switchMachine('pink_purple')">🔷 猛藍粉紫刀槍</div>
             <div class="tab" id="tab-swords" onclick="switchMachine('swords')">⚔️ 戰術關刀神兵</div>
             <div class="tab" id="tab-karambits" onclick="switchMachine('karambits')">😈 惡魔爪子神刀</div>
         </div>
@@ -571,7 +571,7 @@
 
         <div class="inventory-section">
             <h3 style="margin-top: 0; display:flex; justify-content:space-between; align-items:center;">
-                <span>🎒 臨時存儲背包</span>
+                <span>🎒 臨時存存储背包</span>
                 <span style="font-size:11px; color:var(--primary); font-weight:normal;">*道具只供提取，不設回收*</span>
             </h3>
             <div class="inventory-grid" id="inventory-grid"></div>
@@ -673,7 +673,7 @@
                 "AK-47 | Pinpoint", "AK-47 | Red Baron", "M4A4 | B-Hop", "Galil AR | Irid"
             ],
             gold: [
-                "★ Butterfly Knife | Naval" // 作為預設金色傳說硬底
+                "★ Butterfly Knife | Naval"
             ]
         };
 
@@ -692,6 +692,9 @@
         let pinkCounter = parseInt(localStorage.getItem('cs_cnt_pink')) || 0;
         let redCounter = parseInt(localStorage.getItem('cs_cnt_red')) || 0;
 
+        // 新增獨立用於「猛藍粉紫刀槍機台」的專屬抽數計數器
+        let pinkBlueMachineSpins = parseInt(localStorage.getItem('cs_pinkblue_spins')) || 0;
+
         const PURPLE_LOOP = [10, 20];
         const PINK_LOOP = [20, 40];
         const RED_LOOP = [55, 75, 35];
@@ -703,7 +706,7 @@
         // 構建機台基本資料
         const MACHINES = {
             guns: { title: "精選槍械飾品機台", cost: 2, isCustom: false },
-            pink_purple: { title: "🌸 猛男粉紫刀槍機台", cost: 3, isCustom: false },
+            pink_purple: { title: "🔷 猛藍粉紫刀槍機台", cost: 8, isCustom: false }, // 價格修改為 8 金幣
             swords: { title: "⚔️ 戰術關刀神兵機台", cost: 2, isCustom: true },
             karambits: { title: "😈 惡魔爪子神刀機台", cost: 10, isCustom: false }
         };
@@ -713,11 +716,20 @@
 
         function updateUI() {
             document.getElementById('balance-val').innerText = balance + " 金幣";
-            document.getElementById('pity-percent-text').innerText = `已抽次數: ${totalSpins} 次`;
-            document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出 金色傳說 武器)`;
-
-            const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
-            document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
+            
+            if (currentMachine === 'pink_purple') {
+                document.getElementById('pity-title-text').innerText = `🔷 猛藍粉紫專屬硬性保底`;
+                document.getElementById('pity-percent-text').innerText = `本機台已抽: ${pinkBlueMachineSpins} 次`;
+                document.getElementById('gold-spend-status').innerText = `*本機台規則：第2,9,19,25次必出紫色，之後每11次出紫；第14,30次必出粉紅，之後每20次出粉（抽 40 次必出粉紅色）`;
+                const pinkPercent = Math.min((pinkBlueMachineSpins / 40) * 100, 100).toFixed(0);
+                document.getElementById('pity-bar-fill').style.width = pinkPercent + '%';
+            } else {
+                document.getElementById('pity-title-text').innerText = `🔴 全機台硬性保底計數器`;
+                document.getElementById('pity-percent-text').innerText = `已抽次數: ${totalSpins} 次`;
+                document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出 金色傳說 武器)`;
+                const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
+                document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
+            }
 
             localStorage.setItem('cs_balance', balance);
             localStorage.setItem('cs_inventory', JSON.stringify(inventory));
@@ -729,6 +741,7 @@
             localStorage.setItem('cs_cnt_purple', purpleCounter);
             localStorage.setItem('cs_cnt_pink', pinkCounter);
             localStorage.setItem('cs_cnt_red', redCounter);
+            localStorage.setItem('cs_pinkblue_spins', pinkBlueMachineSpins);
 
             renderInventory();
         }
@@ -757,7 +770,6 @@
         }
 
         function initSwordsConfigPanel() {
-            // 自選關刀預設打勾前10個玩家擁有的藍色，前3個玩家擁有的紫色
             swordsSelectedPool.blue = OWNED_WINNABLE_SKINS.blue.slice(0, 10);
             swordsSelectedPool.purple = OWNED_WINNABLE_SKINS.purple.slice(0, 3);
             swordsSelectedPool.pink = [];
@@ -767,9 +779,9 @@
             const rarities = ['blue', 'purple', 'pink', 'red', 'gold'];
             rarities.forEach(rarity => {
                 const container = document.getElementById(`list-${rarity}`);
+                if (!container) return;
                 container.innerHTML = '';
                 
-                // 玩家可以從自己擁有的皮膚中勾選加入戰術關刀池
                 let listData = OWNED_WINNABLE_SKINS[rarity];
 
                 listData.forEach(name => {
@@ -854,7 +866,6 @@
         // 【核心中獎抽取機制】：嚴格鎖定只能抽到玩家這份清單擁有的皮膚
         function getRealOwnedSkinByRarity(rarityType) {
             const m = MACHINES[currentMachine];
-            // 如果是自選機台，從自選勾選池發放
             if (m.isCustom) {
                 let pool = swordsSelectedPool[rarityType];
                 if (!pool || pool.length === 0) {
@@ -864,10 +875,9 @@
                 const name = pool[Math.floor(Math.random() * pool.length)];
                 return { name: name, rarity: `rarity-${rarityType}` };
             } else {
-                // 固定機台則從玩家專屬 51 款皮膚清單中相應稀有度隨機抽出
                 let pool = OWNED_WINNABLE_SKINS[rarityType];
                 if (!pool || pool.length === 0) {
-                    pool = OWNED_WINNABLE_SKINS.blue; // 容錯後備
+                    pool = OWNED_WINNABLE_SKINS.blue; 
                     rarityType = 'blue';
                 }
                 const name = pool[Math.floor(Math.random() * pool.length)];
@@ -909,6 +919,26 @@
 
         let isSpinning = false;
         
+        // 判定猛藍粉紫機台紫色的硬性抽數保底函數
+        function checkPinkBluePurplePity(spinNum) {
+            const staticSpins = [2, 9, 19, 25];
+            if (staticSpins.includes(spinNum)) return true;
+            if (spinNum > 25) {
+                return (spinNum - 25) % 11 === 0;
+            }
+            return false;
+        }
+
+        // 判定猛藍粉紫機台粉紅色的硬性抽數保底函數
+        function checkPinkBluePinkPity(spinNum) {
+            const staticSpins = [14, 30];
+            if (staticSpins.includes(spinNum)) return true;
+            if (spinNum > 30) {
+                return (spinNum - 30) % 20 === 0;
+            }
+            return false;
+        }
+
         function startSpin(multiCount = 1) {
             if (isSpinning) return;
             
@@ -922,38 +952,68 @@
             balance -= totalCost;
             let rollResults = [];
 
-            // 逐抽按原始保底邏輯運算，確保產出物 100% 只在玩家擁有的清單內
             for (let k = 0; k < multiCount; k++) {
-                totalSpins++;
-                totalGoldSpent += currentSingleCost;
-                
-                purpleCounter++;
-                pinkCounter++;
-                redCounter++;
-
                 let winSkin = null;
 
-                if (totalGoldSpent >= 800) {
-                    winSkin = getRealOwnedSkinByRarity('gold');
-                    totalGoldSpent -= 800;
-                }
-                else if (redCounter >= RED_LOOP[redIndex]) {
-                    winSkin = getRealOwnedSkinByRarity('red');
-                    redCounter = 0; 
-                    redIndex = (redIndex + 1) % RED_LOOP.length;
-                }
-                else if (pinkCounter >= PINK_LOOP[pinkIndex]) {
-                    winSkin = getRealOwnedSkinByRarity('pink');
-                    pinkCounter = 0;
-                    pinkIndex = (pinkIndex + 1) % PINK_LOOP.length;
-                }
-                else if (purpleCounter >= PURPLE_LOOP[purpleIndex]) {
-                    winSkin = getRealOwnedSkinByRarity('purple');
-                    purpleCounter = 0;
-                    purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length;
-                }
+                // 如果是「猛藍粉紫刀槍機台」
+                if (currentMachine === 'pink_purple') {
+                    pinkBlueMachineSpins++; // 機台獨立計數器增加
+                    
+                    // 優先判定粉色保底
+                    if (checkPinkBluePinkPity(pinkBlueMachineSpins)) {
+                        winSkin = getRealOwnedSkinByRarity('pink');
+                    }
+                    // 其次判定紫色保底
+                    else if (checkPinkBluePurplePity(pinkBlueMachineSpins)) {
+                        winSkin = getRealOwnedSkinByRarity('purple');
+                    }
+                    // 隨機概率掉落 (只會抽出藍、紫、粉)
+                    else {
+                        let rand = Math.random() * 100;
+                        if (rand < 60) {
+                            winSkin = getRealOwnedSkinByRarity('blue');
+                        } else if (rand < 88) {
+                            winSkin = getRealOwnedSkinByRarity('purple');
+                        } else {
+                            winSkin = getRealOwnedSkinByRarity('pink');
+                        }
+                    }
+                } 
+                // 其他普通機台的原本保底與掉落邏輯
                 else {
-                    winSkin = getRealOwnedSkinByRarity('blue');
+                    totalSpins++;
+                    totalGoldSpent += currentSingleCost;
+                    
+                    purpleCounter++;
+                    pinkCounter++;
+                    redCounter++;
+
+                    if (totalGoldSpent >= 800) {
+                        winSkin = getRealOwnedSkinByRarity('gold');
+                        totalGoldSpent -= 800;
+                    }
+                    else if (redCounter >= RED_LOOP[redIndex]) {
+                        winSkin = getRealOwnedSkinByRarity('red');
+                        redCounter = 0; 
+                        redIndex = (redIndex + 1) % RED_LOOP.length;
+                    }
+                    else if (pinkCounter >= PINK_LOOP[pinkIndex]) {
+                        winSkin = getRealOwnedSkinByRarity('pink');
+                        pinkCounter = 0;
+                        pinkIndex = (pinkIndex + 1) % PINK_LOOP.length;
+                    }
+                    else if (purpleCounter >= PURPLE_LOOP[purpleIndex]) {
+                        winSkin = getRealOwnedSkinByRarity('purple');
+                        purpleCounter = 0;
+                        purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length;
+                    }
+                    else {
+                        let rand = Math.random() * 100;
+                        if (rand < 50) winSkin = getRealOwnedSkinByRarity('blue');
+                        else if (rand < 80) winSkin = getRealOwnedSkinByRarity('purple');
+                        else if (rand < 93) winSkin = getRealOwnedSkinByRarity('pink');
+                        else winSkin = getRealOwnedSkinByRarity('red');
+                    }
                 }
 
                 rollResults.push(winSkin);
@@ -979,7 +1039,6 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            // 動態對齊生成：固定將第 30 格強制設定為本次算出的中獎道具（必然在擁有名單中）
             const winIndex = 30;
             const finalShowSkin = rollResults[rollResults.length - 1];
 
@@ -991,7 +1050,6 @@
                 }
             }
 
-            // 【精確中心定位演算法】卡片總寬 124px (120px + margin 4px)
             setTimeout(() => {
                 const viewportWidth = document.querySelector('.roulette-viewport').offsetWidth;
                 const cardWidth = 124; 
@@ -1057,7 +1115,6 @@
             document.getElementById('reward-fullscreen-modal').style.display = 'none';
         }
 
-        // 規則與彈窗
         function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
         function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
 

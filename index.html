@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 歐皇神話至尊盲盒 (高爆率視覺震撼版)</title>
+    <title>CS2 歐皇神話至尊盲盒 (真·指鹿為馬控盤版)</title>
     <style>
         :root {
             --primary: #ff4e50;
@@ -401,7 +401,7 @@
     <div class="container">
         <div class="notice-banner">
             ⚠️ <b>系統重要公告與服務條款：</b><br>
-            1. 本盲盒搭載<b>「全動態高爆視覺演算法」</b>，滾輪展示之高級飾品中獎期望極高，最終結果精確扣合硬性保底。<br>
+            1. 本盲盒搭載<b>「全動態高爆率RNG滾輪」</b>。請注意：因伺服器緩衝延遲，最終獲取道具以系統彈窗發放結果為準。<br>
             2. 背包內的所有武器飾品<b>「只供提取，不設回收」</b>，請知悉。<br>
             3. 所有道具提取均由<b>「人工客服手動登記發貨」</b>，正常情況下會在 12 小時內完成發送。
         </div>
@@ -454,7 +454,7 @@
 
         <div class="inventory-section">
             <h3 style="margin-top: 0; display:flex; justify-content:space-between; align-items:center;">
-                <span>🎒 臨時存儲背包</span>
+                <span>🎒 臨時存存储背包</span>
                 <span style="font-size:11px; color:var(--primary); font-weight:normal;">*道具只供提取，不設回收*</span>
             </h3>
             <div class="inventory-grid" id="inventory-grid"></div>
@@ -626,15 +626,13 @@
             }
         }
 
-        // 🔥 核心修改：超高誘惑性背景視覺格子生成算法（大幅拉高金、紅、粉、紫在背景中出現的頻率）
+        // 視覺用高爆率生成：讓滾輪布滿高階貨，增加隨機晃過指針的概率
         function getHighTemptationVisualSkin() {
             const m = MACHINES[currentMachine];
             let r = Math.random() * 100;
-            
-            // 故意把金、紅、粉、紫的視覺生成機率放大5到10倍！
-            if (r < 8.0) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)]; // 金色格子滿街跑
-            if (r < 25.0) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];    // 紅色格子鋪天蓋地
-            if (r < 50.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];  // 粉色滿街是
+            if (r < 10.0) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)]; // 金色
+            if (r < 30.0) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];    // 紅色
+            if (r < 55.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];  // 粉色
             if (r < 75.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
             return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
         }
@@ -649,7 +647,6 @@
             track.innerHTML = '';
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
-            // 初始狀態就讓轉盤看起來極度奢華
             for(let i = 0; i < 40; i++) {
                 track.appendChild(createCard(getHighTemptationVisualSkin()));
             }
@@ -675,10 +672,10 @@
             }
 
             balance -= totalCost;
-            let rollResults = [];
+            let actualRollResults = []; // 後台精準死保底結果 (發給玩家的)
             const m = MACHINES[currentMachine];
 
-            // 1. 後台雷打不動，精準算死中獎保底
+            // 1. 後台寂靜執行：算死硬保底，不管轉盤停在哪裡，都塞這個結果給玩家
             for (let k = 0; k < multiCount; k++) {
                 totalSpins++;
                 totalGoldSpent += singleCost;
@@ -689,43 +686,21 @@
 
                 let winSkin = null;
 
-                // 金色保底 (滿 800 金幣)
-                if (totalGoldSpent >= 800) {
-                    winSkin = m.grandPrizes[0]; 
-                    totalGoldSpent -= 800;
-                }
-                // 紅色保底
-                else if (redCounter >= RED_LOOP[redIndex]) {
-                    winSkin = m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
-                    redCounter = 0;
-                    redIndex = (redIndex + 1) % RED_LOOP.length;
-                }
-                // 粉色保底
-                else if (pinkCounter >= PINK_LOOP[pinkIndex]) {
-                    winSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
-                    pinkCounter = 0;
-                    pinkIndex = (pinkIndex + 1) % PINK_LOOP.length;
-                }
-                // 紫色保底
-                else if (purpleCounter >= PURPLE_LOOP[purpleIndex]) {
-                    winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
-                    purpleCounter = 0;
-                    purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length;
-                }
-                // 沒觸發任何保底，後台100%發藍色
-                else {
-                    winSkin = getBaseBlueSkin();
-                }
+                if (totalGoldSpent >= 800) { winSkin = m.grandPrizes[0]; totalGoldSpent -= 800; }
+                else if (redCounter >= RED_LOOP[redIndex]) { winSkin = m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)]; redCounter = 0; redIndex = (redIndex + 1) % RED_LOOP.length; }
+                else if (pinkCounter >= PINK_LOOP[pinkIndex]) { winSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)]; pinkCounter = 0; pinkIndex = (pinkIndex + 1) % PINK_LOOP.length; }
+                else if (purpleCounter >= PURPLE_LOOP[purpleIndex]) { winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)]; purpleCounter = 0; purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length; }
+                else { winSkin = getBaseBlueSkin(); }
 
-                rollResults.push(winSkin);
-                inventory.push(winSkin);
+                actualRollResults.push(winSkin);
+                inventory.push(winSkin); // 直接把保底道具加入背包，而不是轉盤看到的道具
             }
 
             updateUI();
 
             const isSkip = document.getElementById('skip-animation-checkbox').checked;
             if (isSkip) {
-                showFullscreenReward(rollResults);
+                showFullscreenReward(actualRollResults);
                 return;
             }
 
@@ -739,21 +714,15 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            const winIndex = 25; // 停在第 25 格
-            const finalShowSkin = rollResults[rollResults.length - 1]; 
-
-            // 2. 視覺震撼：轉盤狂刷金、紅、粉色格子，但指針那一格（第25格）被後台控死
+            // 2. 轉盤視覺（完全不作弊、純隨機生成的格子）
+            // 指針中獎位是第 25 格，這裡全部隨機搖，所以指針非常大機會停在金色/紅色上面
             for(let i = 0; i < 35; i++) {
-                if (i === winIndex) {
-                    track.appendChild(createCard(finalShowSkin)); // 只有這格是真實保底結果
-                } else {
-                    track.appendChild(createCard(getHighTemptationVisualSkin())); // 其它格全部塞滿高階貨去晃玩家眼球
-                }
+                track.appendChild(createCard(getHighTemptationVisualSkin()));
             }
 
             setTimeout(() => {
                 track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
-                track.style.transform = 'translateX(-2600px)';
+                track.style.transform = 'translateX(-2600px)'; // 剛好對準第 25 格
             }, 50);
 
             setTimeout(() => {
@@ -761,7 +730,9 @@
                 document.getElementById('spin-btn-1').disabled = false;
                 document.getElementById('spin-btn-3').disabled = false;
                 document.getElementById('spin-btn-5').disabled = false;
-                showFullscreenReward(rollResults);
+                
+                // 🔥 核心控盤效果：無視指針停在甚麼酷炫皮膚上，強行彈窗發放後台的硬保底道具！
+                showFullscreenReward(actualRollResults);
             }, 3600);
         }
 

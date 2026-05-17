@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 歐皇神話至尊盲盒 (技術演示版)</title>
+    <title>CS2 歐皇神話至尊盲盒 (截圖精準槍名版)</title>
     <style>
         :root {
             --primary: #ff4e50;
@@ -165,7 +165,7 @@
             background: linear-gradient(90deg, var(--red), var(--primary));
             width: 0%;
             height: 100%;
-            transition: width 0.5s ease;
+            transition: width 0.3s ease;
             box-shadow: 0 0 8px var(--red);
         }
 
@@ -179,27 +179,6 @@
             overflow: hidden;
             margin: 20px 0;
             box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-            transition: all 0.5s ease-in-out;
-        }
-
-        .roulette-viewport.fullscreen-focus {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(1.2);
-            width: 90vw;
-            max-width: 1000px;
-            z-index: 9999;
-            box-shadow: 0 0 100px rgba(0,0,0,0.95), 0 0 30px rgba(235, 75, 75, 0.2);
-            border-color: var(--red);
-        }
-
-        .spin-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: rgba(5, 5, 8, 0.95);
-            z-index: 9998;
         }
 
         .pointer {
@@ -220,6 +199,7 @@
             left: 0;
             top: 15px;
             height: 110px;
+            transform: translateX(0px);
         }
 
         .skin-card {
@@ -231,30 +211,25 @@
             border-bottom: 5px solid #888;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            padding: 10px 5px 6px 5px;
+            padding: 10px 5px;
             box-sizing: border-box;
-            font-size: 10px;
+            font-size: 11px;
             text-align: center;
-            position: relative;
-        }
-
-        .skin-card img {
-            width: 85px;
-            height: 60px;
-            object-fit: contain;
-            filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.5));
         }
 
         .skin-name {
-            font-weight: 500;
-            color: #ced4da;
-            white-space: nowrap;
+            font-weight: bold;
+            color: #ffffff;
+            word-break: break-word;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
             width: 100%;
-            padding: 0 4px;
+            line-height: 1.4;
         }
 
         .rarity-gold { border-bottom-color: var(--gold); background: radial-gradient(circle, rgba(102,81,18,0.3) 0%, rgba(20,22,29,0) 100%); } 
@@ -271,15 +246,6 @@
             gap: 8px;
             font-size: 14px;
             color: #ccc;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        .skip-control input {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-            accent-color: var(--primary);
         }
 
         .btn {
@@ -291,18 +257,12 @@
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
         }
 
         .btn-group {
             display: flex;
             gap: 10px;
             justify-content: center;
-            margin-top: 5px;
         }
 
         .inventory-section {
@@ -323,28 +283,30 @@
             background-color: #0f1015;
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 12px 8px;
+            padding: 15px 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            justify-content: space-between;
+            min-height: 100px;
         }
 
-        .inv-item img {
-            width: 60px;
-            height: 45px;
-            object-fit: contain;
+        .inv-item-name {
+            font-size: 11px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 10px;
+            word-break: break-word;
         }
 
         .inv-actions {
-            margin-top: 8px;
-            display: flex;
-            gap: 4px;
+            margin-top: auto;
             width: 100%;
         }
 
         .inv-btn {
-            flex: 1;
+            width: 100%;
             font-size: 11px;
             padding: 6px;
             border: none;
@@ -354,7 +316,7 @@
             font-weight: bold;
         }
 
-        .btn-withdraw { background-color: var(--primary); width: 100%; }
+        .btn-withdraw { background-color: var(--primary); }
 
         .fullscreen-modal {
             display: none;
@@ -365,20 +327,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
         }
 
         .reward-title {
             font-size: 32px;
             font-weight: 900;
             color: var(--red);
-            text-shadow: 0 0 20px rgba(235, 75, 75, 0.6);
             margin-bottom: 30px;
-            letter-spacing: 2px;
         }
 
         .reward-container {
@@ -393,39 +348,24 @@
 
         .reward-card {
             width: 150px;
-            height: 200px;
+            height: 150px;
             background-color: #1a1c24;
             border-radius: 12px;
             border: 2px solid var(--border-color);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             padding: 15px;
             box-sizing: border-box;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            animation: cardPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-        }
-
-        @keyframes cardPop {
-            from { transform: scale(0.5); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .reward-card img {
-            width: 100px;
-            height: 75px;
-            object-fit: contain;
         }
 
         .reward-card-name {
-            font-size: 11px;
+            font-size: 13px;
             font-weight: bold;
             text-align: center;
-            margin-top: 10px;
-            height: 32px;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            word-break: break-word;
+            margin-top: 15px;
         }
 
         .modal {
@@ -443,15 +383,12 @@
             border: 2px solid var(--border-color);
             padding: 25px;
             border-radius: 12px;
-            text-align: center;
-            max-width: 350px;
+            max-width: 400px;
             width: 90%;
         }
     </style>
 </head>
 <body>
-
-    <div class="spin-overlay" id="spin-overlay-mask"></div>
 
     <header>
         <div class="logo">CS2 歐皇神話至尊盲盒</div>
@@ -462,7 +399,6 @@
     </header>
 
     <div class="container">
-        
         <div class="notice-banner">
             ⚠️ <b>系統重要公告與服務條款：</b><br>
             1. 本平台提供比官方更透明的<b>「契合度保底系統」</b>，確保每一抽都有回饋。<br>
@@ -476,35 +412,35 @@
         </div>
 
         <div class="tab-container">
-            <div class="tab active" onclick="switchMachine('guns')">🔫 全系槍械神兵</div>
-            <div class="tab" onclick="switchMachine('pink_purple')">🌸 猛男粉紫槍</div>
-            <div class="tab" onclick="switchMachine('swords')">⚔️ 關刀與神針</div>
-            <div class="tab" onclick="switchMachine('karambits')">😈 惡魔爪子刀</div>
+            <div class="tab active" onclick="switchMachine('guns')">🔫 精選槍械飾品機</div>
+            <div class="tab" onclick="switchMachine('pink_purple')">🌸 猛男粉紫刀槍</div>
+            <div class="tab" onclick="switchMachine('swords')">⚔️ 戰術關刀神兵</div>
+            <div class="tab" onclick="switchMachine('karambits')">😈 惡魔爪子神刀</div>
         </div>
 
         <div class="machine-box">
-            <h2 id="machine-title" style="margin: 0 0 5px 0;">全系槍械神兵盛典機台</h2>
+            <h2 id="machine-title">精選槍械飾品機台</h2>
             <p id="machine-cost-desc" style="color: var(--gold); font-weight: bold; margin: 0 0 10px 0;">單次抽獎：2 金幣</p>
 
             <div class="pity-container">
                 <div class="pity-info">
-                    <span id="pity-title-text">🔴 全系槍械神兵契合度</span>
+                    <span id="pity-title-text">🔴 精選槍械契合度</span>
                     <span style="color: var(--red); font-weight: bold;" id="pity-percent-text">契合進度: 0%</span>
                 </div>
                 <div class="pity-bar-bg">
                     <div class="pity-bar-fill" id="pity-bar-fill"></div>
                 </div>
-                <div style="font-size:10px; color:#aaa; text-align:left; margin-top:5px;" id="pity-notice-text">*官方開箱沒有保底，但在這裡，契合度 100% 必出本期紅色大獎！*</div>
+                <div style="font-size:10px; color:#aaa; text-align:left; margin-top:5px;">*官方開箱沒有保底，但在這裡，契合度 100% 必出本期紅色/金色大獎！*</div>
             </div>
 
-            <div class="roulette-viewport" id="roulette-viewport-id">
+            <div class="roulette-viewport">
                 <div class="pointer"></div>
                 <div class="roulette-track" id="roulette-track"></div>
             </div>
 
             <label class="skip-control">
                 <input type="checkbox" id="skip-animation-checkbox">
-                <span>⚡ 剔選跳過抽獎滾輪動畫（快刷專用）</span>
+                <span>⚡ 跳過抽獎滾輪動畫（快刷專用）</span>
             </label>
 
             <div class="btn-group">
@@ -524,96 +460,136 @@
     </div>
 
     <div class="fullscreen-modal" id="reward-fullscreen-modal">
-        <div class="reward-title">🔥 恭喜獲得稀有道具！</div>
+        <div class="reward-title">🔥 恭喜獲得道具！</div>
         <div class="reward-container" id="fullscreen-reward-container"></div>
         <button class="btn" style="padding: 15px 50px; font-size:18px;" onclick="closeFullscreenModal()">收下道具</button>
     </div>
 
     <div class="modal" id="prob-modal">
-        <div class="modal-content" style="max-width: 400px; text-align: left;">
-            <h3 style="text-align: center; color: var(--gold); margin-top:0;">💎 為什麼這裡比官方更好抽？</h3>
+        <div class="modal-content">
+            <h3 style="text-align: center; color: var(--gold); margin-top:0;">💎 契合度保底系統說明</h3>
             <hr style="border-color: var(--border-color);">
-            <p style="font-size: 13px;">官方遊戲的爆率是隨機且沒有終點的。在本平台，我們引入了獨家的<b>「契合度保底系統」</b>：</p>
+            <p style="font-size: 13px;">在本平台，我們引入了獨家的<b>「契合度保底系統」</b>：</p>
             <ul style="font-size: 12px; padding-left: 20px;">
-                <li><b>100% 必中：</b>契合度滿，紅色/金色大獎必定掉落。</li>
-                <li><b>進度透明：</b>每一抽都在累積你的歐氣，絕不白費。</li>
+                <li><b>100% 必中：</b>契合度達到上限時，紅色/金色大獎必定掉落。</li>
+                <li><b>進度透明：</b>每一抽都在累積你的契合進度，絕不白費。</li>
             </ul>
             <div style="background: #1e212a; padding: 10px; border-radius: 4px; font-size: 11px; color: #888; line-height: 1.6;">
-                🟡 金色：0.02% | 🔴 紅色：0.08%<br>
-                💗 粉色：0.4% | 💜 紫色：3.5% | 💙 藍色：96%
+                🟡 金色：0.2% | 🔴 紅色：1.5%<br>
+                💗 粉色：5.0% | 💜 紫色：15.0% | 💙 藍色：78.3%
             </div>
-            <p style="font-size: 11px; color: var(--primary); text-align: center; margin-top: 10px;">*註：保底機制觸發時，大獎獲取率將提升至 100%*</p>
-            <button class="btn" style="width:100%; margin-top:10px;" onclick="closeProbModal()">我也要變歐皇</button>
+            <button class="btn" style="width:100%; margin-top:15px;" onclick="closeProbModal()">確定</button>
         </div>
     </div>
 
     <script>
-        let balance = parseInt(localStorage.getItem('cs_balance')) || 0;
+        let balance = parseInt(localStorage.getItem('cs_balance')) || 500;
         let inventory = JSON.parse(localStorage.getItem('cs_inventory')) || [];
-        
-        let pityData = JSON.parse(localStorage.getItem('cs_pity_data_red_v2')) || {
-            guns: 0,pink_purple: 0,swords: 0,karambits: 0
-        };
-
-        // 每個機台獨立的硬性抽數計數器（紫色、粉色、紅色）
-        let hardPityCounts = JSON.parse(localStorage.getItem('cs_hard_pity_counts')) || {
-            guns: { purple: 0, pink: 0, red: 0 },
-            pink_purple: { purple: 0, pink: 0, red: 0 },
-            swords: { purple: 0, pink: 0, red: 0 },
-            karambits: { purple: 0, pink: 0, red: 0 }
-        };
-
-        let totalDeposited = parseInt(localStorage.getItem('cs_total_deposited')) || 0; 
-        let localSpinCount = parseInt(localStorage.getItem('cs_local_spin_count')) || 0; 
-
+        let pityData = JSON.parse(localStorage.getItem('cs_pity_data_v3')) || { guns: 0, pink_purple: 0, swords: 0, karambits: 0 };
         let currentMachine = 'guns';
 
-        const VALID_CDKS = {
-            "CS2-TEST-10": 10,   
-            "CS2-TEST-50": 50,   
-            "CS2-TEST-100": 100, 
-            "CS2-TEST-200": 200  
-        };
+        const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
+        const PITY_NAMES = { guns: "🔴 精選槍械契合度", pink_purple: "🔴 紅色粉紫圈契合度", swords: "🔴 紅色關刀神兵契合度", karambits: "🔴 紅色爪子刀契合度" };
 
-        const PITY_NAMES = {
-            guns: "🔴 全系槍械神兵契合度",
-            pink_purple: "🔴 紅色粉紫圈契合度",
-            swords: "🔴 紅色關刀與神針契合度",
-            karambits: "🔴 紅色爪子刀契合度"
-        };
-
+        // 嚴格依照你截圖入面所有出現過嘅 38 款皮膚名稱輸入
         const MACHINES = {
             guns: {
-                title: "全系槍械神兵盛典機台", cost: 2, pityLimit: 250,
-                grandPrizes: [{ name: "★ M9 Bayonet | Fade (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" }],
-                redPrizes: [{ name: "AK-47 | Fire Serpent (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL4t-klY6FkvX3b_WGlT9XvZEpju_E9N2g2VfsrkE9MTrnd9SdeAY8NFDYr1K_ye_mjsS7tIOvsw", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "M4A4 | Buzz Kill (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "Galil AR | Sugar Rush (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "Glock-18 | Bunsen Burner (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" }]
+                title: "精選槍械飾品機台", cost: 2, pityLimit: 150,
+                grandPrizes: [
+                    { name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" },
+                    { name: "★ Karambit | Violet", rarity: "rarity-gold" }
+                ],
+                redPrizes: [
+                    { name: "AK-47 | Midas", rarity: "rarity-red" },
+                    { name: "AK-47 | PinPoint", rarity: "rarity-red" },
+                    { name: "AK-47 | Red Baron", rarity: "rarity-red" },
+                    { name: "M4A1-S | BlackOps", rarity: "rarity-red" },
+                    { name: "AWP | High Octane", rarity: "rarity-red" },
+                    { name: "Desert Eagle | High Octane", rarity: "rarity-red" },
+                    { name: "Tec-9 | Medal", rarity: "rarity-red" }
+                ],
+                pinkPrizes: [
+                    { name: "M4A1-S | Retro", rarity: "rarity-pink" },
+                    { name: "M4A4 | B-Hop", rarity: "rarity-pink" },
+                    { name: "Glock-18 | Fuji", rarity: "rarity-pink" },
+                    { name: "AWP | Typhon", rarity: "rarity-pink" },
+                    { name: "Desert Eagle | Mercy", rarity: "rarity-pink" },
+                    { name: "XM1014 | Lilies", rarity: "rarity-pink" },
+                    { name: "SSG 08 | Labyrinth", rarity: "rarity-pink" }
+                ],
+                purplePrizes: [
+                    { name: "Glock-18 | Broken TV", rarity: "rarity-purple" },
+                    { name: "Five-SeveN | Control", rarity: "rarity-purple" },
+                    { name: "P250 | B-250", rarity: "rarity-purple" },
+                    { name: "P250 | Mindspill", rarity: "rarity-purple" },
+                    { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" },
+                    { name: "Dual Berettas | Choking Hazard", rarity: "rarity-purple" },
+                    { name: "Dual Berettas | Tension", rarity: "rarity-purple" },
+                    { name: "AUG | Hot Rod", rarity: "rarity-purple" },
+                    { name: "AUG | Overgrowth", rarity: "rarity-purple" },
+                    { name: "Galil AR | Monochrome", rarity: "rarity-purple" },
+                    { name: "P90 | Database", rarity: "rarity-purple" },
+                    { name: "XM1014 | Koi", rarity: "rarity-purple" }
+                ],
+                bluePrizes: [
+                    { name: "Glock-18 | PinPoint", rarity: "rarity-blue" },
+                    { name: "Five-SeveN | Icecap", rarity: "rarity-blue" },
+                    { name: "P250 | Glacial", rarity: "rarity-blue" },
+                    { name: "P250 | Pulse", rarity: "rarity-blue" },
+                    { name: "Desert Eagle | Permafrost", rarity: "rarity-blue" },
+                    { name: "Desert Eagle | Turbo", rarity: "rarity-blue" },
+                    { name: "Dual Berettas | Vernal", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Monarch", rarity: "rarity-blue" },
+                    { name: "Tec-9 | Striker", rarity: "rarity-blue" },
+                    { name: "USP-S | Heated", rarity: "rarity-blue" },
+                    { name: "USP-S | Tekko", rarity: "rarity-blue" },
+                    { name: "MAC-10 | Daisies", rarity: "rarity-blue" },
+                    { name: "MAC-10 | Ivory", rarity: "rarity-blue" },
+                    { name: "MP9 | Canyon", rarity: "rarity-blue" },
+                    { name: "P90 | Big Cat", rarity: "rarity-blue" },
+                    { name: "P90 | PinPoint", rarity: "rarity-blue" },
+                    { name: "MAG-7 | Vision7", rarity: "rarity-blue" },
+                    { name: "Negev | Noctiflora", rarity: "rarity-blue" },
+                    { name: "Negev | Rotary Power", rarity: "rarity-blue" },
+                    { name: "Negev | The Jungle", rarity: "rarity-blue" },
+                    { name: "Nova | Arctic Stripe", rarity: "rarity-blue" },
+                    { name: "Nova | Flutter", rarity: "rarity-blue" },
+                    { name: "Nova | Half-One", rarity: "rarity-blue" },
+                    { name: "Nova | Heat", rarity: "rarity-blue" },
+                    { name: "XM1014 | Abstract", rarity: "rarity-blue" },
+                    { name: "AUG | Predator", rarity: "rarity-blue" },
+                    { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
+                    { name: "FAMAS | Medic", rarity: "rarity-blue" },
+                    { name: "Galil AR | Irid", rarity: "rarity-blue" },
+                    { name: "Galil AR | Irradiated", rarity: "rarity-blue" },
+                    { name: "SG 553 | Dynasty", rarity: "rarity-blue" },
+                    { name: "SG 553 | Frostline", rarity: "rarity-blue" },
+                    { name: "SSG 08 | Desert Strike", rarity: "rarity-blue" }
+                ]
             },
             pink_purple: {
-                title: "🌸 猛男粉紫專區機台", cost: 3, pityLimit: 400,
-                grandPrizes: [{ name: "★ Ursus Knife | Marble Fade (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" }],
-                redPrizes: [{ name: "M4A1-S | Player Two (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL4t-klY6FkvX3b_WGlT9XvZEpju_E9N2g2VfsrkE9MTrnd9SdeAY8NFDYr1K_ye_mjsS7tIOvsw", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "AK-47 | Neon Revolution (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "Glock-18 | Vogue (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "MAC-10 | Oceanic (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" }]
+                title: "🌸 猛男粉紫刀槍機台", cost: 3, pityLimit: 200,
+                grandPrizes: [{ name: "★ Karambit | Violet", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Red Baron", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "Glock-18 | Fuji", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "XM1014 | Koi", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "P250 | Pulse", rarity: "rarity-blue" }]
             },
             swords: {
-                title: "⚔️ 關刀與神針機台", cost: 40, pityLimit: 3000,
-                grandPrizes: [{ name: "★ 劍出關刀 | 屠殺之極 (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" }],
-                redPrizes: [{ name: "AWP | Lightning Strike (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL4t-klY6FkvX3b_WGlT9XvZEpju_E9N2g2VfsrkE9MTrnd9SdeAY8NFDYr1K_ye_mjsS7tIOvsw", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "M4A1-S | Hyper Beast (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "XM1014 | Entombed (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "PP-Bizon | High Roller (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" }]
+                title: "⚔️ 戰術關刀神兵機台", cost: 10, pityLimit: 500,
+                grandPrizes: [{ name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Midas", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "AWP | Typhon", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "Galil AR | Monochrome", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "FAMAS | Arctic Camo", rarity: "rarity-blue" }]
             },
             karambits: {
-                title: "😈 惡魔爪子刀機台", cost: 40, pityLimit: 3000,
-                grandPrizes: [{ name: "★ Karambit | Lore (黃色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r805WSv_S-Oun38fdV1t_LQZosreYJAhv7PvHfDxL69mkkY6FlvX3Z6-FkT9XvZEpju_E9Nym0VbkrRE-Yzund9SdewY7Ml_U_wTo28S4S8Sj_A", rarity: "rarity-gold" }],
-                redPrizes: [{ name: "M4A4 | The Emperor (紅色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r2t1WSv3R8fKx38fdX01_Ignv4beYJAJu7PzHeDNL4t-klY6FkvX3b_WGlT9XvZEpju_E9N2g2VfsrkE9MTrnd9SdeAY8NFDYr1K_ye_mjsS7tIOvsw", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "AK-47 | Point Disarray (粉色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r8t1WSv3W8fyn38fdVEJu4LeYJAZv7PzHfS9N69SjlI6Fm_X3P-OFkT9XvZEpju_E9Nig2VfsrUU9MTynd9SdeAY8M1DYr1Prw7q8jMTitIO3pA", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "USP-S | Orion (紫色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "P90 | Grim (藍色)", img: "https://community.cloudflare.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVwgdKYehLQyeUhY_IA_O3hld18rMld_kW4ieYxdKz8bPDbYgKqN-g-r5t1WSv2U8vqn38fdVkt_LAtosreYJAJu7PzHeDNL69SxlI6Fm_X3O-OFkT9XvZEpju_E9Niz3lfsrkM9MTynd9SdeAY8M1DYr1O6xOzoisS7tIO78Q", rarity: "rarity-blue" }]
+                title: "😈 惡魔爪子神刀機台", cost: 10, pityLimit: 500,
+                grandPrizes: [{ name: "★ Karambit | Violet", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | PinPoint", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "M4A1-S | Retro", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "P90 | Database", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "Nova | Heat", rarity: "rarity-blue" }]
             }
         };
 
@@ -630,10 +606,7 @@
 
             localStorage.setItem('cs_balance', balance);
             localStorage.setItem('cs_inventory', JSON.stringify(inventory));
-            localStorage.setItem('cs_pity_data_red_v2', JSON.stringify(pityData));
-            localStorage.setItem('cs_hard_pity_counts', JSON.stringify(hardPityCounts));
-            localStorage.setItem('cs_total_deposited', totalDeposited);
-            localStorage.setItem('cs_local_spin_count', localSpinCount);
+            localStorage.setItem('cs_pity_data_v3', JSON.stringify(pityData));
             renderInventory();
         }
 
@@ -641,7 +614,9 @@
             if (isSpinning) return;
             currentMachine = type;
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            event.currentTarget.classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
 
             document.getElementById('machine-title').innerText = MACHINES[type].title;
             document.getElementById('machine-cost-desc').innerText = `單次抽獎：${MACHINES[type].cost} 金幣`;
@@ -655,7 +630,6 @@
             if (VALID_CDKS[input]) {
                 const amount = VALID_CDKS[input];
                 balance += amount;
-                totalDeposited += amount; 
                 alert(`🎉 兌換成功！已成功充值 ${amount} 金幣。`);
                 delete VALID_CDKS[input]; 
                 document.getElementById('cdk-input').value = "";
@@ -665,63 +639,30 @@
             }
         }
 
-        function getRandomSkinNaturalPool() {
+        function getRandomSkinFromCurrent() {
             const m = MACHINES[currentMachine];
             let r = Math.random() * 100;
-            if (r < 5.0) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)];
-            if (r < 15.0) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
-            if (r < 35.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
-            if (r < 65.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+            if (r < 0.2) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)];
+            if (r < 1.5) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
+            if (r < 5.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
+            if (r < 15.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
             return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
-        }
-
-        function getRiggedWinningSkin() {
-            const m = MACHINES[currentMachine];
-            const hPity = hardPityCounts[currentMachine];
-            let r = Math.random() * 10000;
-
-            if (hPity.red >= 150) {
-                hPity.red = 0; hPity.pink = 0; hPity.purple = 0;
-                return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
-            } 
-            else if (hPity.pink >= 50) {
-                hPity.pink = 0; hPity.purple = 0;
-                return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
-            } 
-            else if (hPity.purple >= 12) {
-                hPity.purple = 0;
-                return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
-            } 
-            else {
-                if (r < 2) {
-                    hPity.red = 0; hPity.pink = 0; hPity.purple = 0;
-                    return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
-                } else if (r < 10) {
-                    hPity.pink = 0; hPity.purple = 0;
-                    return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
-                } else if (r < 50) {
-                    hPity.purple = 0;
-                    return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
-                }
-                return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
-            }
         }
 
         function setupTrack() {
             const track = document.getElementById('roulette-track');
             track.innerHTML = '';
-            for(let i=0; i<80; i++) {
-                track.appendChild(createCard(getRandomSkinNaturalPool()));
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0px)';
+            for(let i = 0; i < 40; i++) {
+                track.appendChild(createCard(getRandomSkinFromCurrent()));
             }
         }
 
         function createCard(item) {
             const card = document.createElement('div');
             card.className = `skin-card ${item.rarity}`;
-            card.innerHTML = `
-                <img src="${item.img}">
-                <div class="skin-name">${item.name}</div>
-            `;
+            card.innerHTML = `<div class="skin-name">${item.name}</div>`;
             return card;
         }
 
@@ -740,27 +681,20 @@
             balance -= cost;
             let rollResults = [];
             const m = MACHINES[currentMachine];
-            const hPity = hardPityCounts[currentMachine];
 
             for (let k = 0; k < multiCount; k++) {
-                localSpinCount++; 
                 pityData[currentMachine] += MACHINES[currentMachine].cost;
-                
-                hPity.purple++;
-                hPity.pink++;
-                hPity.red++;
-
                 let winSkin = null;
 
                 if (pityData[currentMachine] >= limit) {
                     winSkin = m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)]; 
                     pityData[currentMachine] = 0; 
-                    hPity.red = 0; hPity.pink = 0; hPity.purple = 0;
-                } 
-                else {
-                    winSkin = getRiggedWinningSkin();
+                } else {
+                    winSkin = getRandomSkinFromCurrent();
+                    if (winSkin.rarity === 'rarity-red' || winSkin.rarity === 'rarity-gold') {
+                        pityData[currentMachine] = 0;
+                    }
                 }
-
                 rollResults.push(winSkin);
                 inventory.push(winSkin);
             }
@@ -768,60 +702,44 @@
             updateUI();
 
             const isSkip = document.getElementById('skip-animation-checkbox').checked;
-
             if (isSkip) {
                 showFullscreenReward(rollResults);
                 return;
             }
 
             isSpinning = true;
-            toggleButtons(true);
-
-            const viewport = document.getElementById('roulette-viewport-id');
-            const mask = document.getElementById('spin-overlay-mask');
-            mask.style.display = 'block';
-            viewport.classList.add('fullscreen-focus');
+            document.getElementById('spin-btn-1').disabled = true;
+            document.getElementById('spin-btn-3').disabled = true;
+            document.getElementById('spin-btn-5').disabled = true;
 
             const track = document.getElementById('roulette-track');
+            track.innerHTML = '';
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            const winIndex = 65; 
-            const finalShowSkin = rollResults[rollResults.length - 1]; 
+            const winIndex = 25;
+            const finalShowSkin = rollResults[rollResults.length - 1];
 
-            track.innerHTML = '';
-            for(let i=0; i<85; i++) {
+            for(let i = 0; i < 35; i++) {
                 if (i === winIndex) {
-                    track.appendChild(createCard(finalShowSkin)); 
+                    track.appendChild(createCard(finalShowSkin));
                 } else {
-                    track.appendChild(createCard(getRandomSkinNaturalPool()));
+                    track.appendChild(createCard(getRandomSkinFromCurrent()));
                 }
             }
 
             setTimeout(() => {
-                const cardWidth = 124; 
-                const viewportWidth = viewport.offsetWidth;
-                const offset = -(winIndex * cardWidth) + (viewportWidth / 2) - (cardWidth / 2);
-                
-                track.style.transition = 'transform 11s cubic-bezier(0.01, 0.98, 0.05, 1)'; 
-                track.style.transform = `translateX(${offset}px)`;
+                track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
+                track.style.transform = 'translateX(-2600px)';
             }, 50);
 
             setTimeout(() => {
                 isSpinning = false;
-                toggleButtons(false);
-                
-                mask.style.display = 'none';
-                viewport.classList.remove('fullscreen-focus');
-
+                document.getElementById('spin-btn-1').disabled = false;
+                document.getElementById('spin-btn-3').disabled = false;
+                document.getElementById('spin-btn-5').disabled = false;
                 showFullscreenReward(rollResults);
-            }, 11100);
-        }
-
-        function toggleButtons(disabled) {
-            document.getElementById('spin-btn-1').disabled = disabled;
-            document.getElementById('spin-btn-3').disabled = disabled;
-            document.getElementById('spin-btn-5').disabled = disabled;
+            }, 3600);
         }
 
         function renderInventory() {
@@ -835,8 +753,7 @@
                 const div = document.createElement('div');
                 div.className = 'inv-item';
                 div.innerHTML = `
-                    <img src="${item.img}">
-                    <div style="font-size: 11px; font-weight: bold; margin-top:5px; height: 32px; overflow:hidden;">${item.name}</div>
+                    <div class="inv-item-name">${item.name}</div>
                     <div class="inv-actions">
                         <button class="inv-btn btn-withdraw" onclick="withdrawItem(${index})">提取道具</button>
                     </div>
@@ -847,7 +764,7 @@
 
         function withdrawItem(index) {
             const item = inventory[index];
-            alert(`💬 【提取道具申請成功】\n\n已登記！請復制您抽中的道具：\n「${item.name}」\n\n然後前往【閒魚聯絡客服】，發送名稱與您的遊戲交易ID，我們會在12小時內手動發送報價！\n\n*注意：此道具一經提取、恕不設回收。*`);
+            alert(`申請成功！請複製抽中道具：\n「${item.name}」\n前往聯絡客服，正常會在12小時內手動發貨！`);
         }
 
         function showFullscreenReward(skins) {
@@ -858,15 +775,12 @@
             skins.forEach((skin, idx) => {
                 const card = document.createElement('div');
                 card.className = `reward-card ${skin.rarity}`;
-                card.style.animationDelay = `${idx * 0.15}s`; 
                 card.innerHTML = `
                     <div style="font-size:10px; color:#aaa;">第 ${idx + 1} 抽</div>
-                    <img src="${skin.img}">
                     <div class="reward-card-name">${skin.name}</div>
                 `;
                 container.appendChild(card);
             });
-
             modal.style.display = 'flex';
         }
 
@@ -874,14 +788,10 @@
             document.getElementById('reward-fullscreen-modal').style.display = 'none';
         }
 
-        function showProbInfo() {
-            document.getElementById('prob-modal').style.display = 'flex';
-        }
+        function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
+        function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
 
-        function closeProbModal() {
-            document.getElementById('prob-modal').style.display = 'none';
-        }
-
+        // 正確初始化
         setupTrack();
         updateUI();
     </script>

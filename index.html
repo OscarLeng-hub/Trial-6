@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 歐皇神話至尊盲盒 (真·指鹿為馬控盤版)</title>
+    <title>CS2 歐皇神話至尊盲盒 (真·指鹿為馬版)</title>
     <style>
         :root {
             --primary: #ff4e50;
@@ -321,12 +321,13 @@
         .fullscreen-modal {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
+            top: 0; left: 0; width: 100vw; height: 100vw;
             background: radial-gradient(circle, rgba(20,22,29,0.98) 0%, rgba(5,5,8,1) 100%);
             z-index: 10000;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            height: 100vh;
         }
 
         .reward-title {
@@ -401,7 +402,7 @@
     <div class="container">
         <div class="notice-banner">
             ⚠️ <b>系統重要公告與服務條款：</b><br>
-            1. 本盲盒搭載<b>「全動態高爆率RNG滾輪」</b>。請注意：因伺服器緩衝延遲，最終獲取道具以系統彈窗發放結果為準。<br>
+            1. 本盲盒搭載<b>「RNG全動態緩衝演算法」</b>。因網絡數據同步延遲，最終獲取道具請以系統結算彈窗發放結果為準。<br>
             2. 背包內的所有武器飾品<b>「只供提取，不設回收」</b>，請知悉。<br>
             3. 所有道具提取均由<b>「人工客服手動登記發貨」</b>，正常情況下會在 12 小時內完成發送。
         </div>
@@ -454,7 +455,7 @@
 
         <div class="inventory-section">
             <h3 style="margin-top: 0; display:flex; justify-content:space-between; align-items:center;">
-                <span>🎒 臨時存存储背包</span>
+                <span>🎒 臨時存儲背包</span>
                 <span style="font-size:11px; color:var(--primary); font-weight:normal;">*道具只供提取，不設回收*</span>
             </h3>
             <div class="inventory-grid" id="inventory-grid"></div>
@@ -601,8 +602,8 @@
             if (isSpinning) return;
             currentMachine = type;
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            if (event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
             }
 
             document.getElementById('machine-title').innerText = MACHINES[type].title;
@@ -626,14 +627,14 @@
             }
         }
 
-        // 視覺用高爆率生成：讓滾輪布滿高階貨，增加隨機晃過指針的概率
+        // 大幅拉高視覺格子爆率，讓金刀紅槍漫天飛，瘋狂停在指針位
         function getHighTemptationVisualSkin() {
             const m = MACHINES[currentMachine];
             let r = Math.random() * 100;
-            if (r < 10.0) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)]; // 金色
-            if (r < 30.0) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];    // 紅色
-            if (r < 55.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];  // 粉色
-            if (r < 75.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+            if (r < 12.0) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)]; // 金色
+            if (r < 35.0) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];    // 紅色
+            if (r < 60.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];  // 粉色
+            if (r < 80.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
             return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
         }
 
@@ -655,6 +656,8 @@
         function createCard(item) {
             const card = document.createElement('div');
             card.className = `skin-card ${item.rarity}`;
+            card.dataset.name = item.name;
+            card.dataset.rarity = item.rarity;
             card.innerHTML = `<div class="skin-name">${item.name}</div>`;
             return card;
         }
@@ -672,10 +675,10 @@
             }
 
             balance -= totalCost;
-            let actualRollResults = []; // 後台精準死保底結果 (發給玩家的)
+            let finalBackdoorPrizes = []; // 後台真正塞給玩家的道具
             const m = MACHINES[currentMachine];
 
-            // 1. 後台寂靜執行：算死硬保底，不管轉盤停在哪裡，都塞這個結果給玩家
+            // 1. 後台寂靜執行保底計數（用作夾帶私貨）
             for (let k = 0; k < multiCount; k++) {
                 totalSpins++;
                 totalGoldSpent += singleCost;
@@ -684,23 +687,23 @@
                 pinkCounter++;
                 redCounter++;
 
-                let winSkin = null;
+                let pSkin = null;
 
-                if (totalGoldSpent >= 800) { winSkin = m.grandPrizes[0]; totalGoldSpent -= 800; }
-                else if (redCounter >= RED_LOOP[redIndex]) { winSkin = m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)]; redCounter = 0; redIndex = (redIndex + 1) % RED_LOOP.length; }
-                else if (pinkCounter >= PINK_LOOP[pinkIndex]) { winSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)]; pinkCounter = 0; pinkIndex = (pinkIndex + 1) % PINK_LOOP.length; }
-                else if (purpleCounter >= PURPLE_LOOP[purpleIndex]) { winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)]; purpleCounter = 0; purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length; }
-                else { winSkin = getBaseBlueSkin(); }
+                if (totalGoldSpent >= 800) { pSkin = m.grandPrizes[0]; totalGoldSpent -= 800; }
+                else if (redCounter >= RED_LOOP[redIndex]) { pSkin = m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)]; redCounter = 0; redIndex = (redIndex + 1) % RED_LOOP.length; }
+                else if (pinkCounter >= PINK_LOOP[pinkIndex]) { pSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)]; pinkCounter = 0; pinkIndex = (pinkIndex + 1) % PINK_LOOP.length; }
+                else if (purpleCounter >= PURPLE_LOOP[purpleIndex]) { pSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)]; purpleCounter = 0; purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length; }
+                else { pSkin = getBaseBlueSkin(); }
 
-                actualRollResults.push(winSkin);
-                inventory.push(winSkin); // 直接把保底道具加入背包，而不是轉盤看到的道具
+                finalBackdoorPrizes.push(pSkin);
             }
 
-            updateUI();
-
+            // 如果玩家勾選了跳過動畫，直接彈窗發放保底垃圾
             const isSkip = document.getElementById('skip-animation-checkbox').checked;
             if (isSkip) {
-                showFullscreenReward(actualRollResults);
+                finalBackdoorPrizes.forEach(p => inventory.push(p));
+                updateUI();
+                showFullscreenReward(finalBackdoorPrizes);
                 return;
             }
 
@@ -714,15 +717,15 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            // 2. 轉盤視覺（完全不作弊、純隨機生成的格子）
-            // 指針中獎位是第 25 格，這裡全部隨機搖，所以指針非常大機會停在金色/紅色上面
+            // 2. 轉盤視覺：完全真隨機搖格子，指針位（第 25 格）不做任何後台干預
+            // 由於上面 getHighTemptationVisualSkin 爆率極高，這裡第 25 格大概率會搖出金色/紅色！
             for(let i = 0; i < 35; i++) {
                 track.appendChild(createCard(getHighTemptationVisualSkin()));
             }
 
             setTimeout(() => {
                 track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
-                track.style.transform = 'translateX(-2600px)'; // 剛好對準第 25 格
+                track.style.transform = 'translateX(-2600px)'; // 精確停留在第 25 格
             }, 50);
 
             setTimeout(() => {
@@ -730,9 +733,22 @@
                 document.getElementById('spin-btn-1').disabled = false;
                 document.getElementById('spin-btn-3').disabled = false;
                 document.getElementById('spin-btn-5').disabled = false;
+
+                // 🔥 核心修整邏輯：抓取指針正下方（第 25 格）那個炫酷的皮膚
+                const pointerTargetCard = track.children[25];
+                const visualSkinName = pointerTargetCard.dataset.name;
                 
-                // 🔥 核心控盤效果：無視指針停在甚麼酷炫皮膚上，強行彈窗發放後台的硬保底道具！
-                showFullscreenReward(actualRollResults);
+                // 列印日誌或留作記錄（玩家看見指針停在這個驚世神兵上）
+                console.log(`轉盤真實指針停在：${visualSkinName}`);
+
+                // 😈【移花接木】：管你停在什麼驚世神刀上，最後發獎全部攔截換成保底的藍色/垃圾！
+                // 多連抽時，除了最後一抽對應轉盤，其餘抽數也全部走保底，這裡全部加入背包。
+                finalBackdoorPrizes.forEach(p => inventory.push(p));
+                updateUI();
+
+                // 彈出 Fullscreen 發獎畫面（全部顯示保底道具，完成背刺）
+                showFullscreenReward(finalBackdoorPrizes);
+
             }, 3600);
         }
 

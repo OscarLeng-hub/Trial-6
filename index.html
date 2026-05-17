@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 歐皇神話至尊盲盒 (RNG滾輪+後台硬保底版)</title>
+    <title>CS2 歐皇神話至尊盲盒 (高爆率視覺震撼版)</title>
     <style>
         :root {
             --primary: #ff4e50;
@@ -232,11 +232,11 @@
             line-height: 1.4;
         }
 
-        .rarity-gold { border-bottom-color: var(--gold); background: radial-gradient(circle, rgba(102,81,18,0.3) 0%, rgba(20,22,29,0) 100%); } 
-        .rarity-red { border-bottom-color: var(--red); background: radial-gradient(circle, rgba(120,24,24,0.3) 0%, rgba(20,22,29,0) 100%); }  
-        .rarity-pink { border-bottom-color: var(--pink); background: radial-gradient(circle, rgba(99,21,105,0.3) 0%, rgba(20,22,29,0) 100%); } 
-        .rarity-purple { border-bottom-color: var(--purple); background: radial-gradient(circle, rgba(54,19,102,0.3) 0%, rgba(20,22,29,0) 100%); } 
-        .rarity-blue { border-bottom-color: var(--blue); background: radial-gradient(circle, rgba(20,40,102,0.3) 0%, rgba(20,22,29,0) 100%); }  
+        .rarity-gold { border-bottom-color: var(--gold); background: radial-gradient(circle, rgba(102,81,18,0.4) 0%, rgba(20,22,29,0) 100%); } 
+        .rarity-red { border-bottom-color: var(--red); background: radial-gradient(circle, rgba(120,24,24,0.4) 0%, rgba(20,22,29,0) 100%); }  
+        .rarity-pink { border-bottom-color: var(--pink); background: radial-gradient(circle, rgba(99,21,105,0.4) 0%, rgba(20,22,29,0) 100%); } 
+        .rarity-purple { border-bottom-color: var(--purple); background: radial-gradient(circle, rgba(54,19,102,0.4) 0%, rgba(20,22,29,0) 100%); } 
+        .rarity-blue { border-bottom-color: var(--blue); background: radial-gradient(circle, rgba(20,40,102,0.2) 0%, rgba(20,22,29,0) 100%); }  
 
         .skip-control {
             margin-bottom: 15px;
@@ -401,7 +401,7 @@
     <div class="container">
         <div class="notice-banner">
             ⚠️ <b>系統重要公告與服務條款：</b><br>
-            1. 本盲盒滾輪採用<b>「真實RNG隨機演算法」</b>渲染格子，後台則搭載<b>「精準硬性計數保底」</b>以控制最終中獎結果。<br>
+            1. 本盲盒搭載<b>「全動態高爆視覺演算法」</b>，滾輪展示之高級飾品中獎期望極高，最終結果精確扣合硬性保底。<br>
             2. 背包內的所有武器飾品<b>「只供提取，不設回收」</b>，請知悉。<br>
             3. 所有道具提取均由<b>「人工客服手動登記發貨」</b>，正常情況下會在 12 小時內完成發送。
         </div>
@@ -487,7 +487,6 @@
         let balance = parseInt(localStorage.getItem('cs_balance')) || 500;
         let inventory = JSON.parse(localStorage.getItem('cs_inventory')) || [];
         
-        // 核心硬保底計數
         let totalSpins = parseInt(localStorage.getItem('cs_total_spins')) || 0;
         let totalGoldSpent = parseInt(localStorage.getItem('cs_gold_spent')) || 0;
         
@@ -627,14 +626,16 @@
             }
         }
 
-        // 用於生成滾輪格子嘅真實 RNG 隨機算法
-        function getRNGRandomSkin() {
+        // 🔥 核心修改：超高誘惑性背景視覺格子生成算法（大幅拉高金、紅、粉、紫在背景中出現的頻率）
+        function getHighTemptationVisualSkin() {
             const m = MACHINES[currentMachine];
             let r = Math.random() * 100;
-            if (r < 0.2) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)];
-            if (r < 1.5) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
-            if (r < 5.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
-            if (r < 15.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+            
+            // 故意把金、紅、粉、紫的視覺生成機率放大5到10倍！
+            if (r < 8.0) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)]; // 金色格子滿街跑
+            if (r < 25.0) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];    // 紅色格子鋪天蓋地
+            if (r < 50.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];  // 粉色滿街是
+            if (r < 75.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
             return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
         }
 
@@ -643,14 +644,14 @@
             return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
         }
 
-        // 預先用 RNG 鋪設背景格子，望落更真實
         function setupTrack() {
             const track = document.getElementById('roulette-track');
             track.innerHTML = '';
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
+            // 初始狀態就讓轉盤看起來極度奢華
             for(let i = 0; i < 40; i++) {
-                track.appendChild(createCard(getRNGRandomSkin()));
+                track.appendChild(createCard(getHighTemptationVisualSkin()));
             }
         }
 
@@ -677,7 +678,7 @@
             let rollResults = [];
             const m = MACHINES[currentMachine];
 
-            // 1. 後台執行精準保底計算
+            // 1. 後台雷打不動，精準算死中獎保底
             for (let k = 0; k < multiCount; k++) {
                 totalSpins++;
                 totalGoldSpent += singleCost;
@@ -690,7 +691,7 @@
 
                 // 金色保底 (滿 800 金幣)
                 if (totalGoldSpent >= 800) {
-                    winSkin = m.grandPrizes[0]; // 必定且只抽出 Butterfly Knife | Naval
+                    winSkin = m.grandPrizes[0]; 
                     totalGoldSpent -= 800;
                 }
                 // 紅色保底
@@ -711,7 +712,7 @@
                     purpleCounter = 0;
                     purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length;
                 }
-                // 冇保底，100% 藍色
+                // 沒觸發任何保底，後台100%發藍色
                 else {
                     winSkin = getBaseBlueSkin();
                 }
@@ -722,7 +723,6 @@
 
             updateUI();
 
-            // 如果揀左跳過動畫，直接彈窗
             const isSkip = document.getElementById('skip-animation-checkbox').checked;
             if (isSkip) {
                 showFullscreenReward(rollResults);
@@ -739,25 +739,23 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            const winIndex = 25; // 指定第 25 格為指針中獎格
-            const finalShowSkin = rollResults[rollResults.length - 1]; // 跑馬燈停落嚟果抽嘅結果
+            const winIndex = 25; // 停在第 25 格
+            const finalShowSkin = rollResults[rollResults.length - 1]; 
 
-            // 2. 視覺特效渲染：全車隨機生成，唯獨第 25 格被後台秘密修正為保底道具
+            // 2. 視覺震撼：轉盤狂刷金、紅、粉色格子，但指針那一格（第25格）被後台控死
             for(let i = 0; i < 35; i++) {
                 if (i === winIndex) {
-                    track.appendChild(createCard(finalShowSkin)); // 強制修正指針格
+                    track.appendChild(createCard(finalShowSkin)); // 只有這格是真實保底結果
                 } else {
-                    track.appendChild(createCard(getRNGRandomSkin())); // 其他所有格子100%純真隨機RNG
+                    track.appendChild(createCard(getHighTemptationVisualSkin())); // 其它格全部塞滿高階貨去晃玩家眼球
                 }
             }
 
-            // 啟動轉盤動畫
             setTimeout(() => {
                 track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
                 track.style.transform = 'translateX(-2600px)';
             }, 50);
 
-            // 動答完結彈出結果
             setTimeout(() => {
                 isSpinning = false;
                 document.getElementById('spin-btn-1').disabled = false;
@@ -816,7 +814,7 @@
         function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
         function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
 
-        // 初始化滾輪
+        // 初始化
         setupTrack();
         updateUI();
     </script>

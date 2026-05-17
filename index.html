@@ -140,6 +140,15 @@
             display: none;
         }
 
+        .config-box {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
         .config-title {
             font-size: 15px;
             font-weight: bold;
@@ -609,16 +618,15 @@
         let totalSpins = parseInt(localStorage.getItem('cs_total_spins')) || 0;
         let totalGoldSpent = parseInt(localStorage.getItem('cs_gold_spent')) || 0;
         
-        // 🌸 猛藍粉紫專用全局獨立計數器
         let pinkMachineSpins = parseInt(localStorage.getItem('cs_pink_machine_spins')) || 0;
 
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
 
-        // 系統大水庫備選庫 (轉盤前端隨機背景混合生成用)
+        // 精確比對後的系統大水庫展示備選庫
         const MASTER_VISUAL_POOL = {
             blue: [
                 { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" }, { name: "SSG 08 | Desert Strike", rarity: "rarity-blue" },
-                { name: "Nova | Heat", rarity: "rarity-blue" }, { name: "P90 | Big Cat", rarity: "rarity-blue" },
+                { name: "Nova | Heat", rarity: "rarity-blue" }, { name: "P90 | BigCat", rarity: "rarity-blue" },
                 { name: "Galil AR | Irradiated", rarity: "rarity-blue" }, { name: "Nova | Flutter", rarity: "rarity-blue" },
                 { name: "Negev | Noctiflora", rarity: "rarity-blue" }, { name: "Tec-9 | Monarch", rarity: "rarity-blue" },
                 { name: "XM1014 | Lilies", rarity: "rarity-blue" }, { name: "AUG | Overgrowth", rarity: "rarity-blue" },
@@ -626,14 +634,13 @@
                 { name: "P250 | Frutiger Aero", rarity: "rarity-blue" }, { name: "USP-S | SpecOps", rarity: "rarity-blue" },
                 { name: "Desert Eagle | Turbo", rarity: "rarity-blue" }, { name: "XM1014 | Koi", rarity: "rarity-blue" },
                 { name: "MP9 | Canyon", rarity: "rarity-blue" }, { name: "Glock-18 | Broken TV", rarity: "rarity-blue" },
-                { name: "P90 | Database", rarity: "rarity-blue" }, { name: "AK-47 | Red Baron", rarity: "rarity-blue" },
-                { name: "XM1014 | Splatter", rarity: "rarity-blue" }, { name: "AUG | Predator", rarity: "rarity-blue" },
-                { name: "MAG-7 | Vision 7", rarity: "rarity-blue" }, { name: "Nova | Half-One", rarity: "rarity-blue" },
-                { name: "Negev | Rotary Power", rarity: "rarity-blue" }
+                { name: "P90 | Database", rarity: "rarity-blue" }, { name: "XM1014 | Splatter", rarity: "rarity-blue" },
+                { name: "AUG | Predator", rarity: "rarity-blue" }, { name: "MAG-7 | Vision", rarity: "rarity-blue" },
+                { name: "Nova | Half-One", rarity: "rarity-blue" }, { name: "Negev | Rotary Power", rarity: "rarity-blue" }
             ],
             purple: [
                 { name: "FAMAS | Medic", rarity: "rarity-purple" }, { name: "MAC-10 | Ivory", rarity: "rarity-purple" },
-                { name: "MAC-10 | Dahlia", rarity: "rarity-purple" }, { name: "SSG 08 | Labyrinth", rarity: "rarity-purple" },
+                { name: "MAC-10 | Dahila", rarity: "rarity-purple" }, { name: "SSG 08 | Labyrinth", rarity: "rarity-purple" },
                 { name: "Dual Berettas | Vernal", rarity: "rarity-purple" }, { name: "AUG | Tension", rarity: "rarity-purple" },
                 { name: "Sawed-Off | Panthers", rarity: "rarity-purple" }, { name: "Five-SeveN | Control", rarity: "rarity-purple" },
                 { name: "FAMAS | Wallpaper", rarity: "rarity-purple" }, { name: "R8 Revolver | Bloody", rarity: "rarity-purple" },
@@ -642,10 +649,8 @@
                 { name: "MP9 | Paranoia", rarity: "rarity-purple" }, { name: "Tec-9 | Vice", rarity: "rarity-purple" },
                 { name: "Tec-9 | Striker", rarity: "rarity-purple" }, { name: "P250 | Pulse", rarity: "rarity-purple" },
                 { name: "AUG | Hot Rod", rarity: "rarity-purple" }, { name: "P250 | X-250", rarity: "rarity-purple" },
-                { name: "Tec-9 | Timeless", rarity: "rarity-purple" }, { name: "MAC-10 | Nailgun", rarity: "rarity-purple" },
-                { name: "Desert Eagle | Velocity", rarity: "rarity-purple" }, { name: "MP9 | Graffiti", rarity: "rarity-purple" },
-                { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" }, { name: "Dual Berettas | Tension", rarity: "rarity-purple" },
-                { name: "Dual Berettas | Gilded", rarity: "rarity-purple" }
+                { name: "Tec-9 | Timeless", rarity: "rarity-purple" }, { name: "Dual Berettas | Tension", rarity: "rarity-purple" },
+                { name: "Dual Berettas | Gilded", rarity: "rarity-purple" }, { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" }
             ],
             pink: [
                 { name: "P250 | Zen", rarity: "rarity-pink" }, { name: "SG 553 | Dynasty", rarity: "rarity-pink" },
@@ -653,11 +658,12 @@
                 { name: "P250 | Mindspill", rarity: "rarity-pink" }, { name: "USP-S | Ajax", rarity: "rarity-pink" },
                 { name: "P90 | Synthwave", rarity: "rarity-pink" }, { name: "Desert Eagle | Circuit", rarity: "rarity-pink" },
                 { name: "AWP | Railgun", rarity: "rarity-pink" }, { name: "MP9 | Choke Oil", rarity: "rarity-pink" },
-                { name: "AWP | Typhon", rarity: "rarity-pink" }, { name: "Sawed-Off | Improvised", rarity: "rarity-pink" },
-                { name: "Dual Berettas | Inked", rarity: "rarity-pink" }, { name: "Zeus x27 | Overcharge", rarity: "rarity-pink" },
-                { name: "Glock-18 | Fade", rarity: "rarity-pink" }, { name: "Desert Eagle | Mercy", rarity: "rarity-pink" },
-                { name: "Glock-18 | Fuji", rarity: "rarity-pink" }, { name: "M4A4 | BubblePop", rarity: "rarity-pink" },
-                { name: "Galil AR | Monochrome", rarity: "rarity-pink" }
+                { name: "MAC-10 | Nailgun", rarity: "rarity-pink" }, { name: "Desert Eagle | Velocity", rarity: "rarity-pink" },
+                { name: "AWP | Typhon", rarity: "rarity-pink" }, { name: "MP9 | Graffiti", rarity: "rarity-pink" },
+                { name: "Sawed-Off | Improvised", rarity: "rarity-pink" }, { name: "Dual Berettas | Inked", rarity: "rarity-pink" },
+                { name: "Zeus x27 | Overcharge", rarity: "rarity-pink" }, { name: "Glock-18 | Fade", rarity: "rarity-pink" },
+                { name: "Desert Eagle | Mercy", rarity: "rarity-pink" }, { name: "Glock-18 | Fuji", rarity: "rarity-pink" },
+                { name: "M4A4 | BubblePop", rarity: "rarity-pink" }, { name: "Galil AR | Monochrome", rarity: "rarity-pink" }
             ],
             red: [
                 { name: "SSG 08 | Mindpill", rarity: "rarity-red" }, { name: "P90 | Chromatic", rarity: "rarity-red" },
@@ -665,33 +671,44 @@
                 { name: "M4A1-S | Retro", rarity: "rarity-red" }, { name: "M4A4 | B-Hop", rarity: "rarity-red" },
                 { name: "M4A1-S | Orchids", rarity: "rarity-red" }, { name: "M4A1-S | Phaseprint", rarity: "rarity-red" },
                 { name: "Galil AR | Irid", rarity: "rarity-red" }, { name: "AWP | Bird Hunt", rarity: "rarity-red" },
-                { name: "FAMAS | Mind", rarity: "rarity-red" }, { name: "AK-47 | Luminax", rarity: "rarity-red" }
+                { name: "FAMAS | Mind", rarity: "rarity-red" }, { name: "AK-47 | Luminax", rarity: "rarity-red" },
+                { name: "AK-47 | Red Baron", rarity: "rarity-red" }
             ],
             gold: [
                 { name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }
             ]
         };
 
-        // 玩家限制真實提取庫
+        // 玩家真實限制提取庫
         const PLAYER_OWNED_POOL = {
             blue: [
-                "AUG | Overgrowth", "Desert Eagle | Turbo", "Desert Eagle | Permafrost", "Dual Berettas | Vernal", 
-                "Five-SeveN | Icecap", "Glock-18 | Broken TV", "P250 | B-250", "P250 | Glacial", "P250 | Pulse", 
-                "Tec-9 | Monarch", "Tec-9 | Striker", "MAC-10 | Daisies", "MAC-10 | Ivory", "MP9 | Canyon", 
-                "P90 | Big Cat", "P90 | Database", "MAG-7 | Vision 7", "Negev | Noctiflora", "Negev | Rotary Power", 
-                "Negev | The Jungle", "Nova | Flutter", "Nova | Half-One", "Nova | Heat", "XM1014 | Abstract", 
-                "XM1014 | Koi", "AUG | Predator", "FAMAS | Arctic Camo", "Galil AR | Irradiated", "SSG 08 | Desert Strike"
+                "FAMAS | Arctic Camo", "SSG 08 | Desert Strike", "Nova | Heat", "P90 | BigCat", 
+                "Galil AR | Irradiated", "Nova | Flutter", "Negev | Noctiflora", "Tec-9 | Monarch", 
+                "XM1014 | Lilies", "AUG | Overgrowth", "Negev | The Jungle", "Nova | Slime", 
+                "P250 | Frutiger Aero", "USP-S | SpecOps", "Desert Eagle | Turbo", "XM1014 | Koi", 
+                "MP9 | Canyon", "Glock-18 | Broken TV", "P90 | Database", "XM1014 | Splatter", 
+                "AUG | Predator", "MAG-7 | Vision", "Nova | Half-One", "Negev | Rotary Power"
             ],
             purple: [
-                "Desert Eagle | Paranoia", "Dual Berettas | Tension", "Five-SeveN | Control", "USP-S | Heated", 
-                "M4A1-S | BlackOps", "FAMAS | Medic", "Galil AR | Monochrome"
+                "FAMAS | Medic", "MAC-10 | Ivory", "MAC-10 | Dahila", "SSG 08 | Labyrinth", 
+                "Dual Berettas | Vernal", "AUG | Tension", "Sawed-Off | Panthers", "Five-SeveN | Control", 
+                "FAMAS | Wallpaper", "R8 Revolver | Bloody", "Galil AR | Feral", "USP-S | Heated", 
+                "M4A1-S | BlackOps", "AK-47 | Uniki", "MP9 | Paranoia", "Tec-9 | Vice", 
+                "Tec-9 | Striker", "P250 | Pulse", "AUG | Hot Rod", "P250 | X-250", 
+                "Tec-9 | Timeless", "Dual Berettas | Tension", "Dual Berettas | Gilded", "Desert Eagle | Paranoia"
             ],
             pink: [
-                "Desert Eagle | Mercy", "Glock-18 | Fuji", "P250 | Mindspill", "XM1014 | Lilies", "AWP | Typhon", 
-                "M4A4 | B-Hop", "M4A1-S | Retro", "SSG 08 | Labyrinth", "SG 553 | Dynasty", "SG 553 | Frostline"
+                "P250 | Zen", "SG 553 | Dynasty", "XM1014 | Office", "Five-SeveN | X-Ray", 
+                "P250 | Mindspill", "USP-S | Ajax", "P90 | Synthwave", "Desert Eagle | Circuit", 
+                "AWP | Railgun", "MP9 | Choke Oil", "MAC-10 | Nailgun", "Desert Eagle | Velocity", 
+                "AWP | Typhon", "MP9 | Graffiti", "Sawed-Off | Improvised", "Dual Berettas | Inked", 
+                "Zeus x27 | Overcharge", "Glock-18 | Fade", "Desert Eagle | Mercy", "Glock-18 | Fuji", 
+                "M4A4 | BubblePop", "Galil AR | Monochrome"
             ],
             red: [
-                "AK-47 | PinPoint", "AK-47 | Red Baron", "AUG | Hot Rod", "Galil AR | Irid"
+                "SSG 08 | Mindpill", "P90 | Chromatic", "SSG 08 | Onyx", "AK-47 | Sakura", 
+                "M4A1-S | Retro", "M4A4 | B-Hop", "M4A1-S | Orchids", "M4A1-S | Phaseprint", 
+                "Galil AR | Irid", "AWP | Bird Hunt", "FAMAS | Mind", "AK-47 | Luminax", "AK-47 | Red Baron"
             ],
             gold: [
                 "★ Butterfly Knife | Naval"
@@ -700,7 +717,7 @@
 
         const MACHINES = {
             guns: { title: "精選槍械飾品機台", cost: 2, isCustom: false },
-            pink_purple: { title: "🌸 猛藍粉紫刀槍", cost: 4, isCustom: false }, // 改名並且改成 4 金幣 ($4)
+            pink_purple: { title: "🌸 猛藍粉紫刀槍", cost: 4, isCustom: false }, 
             swords: { title: "⚔️ 戰術關刀神兵機台", cost: 2, isCustom: true },
             karambits: { title: "😈 惡魔爪子神刀神機台", cost: 10, isCustom: false }
         };
@@ -714,7 +731,6 @@
             document.getElementById('balance-val').innerText = balance + " 金幣";
 
             if (currentMachine === 'pink_purple') {
-                // 🌸 猛藍粉紫獨立保底顯示邏輯 (20次必出粉)
                 let barProgress = pinkMachineSpins % 20;
                 if (barProgress === 0 && pinkMachineSpins > 0) barProgress = 20;
                 
@@ -723,7 +739,6 @@
                 document.getElementById('gold-spend-status').innerText = `*本機台累計總抽數: ${pinkMachineSpins} 次 (全面剔除紅、黃品種)`;
                 document.getElementById('pity-bar-fill').style.width = (barProgress / 20 * 100) + '%';
             } else {
-                // 基礎常規大機台顯示邏輯
                 document.getElementById('pity-title-text').innerText = "🔴 全機台硬性保底計數器";
                 document.getElementById('pity-percent-text').innerText = `已抽次數: ${totalSpins} 次`;
                 document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出 ★ Butterfly Knife | Naval)`;
@@ -749,7 +764,6 @@
             const m = MACHINES[type];
             document.getElementById('machine-title').innerText = m.title;
 
-            // 動態變更按鈕上的價格標記文字
             document.getElementById('spin-btn-1').innerText = `單抽 ($${m.cost})`;
             document.getElementById('spin-btn-3').innerText = `三連抽 ($${m.cost * 3})`;
             document.getElementById('spin-btn-5').innerText = `五連抽 ($${m.cost * 5})`;
@@ -846,7 +860,6 @@
             document.getElementById('live-cost-status').innerText = `當前單抽價格: ${currentSingleCost} 金幣`;
             document.getElementById('machine-cost-desc').innerText = `單次抽獎：${currentSingleCost} 金幣`;
             
-            // 同步按鈕自定義字樣
             document.getElementById('spin-btn-1').innerText = `單抽 ($${currentSingleCost})`;
             document.getElementById('spin-btn-3').innerText = `三連抽 ($${currentSingleCost * 3})`;
             document.getElementById('spin-btn-5').innerText = `五連抽 ($${currentSingleCost * 5})`;
@@ -866,18 +879,15 @@
             }
         }
 
-        // 完美概率顯示：轉盤背景干擾格渲染器
         function getFairVisualSkin() {
             let r = Math.random() * 100;
             let targetRarity = 'blue';
 
             if (currentMachine === 'pink_purple') {
-                // 🌸 猛藍粉紫機台：全面剔除紅、黃（乾淨的 40%藍、35%紫、25%粉混合顯示）
                 if (r < 25.0) targetRarity = 'pink';
                 else if (r < 60.0) targetRarity = 'purple';
                 else targetRarity = 'blue';
             } else {
-                // 普通機台原本的渲染概率
                 if (r < 10.0) targetRarity = 'gold';
                 else if (r < 20.0) targetRarity = 'red';
                 else if (r < 35.0) targetRarity = 'pink';
@@ -907,16 +917,12 @@
             return card;
         }
 
-        // 🤫 後台絕對控制引擎
         function calculatePityWin() {
             let selectedRarity = 'blue';
 
-            // ---------------- 分支 A：猛藍粉紫專屬獨立保底控制 ----------------
             if (currentMachine === 'pink_purple') {
-                // 獨立累加該機台的有效計數
                 pinkMachineSpins++;
 
-                // 粉紅色保底判斷：第 14, 30 次；此後每 20 抽觸發一次
                 let triggerPink = false;
                 if (pinkMachineSpins === 14 || pinkMachineSpins === 30) {
                     triggerPink = true;
@@ -926,7 +932,6 @@
                     }
                 }
 
-                // 紫色保底判斷：第 2, 9, 19, 25 次；此後每 10 抽觸發一次
                 let triggerPurple = false;
                 if (pinkMachineSpins === 2 || pinkMachineSpins === 9 || pinkMachineSpins === 19 || pinkMachineSpins === 25) {
                     triggerPurple = true;
@@ -947,18 +952,15 @@
                 return pickFromPlayerOwned(selectedRarity);
             }
 
-            // ---------------- 分支 B：其餘常規大機台保底控制 ----------------
             totalSpins++;
             totalGoldSpent += currentSingleCost;
 
-            // 金色保底
             if (totalGoldSpent >= 800) {
                 selectedRarity = 'gold';
                 totalGoldSpent -= 800;
                 return pickFromPlayerOwned(selectedRarity);
             }
 
-            // 常規粉色保底
             let triggerPinkStandard = false;
             if (totalSpins === 14 || totalSpins === 30) {
                 triggerPinkStandard = true;
@@ -966,7 +968,6 @@
                 triggerPinkStandard = true;
             }
 
-            // 常規紫色保底
             let triggerPurpleStandard = false;
             if (totalSpins === 2 || totalSpins === 9 || totalSpins === 19 || totalSpins === 25) {
                 triggerPurpleStandard = true;
@@ -993,7 +994,6 @@
         function pickFromPlayerOwned(rarity) {
             const m = MACHINES[currentMachine];
             
-            // 自選機台提取邏輯
             if (m.isCustom) {
                 let pool = swordsSelectedPool[rarity];
                 if (!pool || pool.length === 0) {
@@ -1003,7 +1003,6 @@
                 const name = pool[Math.floor(Math.random() * pool.length)];
                 return { name: name, rarity: `rarity-${rarity}` };
             } else {
-                // 普通或專屬機台提取邏輯
                 let pool = PLAYER_OWNED_POOL[rarity];
                 if (!pool || pool.length === 0) {
                     pool = PLAYER_OWNED_POOL.blue;
@@ -1052,7 +1051,7 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            const winIndex = 25; // 絕對對齊中心之中獎格位置
+            const winIndex = 25; 
             const finalShowSkin = rollResults[rollResults.length - 1];
 
             for(let i = 0; i < 38; i++) {
@@ -1063,14 +1062,13 @@
                 }
             }
 
-            // 🎯 指針對齊機制完美計算
             setTimeout(() => {
                 const cards = track.querySelectorAll('.skin-card');
                 const targetCard = cards[winIndex];
                 const viewport = document.querySelector('.roulette-viewport');
                 
                 if (targetCard && viewport) {
-                    const cardWidth = targetCard.offsetWidth + 4; // 120px + 左右各 2px margin
+                    const cardWidth = targetCard.offsetWidth + 4; 
                     const viewportWidth = viewport.offsetWidth;
                     const targetOffset = (winIndex * cardWidth) + (cardWidth / 2) - (viewportWidth / 2);
                     
@@ -1122,7 +1120,6 @@
             const container = document.getElementById('fullscreen-reward-container');
             container.innerHTML = '';
 
-            // 如果是在猛藍粉紫抽出的，彈出層標題改為粉色調
             if (currentMachine === 'pink_purple') {
                 document.getElementById('reward-title-main').style.color = "var(--pink)";
             } else {
@@ -1148,7 +1145,6 @@
         function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
         function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
 
-        // 初始化加載
         initSwordsConfigPanel();
         switchMachine('guns');
     </script>

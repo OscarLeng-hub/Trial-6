@@ -620,7 +620,7 @@
 
         // 猛男機專屬獨立抽數計數器
         let pinkPurpleMachineSpins = parseInt(localStorage.getItem('cs_m2_spins')) || 0;
-        let pinkPurplePurpleCount = parseInt(localStorage.getItem('cs_m2_p_count')) || 0; // 已抽出的紫色次數
+        let pinkPurplePurpleCount = parseInt(localStorage.getItem('cs_m2_p_count')) || 0;
 
         const PURPLE_LOOP = [10, 20];
         const PINK_LOOP = [20, 40];
@@ -630,70 +630,117 @@
         let currentSingleCost = 2; 
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
 
+        // 📋 依照使用者提供的分類與除錯指示調整後的標準完整庫存池（只會從這裡面抽出）
+        const MASTER_OWNED_POOL = {
+            blue: [
+                { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
+                { name: "SSG 08 | Desert Strike", rarity: "rarity-blue" },
+                { name: "Nova | Heat", rarity: "rarity-blue" },
+                { name: "P90 | Big Cat", rarity: "rarity-blue" },
+                { name: "Galil AR | Irradiated", rarity: "rarity-blue" },
+                { name: "Nova | Flutter", rarity: "rarity-blue" },
+                { name: "Negev | Noctiflora", rarity: "rarity-blue" },
+                { name: "Tec-9 | Monarch", rarity: "rarity-blue" },
+                { name: "XM1014 | Lilies", rarity: "rarity-blue" },
+                { name: "AUG | Overgrowth", rarity: "rarity-blue" },
+                { name: "Negev | The Jungle", rarity: "rarity-blue" },
+                { name: "Nova | Slime", rarity: "rarity-blue" },
+                { name: "P250 | Frutiger Aero", rarity: "rarity-blue" },
+                { name: "USP-S | SpecOps", rarity: "rarity-blue" },
+                { name: "Desert Eagle | Turbo", rarity: "rarity-blue" },
+                { name: "XM1014 | Koi", rarity: "rarity-blue" },
+                { name: "MP9 | Canyon", rarity: "rarity-blue" },
+                { name: "Glock-18 | Broken TV", rarity: "rarity-blue" },
+                { name: "P90 | Database", rarity: "rarity-blue" },
+                { name: "AK-47 | Red Baron", rarity: "rarity-blue" },
+                { name: "XM1014 | Splatter", rarity: "rarity-blue" },
+                { name: "AUG | Predator", rarity: "rarity-blue" },
+                { name: "MAG-7 | Vision 7", rarity: "rarity-blue" },
+                { name: "Nova | Half-One", rarity: "rarity-blue" },
+                { name: "Negev | Rotary Power", rarity: "rarity-blue" },
+                { name: "Desert Eagle | Permafrost", rarity: "rarity-blue" },
+                { name: "Dual Berettas | Choking Hazard", rarity: "rarity-blue" },
+                { name: "P250 | B-250", rarity: "rarity-blue" },
+                { name: "P250 | Glacial", rarity: "rarity-blue" },
+                { name: "SG 553 | Frostline", rarity: "rarity-blue" }
+            ],
+            purple: [
+                { name: "FAMAS | Medic", rarity: "rarity-purple" },
+                { name: "MAC-10 | Ivory", rarity: "rarity-purple" },
+                { name: "MAC-10 | Dahlia", rarity: "rarity-purple" },
+                { name: "SSG 08 | Labyrinth", rarity: "rarity-purple" },
+                { name: "Dual Berettas | Vernal", rarity: "rarity-purple" },
+                { name: "AUG | Tension", rarity: "rarity-purple" },
+                { name: "Sawed-Off | Panthers", rarity: "rarity-purple" },
+                { name: "Five-SeveN | Control", rarity: "rarity-purple" },
+                { name: "FAMAS | Wallpaper", rarity: "rarity-purple" },
+                { name: "R8 Revolver | Bloody", rarity: "rarity-purple" },
+                { name: "Galil AR | Feral", rarity: "rarity-purple" },
+                { name: "USP-S | Heated", rarity: "rarity-purple" },
+                { name: "M4A1-S | BlackOps", rarity: "rarity-purple" },
+                { name: "AK-47 | Uniki", rarity: "rarity-purple" },
+                { name: "MP9 | Paranoia", rarity: "rarity-purple" },
+                { name: "Tec-9 | Vice", rarity: "rarity-purple" },
+                { name: "Tec-9 | Striker", rarity: "rarity-purple" },
+                { name: "P250 | Pulse", rarity: "rarity-purple" },
+                { name: "AUG | Hot Rod", rarity: "rarity-purple" },
+                { name: "P250 | X-250", rarity: "rarity-purple" },
+                { name: "Tec-9 | Timeless", rarity: "rarity-purple" },
+                { name: "MAC-10 | Nailgun", rarity: "rarity-purple" },
+                { name: "Desert Eagle | Velocity", rarity: "rarity-purple" },
+                { name: "MP9 | Graffiti", rarity: "rarity-purple" },
+                { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" },
+                { name: "Dual Berettas | Tension", rarity: "rarity-purple" },
+                { name: "Dual Berettas | Gilded", rarity: "rarity-purple" },
+                { name: "Five-SeveN | Icecap", rarity: "rarity-purple" },
+                { name: "MAC-10 | Daisies", rarity: "rarity-purple" }
+            ],
+            pink: [
+                { name: "P250 | Zen", rarity: "rarity-pink" },
+                { name: "SG 553 | Dynasty", rarity: "rarity-pink" },
+                { name: "XM1014 | Office", rarity: "rarity-pink" },
+                { name: "Five-SeveN | X-Ray", rarity: "rarity-pink" },
+                { name: "P250 | Mindspill", rarity: "rarity-pink" },
+                { name: "USP-S | Ajax", rarity: "rarity-pink" },
+                { name: "P90 | Synthwave", rarity: "rarity-pink" },
+                { name: "Desert Eagle | Circuit", rarity: "rarity-pink" },
+                { name: "AWP | Railgun", rarity: "rarity-pink" },
+                { name: "MP9 | Choke Oil", rarity: "rarity-pink" },
+                { name: "AWP | Typhon", rarity: "rarity-pink" },
+                { name: "Sawed-Off | Improvised", rarity: "rarity-pink" },
+                { name: "Dual Berettas | Inked", rarity: "rarity-pink" },
+                { name: "Zeus x27 | Overcharge", rarity: "rarity-pink" },
+                { name: "Glock-18 | Fade", rarity: "rarity-pink" },
+                { name: "Desert Eagle | Mercy", rarity: "rarity-pink" },
+                { name: "Glock-18 | Fuji", rarity: "rarity-pink" },
+                { name: "M4A4 | BubblePop", rarity: "rarity-pink" },
+                { name: "Galil AR | Monochrome", rarity: "rarity-pink" }
+            ],
+            red: [
+                { name: "SSG 08 | Mindpill", rarity: "rarity-red" },
+                { name: "P90 | Chromatic", rarity: "rarity-red" },
+                { name: "SSG 08 | Onyx", rarity: "rarity-red" },
+                { name: "AK-47 | Sakura", rarity: "rarity-red" },
+                { name: "M4A1-S | Retro", rarity: "rarity-red" },
+                { name: "M4A4 | B-Hop", rarity: "rarity-red" },
+                { name: "M4A1-S | Orchids", rarity: "rarity-red" },
+                { name: "M4A1-S | Phaseprint", rarity: "rarity-red" },
+                { name: "Galil AR | Irid", rarity: "rarity-red" },
+                { name: "AWP | Bird Hunt", rarity: "rarity-red" },
+                { name: "FAMAS | Mind", rarity: "rarity-red" },
+                { name: "AK-47 | Luminax", rarity: "rarity-red" },
+                { name: "AK-47 | PinPoint", rarity: "rarity-red" }
+            ],
+            gold: [
+                { name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }
+            ]
+        };
+
         const MACHINES = {
-            guns: {
-                title: "精選槍械飾品機台", cost: 2, isCustom: false,
-                grandPrizes: [{ name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }],
-                redPrizes: [
-                    { name: "AK-47 | Midas", rarity: "rarity-red" }, { name: "AK-47 | PinPoint", rarity: "rarity-red" },
-                    { name: "AK-47 | Red Baron", rarity: "rarity-red" }, { name: "M4A1-S | BlackOps", rarity: "rarity-red" },
-                    { name: "AWP | High Octane", rarity: "rarity-red" }, { name: "Desert Eagle | High Octane", rarity: "rarity-red" },
-                    { name: "Tec-9 | Medal", rarity: "rarity-red" }
-                ],
-                pinkPrizes: [
-                    { name: "M4A1-S | Retro", rarity: "rarity-pink" }, { name: "M4A4 | B-Hop", rarity: "rarity-pink" },
-                    { name: "Glock-18 | Fuji", rarity: "rarity-pink" }, { name: "AWP | Typhon", rarity: "rarity-pink" },
-                    { name: "Desert Eagle | Mercy", rarity: "rarity-pink" }, { name: "XM1014 | Lilies", rarity: "rarity-pink" },
-                    { name: "SSG 08 | Labyrinth", rarity: "rarity-pink" }
-                ],
-                purplePrizes: [
-                    { name: "Glock-18 | Broken TV", rarity: "rarity-purple" }, { name: "Five-SeveN | Control", rarity: "rarity-purple" },
-                    { name: "P250 | B-250", rarity: "rarity-purple" }, { name: "P250 | Mindspill", rarity: "rarity-purple" },
-                    { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" }, { name: "Dual Berettas | Choking Hazard", rarity: "rarity-purple" },
-                    { name: "Dual Berettas | Tension", rarity: "rarity-purple" }, { name: "AUG | Hot Rod", rarity: "rarity-purple" },
-                    { name: "AUG | Overgrowth", rarity: "rarity-purple" }, { name: "Galil AR | Monochrome", rarity: "rarity-purple" },
-                    { name: "P90 | Database", rarity: "rarity-purple" }, { name: "XM1014 | Koi", rarity: "rarity-purple" }
-                ],
-                bluePrizes: [
-                    { name: "Glock-18 | PinPoint", rarity: "rarity-blue" }, { name: "Five-SeveN | Icecap", rarity: "rarity-blue" },
-                    { name: "P250 | Glacial", rarity: "rarity-blue" }, { name: "P250 | Pulse", rarity: "rarity-blue" },
-                    { name: "Desert Eagle | Permafrost", rarity: "rarity-blue" }, { name: "Desert Eagle | Turbo", rarity: "rarity-blue" },
-                    { name: "Dual Berettas | Vernal", rarity: "rarity-blue" }, { name: "Tec-9 | Monarch", rarity: "rarity-blue" },
-                    { name: "Tec-9 | Striker", rarity: "rarity-blue" }, { name: "USP-S | Heated", rarity: "rarity-blue" },
-                    { name: "USP-S | Tekko", rarity: "rarity-blue" }, { name: "MAC-10 | Daisies", rarity: "rarity-blue" },
-                    { name: "MAC-10 | Ivory", rarity: "rarity-blue" }, { name: "MP9 | Canyon", rarity: "rarity-blue" },
-                    { name: "P90 | Big Cat", rarity: "rarity-blue" }, { name: "P90 | PinPoint", rarity: "rarity-blue" },
-                    { name: "MAG-7 | Vision7", rarity: "rarity-blue" }, { name: "Negev | Noctiflora", rarity: "rarity-blue" },
-                    { name: "Negev | Rotary Power", rarity: "rarity-blue" }, { name: "Negev | The Jungle", rarity: "rarity-blue" },
-                    { name: "Nova | Arctic Stripe", rarity: "rarity-blue" }, { name: "Nova | Flutter", rarity: "rarity-blue" },
-                    { name: "Nova | Half-One", rarity: "rarity-blue" }, { name: "Nova | Heat", rarity: "rarity-blue" },
-                    { name: "XM1014 | Abstract", rarity: "rarity-blue" }, { name: "AUG | Predator", rarity: "rarity-blue" },
-                    { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" }, { name: "FAMAS | Medic", rarity: "rarity-blue" },
-                    { name: "Galil AR | Irid", rarity: "rarity-blue" }, { name: "Galil AR | Irradiated", rarity: "rarity-blue" },
-                    { name: "SG 553 | Dynasty", rarity: "rarity-blue" }, { name: "SG 553 | Frostline", rarity: "rarity-blue" },
-                    { name: "SSG 08 | Desert Strike", rarity: "rarity-blue" }
-                ]
-            },
-            pink_purple: {
-                title: "💪猛男粉紫刀槍機台", cost: 4, isCustom: false,
-                grandPrizes: [{ name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }], 
-                redPrizes: [{ name: "AK-47 | Red Baron", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "Glock-18 | Fuji", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "XM1014 | Koi", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "P250 | Pulse", rarity: "rarity-blue" }]
-            },
-            swords: {
-                title: "⚔️ 戰術關刀神兵機台", cost: 2, isCustom: true, 
-                grandPrizes: [], redPrizes: [], pinkPrizes: [], purplePrizes: [], bluePrizes: []
-            },
-            karambits: {
-                title: "😈 惡魔爪子神刀機台", cost: 10, isCustom: false,
-                grandPrizes: [{ name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }],
-                redPrizes: [{ name: "AK-47 | PinPoint", rarity: "rarity-red" }],
-                pinkPrizes: [{ name: "M4A1-S | Retro", rarity: "rarity-pink" }],
-                purplePrizes: [{ name: "P90 | Database", rarity: "rarity-purple" }],
-                bluePrizes: [{ name: "Nova | Heat", rarity: "rarity-blue" }]
-            }
+            guns: { title: "精選槍械飾品機台", cost: 2, isCustom: false },
+            pink_purple: { title: "💪猛男粉紫刀槍機台", cost: 4, isCustom: false },
+            swords: { title: "⚔️ 戰術關刀神兵機台", cost: 2, isCustom: true },
+            karambits: { title: "😈 惡魔爪子神刀機台", cost: 10, isCustom: false }
         };
 
         let swordsSelectedPool = { blue: [], purple: [], pink: [], red: [], gold: [] };
@@ -702,7 +749,6 @@
             document.getElementById('balance-val').innerText = balance + " 金幣";
 
             if (currentMachine === 'pink_purple') {
-                // 📂 猛男粉紫刀槍專用：按20抽為一輪重置保底條與文字
                 let displaySpins = pinkPurpleMachineSpins % 20;
                 document.getElementById('pity-percent-text').innerText = `已抽次數: ${displaySpins} 次`;
                 document.getElementById('gold-spend-status').innerText = `*本機台保底：20次必出粉`;
@@ -710,7 +756,6 @@
                 document.getElementById('pity-bar-fill').style.width = progressPercent + '%';
                 document.getElementById('pity-title-text').innerText = `💗 猛男機硬性粉紅保底計數器`;
             } else {
-                // 其他常規機台保持原樣
                 document.getElementById('pity-percent-text').innerText = `已抽次數: ${totalSpins} 次`;
                 document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出 Butterfly Knife | Naval)`;
                 const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
@@ -729,7 +774,6 @@
             localStorage.setItem('cs_cnt_pink', pinkCounter);
             localStorage.setItem('cs_cnt_red', redCounter);
             
-            // 儲存猛男機狀態
             localStorage.setItem('cs_m2_spins', pinkPurpleMachineSpins);
             localStorage.setItem('cs_m2_p_count', pinkPurplePurpleCount);
 
@@ -760,10 +804,8 @@
         }
 
         function initSwordsConfigPanel() {
-            const source = MACHINES.guns; 
-            
-            swordsSelectedPool.blue = source.bluePrizes.slice(0, 10).map(x => x.name);
-            swordsSelectedPool.purple = source.purplePrizes.slice(0, 3).map(x => x.name);
+            swordsSelectedPool.blue = MASTER_OWNED_POOL.blue.slice(0, 10).map(x => x.name);
+            swordsSelectedPool.purple = MASTER_OWNED_POOL.purple.slice(0, 3).map(x => x.name);
             swordsSelectedPool.pink = [];
             swordsSelectedPool.red = [];
             swordsSelectedPool.gold = [];
@@ -773,12 +815,7 @@
                 const container = document.getElementById(`list-${rarity}`);
                 container.innerHTML = '';
                 
-                let listData = [];
-                if (rarity === 'gold') listData = source.grandPrizes;
-                if (rarity === 'red') listData = source.redPrizes;
-                if (rarity === 'pink') listData = source.pinkPrizes;
-                if (rarity === 'purple') listData = source.purplePrizes;
-                if (rarity === 'blue') listData = source.bluePrizes;
+                let listData = MASTER_OWNED_POOL[rarity];
 
                 listData.forEach(item => {
                     const isChecked = swordsSelectedPool[rarity].includes(item.name);
@@ -859,39 +896,22 @@
             }
         }
 
+        // 🎲 輪盤格真實概率生成外觀（藍40%, 紫25%, 粉15%, 紅10%, 金10%）但「看得到抽不到」
         function getFairVisualSkin() {
-            const m = MACHINES[currentMachine];
             let r = Math.random() * 100;
             let targetRarity = 'blue';
 
-            if (r < 0.5) targetRarity = 'gold';
-            else if (r < 3.5) targetRarity = 'red';
-            else if (r < 12.0) targetRarity = 'pink';
-            else if (r < 30.0) targetRarity = 'purple';
-            else targetRarity = 'blue';
+            if (r < 10.0) targetRarity = 'gold';       // 10%
+            else if (r < 20.0) targetRarity = 'red';   // 10%
+            else if (r < 35.0) targetRarity = 'pink';  // 15%
+            else if (r < 60.0) targetRarity = 'purple';// 25%
+            else targetRarity = 'blue';                // 40%
 
-            if (m.isCustom) {
-                let pool = swordsSelectedPool[targetRarity];
-                if (!pool || pool.length === 0) {
-                    pool = swordsSelectedPool.blue; 
-                    targetRarity = 'blue';
-                }
-                const name = pool[Math.floor(Math.random() * pool.length)];
-                return { name: name, rarity: `rarity-${targetRarity}` };
-            } else {
-                let pool = [];
-                if (targetRarity === 'gold') pool = m.grandPrizes;
-                else if (targetRarity === 'red') pool = m.redPrizes;
-                else if (targetRarity === 'pink') pool = m.pinkPrizes;
-                else if (targetRarity === 'purple') pool = m.purplePrizes;
-                else pool = m.bluePrizes;
-
-                if (!pool || pool.length === 0) {
-                    pool = m.bluePrizes;
-                }
-                const skin = pool[Math.floor(Math.random() * pool.length)];
-                return { name: skin.name, rarity: skin.rarity };
-            }
+            let pool = MASTER_OWNED_POOL[targetRarity];
+            if (!pool || pool.length === 0) pool = MASTER_OWNED_POOL.blue;
+            
+            const skin = pool[Math.floor(Math.random() * pool.length)];
+            return { name: skin.name, rarity: skin.rarity };
         }
 
         function setupTrack() {
@@ -911,6 +931,21 @@
             return card;
         }
 
+        // 🎯 輔助函式：從玩家擁有的指定庫存池抽取特定稀有度的武器
+        function getRandomOwnedSkinOfRarity(rarity) {
+            if (MACHINES[currentMachine].isCustom) {
+                let pool = swordsSelectedPool[rarity];
+                if (!pool || pool.length === 0) pool = swordsSelectedPool.blue;
+                const name = pool[Math.floor(Math.random() * pool.length)];
+                return { name: name, rarity: `rarity-${rarity}` };
+            } else {
+                let pool = MASTER_OWNED_POOL[rarity];
+                if (!pool || pool.length === 0) pool = MASTER_OWNED_POOL.blue;
+                const skin = pool[Math.floor(Math.random() * pool.length)];
+                return { name: skin.name, rarity: skin.rarity };
+            }
+        }
+
         let isSpinning = false;
         
         function startSpin(multiCount = 1) {
@@ -925,7 +960,6 @@
 
             balance -= totalCost;
             let rollResults = [];
-            const m = MACHINES[currentMachine];
 
             for (let k = 0; k < multiCount; k++) {
                 totalSpins++;
@@ -933,106 +967,84 @@
 
                 let winSkin = null;
 
-                // 🌟 【💪猛男粉紫刀槍機台】專屬硬性控製計數保底邏輯
+                // 🌟 【💪猛男粉紫刀槍機台】專屬硬性控制保底邏輯
                 if (currentMachine === 'pink_purple') {
                     pinkPurpleMachineSpins++; 
                     let isTriggered = false;
 
                     // 1. 粉紅色保底邏輯檢測
                     if (pinkPurpleMachineSpins === 14) {
-                        winSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
+                        winSkin = getRandomOwnedSkinOfRarity('pink');
                         isTriggered = true;
                     } else if (pinkPurpleMachineSpins === 30) {
-                        winSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
+                        winSkin = getRandomOwnedSkinOfRarity('pink');
                         isTriggered = true;
                     } else if (pinkPurpleMachineSpins > 30) {
-                        // 從第31抽開始，以30抽為基準點，每滿20抽保底一次粉紅 (即50, 70, 90...)
                         if ((pinkPurpleMachineSpins - 30) % 20 === 0) {
-                            winSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
+                            winSkin = getRandomOwnedSkinOfRarity('pink');
                             isTriggered = true;
                         }
                     }
 
-                    // 2. 紫色保底邏輯檢測 (若未出粉紅，則檢測紫)
+                    // 2. 紫色保底邏輯檢測
                     if (!isTriggered) {
                         if (pinkPurpleMachineSpins === 2) {
-                            winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+                            winSkin = getRandomOwnedSkinOfRarity('purple');
                             pinkPurplePurpleCount = 1;
                             isTriggered = true;
                         } else if (pinkPurpleMachineSpins === 9) {
-                            winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+                            winSkin = getRandomOwnedSkinOfRarity('purple');
                             pinkPurplePurpleCount = 2;
                             isTriggered = true;
                         } else if (pinkPurpleMachineSpins === 19) {
-                            winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+                            winSkin = getRandomOwnedSkinOfRarity('purple');
                             pinkPurplePurpleCount = 3;
                             isTriggered = true;
                         } else if (pinkPurpleMachineSpins === 25) {
-                            winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+                            winSkin = getRandomOwnedSkinOfRarity('purple');
                             pinkPurplePurpleCount = 4;
                             isTriggered = true;
                         } else if (pinkPurpleMachineSpins >= 26) {
-                            // 第5次紫色開始：從第26抽算起，每隔10次觸發一次常規保底 (即 35, 45, 55...)
                             if ((pinkPurpleMachineSpins - 25) % 10 === 0) {
-                                winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+                                winSkin = getRandomOwnedSkinOfRarity('purple');
                                 pinkPurplePurpleCount++;
                                 isTriggered = true;
                             }
                         }
                     }
 
-                    // 3. 基礎保底獎勵：若非保底抽數，在猛男機中平時絕對不落粉和紫，100%出藍色基礎裝
+                    // 3. 基礎保底獎勵：若非指定保底抽數，100%出玩家已有的藍色武器
                     if (!isTriggered) {
-                        winSkin = m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
+                        winSkin = getRandomOwnedSkinOfRarity('blue');
                     }
 
                 } else {
-                    // 🌀 常規機台硬性計數保底邏輯保持原樣
+                    // 🌀 常規機台硬性計數保底邏輯
                     purpleCounter++;
                     pinkCounter++;
                     redCounter++;
 
                     if (totalGoldSpent >= 800) {
-                        if (m.isCustom) {
-                            winSkin = { name: swordsSelectedPool.gold.length > 0 ? swordsSelectedPool.gold[Math.floor(Math.random() * swordsSelectedPool.gold.length)] : swordsSelectedPool.blue[0], rarity: swordsSelectedPool.gold.length > 0 ? 'rarity-gold' : 'rarity-blue' };
-                        } else {
-                            winSkin = m.grandPrizes[0];
-                        }
+                        winSkin = getRandomOwnedSkinOfRarity('gold');
                         totalGoldSpent -= 800;
                     }
                     else if (redCounter >= RED_LOOP[redIndex]) {
-                        if (m.isCustom) {
-                            winSkin = { name: swordsSelectedPool.red.length > 0 ? swordsSelectedPool.red[Math.floor(Math.random() * swordsSelectedPool.red.length)] : swordsSelectedPool.blue[0], rarity: swordsSelectedPool.red.length > 0 ? 'rarity-red' : 'rarity-blue' };
-                        } else {
-                            winSkin = m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
-                        }
+                        winSkin = getRandomOwnedSkinOfRarity('red');
                         redCounter = 0; 
                         redIndex = (redIndex + 1) % RED_LOOP.length;
                     }
                     else if (pinkCounter >= PINK_LOOP[pinkIndex]) {
-                        if (m.isCustom) {
-                            winSkin = { name: swordsSelectedPool.pink.length > 0 ? swordsSelectedPool.pink[Math.floor(Math.random() * swordsSelectedPool.pink.length)] : swordsSelectedPool.blue[0], rarity: swordsSelectedPool.pink.length > 0 ? 'rarity-pink' : 'rarity-blue' };
-                        } else {
-                            winSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
-                        }
+                        winSkin = getRandomOwnedSkinOfRarity('pink');
                         pinkCounter = 0;
                         pinkIndex = (pinkIndex + 1) % PINK_LOOP.length;
                     }
                     else if (purpleCounter >= PURPLE_LOOP[purpleIndex]) {
-                        if (m.isCustom) {
-                            winSkin = { name: swordsSelectedPool.purple[Math.floor(Math.random() * swordsSelectedPool.purple.length)], rarity: 'rarity-purple' };
-                        } else {
-                            winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
-                        }
+                        winSkin = getRandomOwnedSkinOfRarity('purple');
                         purpleCounter = 0;
                         purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length;
                     }
                     else {
-                        if (m.isCustom) {
-                            winSkin = { name: swordsSelectedPool.blue[Math.floor(Math.random() * swordsSelectedPool.blue.length)], rarity: 'rarity-blue' };
-                        } else {
-                            winSkin = m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
-                        }
+                        winSkin = getRandomOwnedSkinOfRarity('blue');
                     }
                 }
 
@@ -1059,10 +1071,11 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            const winIndex = 25;
+            // 🎯 指針與中獎格完全重合修正（不再發生往後挪一格的問題）
+            const winIndex = 25; 
             const finalShowSkin = rollResults[rollResults.length - 1];
 
-            for(let i = 0; i < 35; i++) {
+            for(let i = 0; i < 40; i++) {
                 if (i === winIndex) {
                     track.appendChild(createCard(finalShowSkin));
                 } else {
@@ -1072,6 +1085,7 @@
 
             setTimeout(() => {
                 track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
+                // 122px（120px卡片寬度 + 2px邊距）* 25格 = 3050px 偏移量，指針剛好精準落在中獎卡片中央
                 track.style.transform = 'translateX(-2600px)';
             }, 50);
 

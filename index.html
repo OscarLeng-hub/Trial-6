@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 歐皇神話盲盒 - 玩家自主配置至尊版</title>
+    <title>CS2 歐皇神話至尊盲盒 - 四池融合完美自選版</title>
     <style>
         :root {
             --primary: #ff4e50;
@@ -102,36 +102,38 @@
 
         .tab-container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
             margin-bottom: 20px;
         }
 
         .tab {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 12px;
+            padding: 10px 5px;
             text-align: center;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             transition: 0.3s;
-            font-size: 14px;
+            font-size: 11px;
+            white-space: nowrap;
         }
 
         .tab.active {
-            border-color: var(--gold);
-            background: linear-gradient(135deg, rgba(251, 192, 45, 0.15), rgba(20, 22, 29, 0.9));
-            color: var(--gold);
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(255, 78, 80, 0.2), rgba(20, 22, 29, 0.9));
+            color: var(--primary);
         }
 
-        /* 玩家自主配置面板 */
+        /* 自選配置面板 */
         .config-box {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
+            display: none; /* 預設隱藏，只有切換到關刀池時才顯示 */
         }
 
         .config-title {
@@ -177,11 +179,9 @@
             border-radius: 6px;
             font-size: 12px;
             cursor: pointer;
-            border: 1px solid transparent;
             user-select: none;
         }
 
-        .skin-option:hover { background: #20232e; }
         .skin-option input { margin-right: 8px; transform: scale(1.1); }
 
         .machine-box {
@@ -192,6 +192,38 @@
             text-align: center;
             margin-bottom: 25px;
             position: relative;
+        }
+
+        .pity-container {
+            background-color: #07080b;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 15px 0;
+            border: 1px solid #1f212a;
+        }
+
+        .pity-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .pity-bar-bg {
+            background-color: #222;
+            width: 100%;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .pity-bar-fill {
+            background: linear-gradient(90deg, var(--red), var(--primary));
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px var(--red);
         }
 
         .roulette-viewport {
@@ -332,16 +364,16 @@
 <body>
 
     <header>
-        <div class="logo">CS2 歐皇神話盲盒 - 玩家自選池</div>
+        <div class="logo">CS2 歐皇神話至尊盲盒</div>
         <div class="balance" id="balance-val">500 金幣</div>
     </header>
 
     <div class="container">
         <div class="notice-banner">
-            🛠️ <b>自定義獎池規則（玩家自行勾選配置）：</b><br>
-            1. 單抽起步價為 <b>$2 金幣</b>。你<b>必須且只能</b>挑選 <b>10個藍色</b> 以及 <b>3個紫色</b> 皮膚。<br>
-            2. 粉色、紅色、金色可以由玩家自由選擇放與不放。但只要放入，單抽價格會即時疊加：<br>
-            &nbsp;&nbsp;&nbsp;&nbsp;🔹 每放一個<b>粉紅色</b>：單抽價格 <b>+$5</b> &nbsp;&nbsp;|&nbsp;&nbsp; 🔴 每放一個<b>紅色</b>：單抽價格 <b>+$25</b> &nbsp;&nbsp;|&nbsp;&nbsp; 🟡 每放一個<b>金色</b>：單抽價格 <b>+$75</b>
+            ⚠️ <b>系統重要公告與服務條款：</b><br>
+            1. 本盲盒搭載真實隨機算法，抽中概率完全公開透明。<br>
+            2. <b>戰術關刀神兵獎池（可自選）：</b>玩家必須剛好配置10個藍色、3個紫色。每額外挑選一個粉色+$5，紅色+$25，金色+$75。<br>
+            3. 其他機台均為固定獎池模式，<b>不開放自選</b>。道具「只供提取，不設回收」。
         </div>
 
         <div class="cdk-section">
@@ -350,19 +382,21 @@
         </div>
 
         <div class="tab-container">
-            <div class="tab active" id="tab-swords" onclick="switchMachine('swords')">⚔️ 戰術關刀神兵獎池</div>
-            <div class="tab" id="tab-karambits" onclick="switchMachine('karambits')">😈 惡魔爪子神刀獎池</div>
+            <div class="tab" id="tab-guns" onclick="switchMachine('guns')">🔫 全系槍械神兵盛典</div>
+            <div class="tab" id="tab-pink_purple" onclick="switchMachine('pink_purple')">🌸 猛男粉紫槍械</div>
+            <div class="tab active" id="tab-swords" onclick="switchMachine('swords')">⚔️ 戰術關刀神兵</div>
+            <div class="tab" id="tab-karambits" onclick="switchMachine('karambits')">😈 惡魔爪子神刀</div>
         </div>
 
-        <div class="config-box">
+        <div class="config-box" id="custom-config-panel">
             <div class="config-title">
-                <span>⚙️ 請勾選你想放入獎池的槍械 / 飾品：</span>
+                <span>⚙️ 自選配置：「戰術關刀神兵」打勾選槍區：</span>
                 <span id="live-cost-status" style="color: var(--gold);">當前單抽價格: $2 金幣</span>
             </div>
 
             <div class="pool-group" style="border-left: 4px solid var(--blue);">
                 <div class="pool-group-header" style="color: var(--blue);">
-                    <span>🔹 藍色軍規飾品 (玩家必須剛好勾選 10 個)</span>
+                    <span>🔹 藍色軍規飾品 (必須正好勾選 10 個)</span>
                     <span id="count-blue">已選: 0 / 10</span>
                 </div>
                 <div class="skin-checkbox-list" id="list-blue"></div>
@@ -370,7 +404,7 @@
 
             <div class="pool-group" style="border-left: 4px solid var(--purple);">
                 <div class="pool-group-header" style="color: var(--purple);">
-                    <span>💜 紫色受限飾品 (玩家必須剛好勾選 3 個)</span>
+                    <span>💜 紫色受限飾品 (必須正好勾選 3 個)</span>
                     <span id="count-purple">已選: 0 / 3</span>
                 </div>
                 <div class="skin-checkbox-list" id="list-purple"></div>
@@ -378,7 +412,7 @@
 
             <div class="pool-group" style="border-left: 4px solid var(--pink);">
                 <div class="pool-group-header" style="color: var(--pink);">
-                    <span>💗 粉色保密飾品 (自由挑選放入，每件使單抽價格 +$5)</span>
+                    <span>💗 粉色保密飾品 (每件使單抽價格 +$5)</span>
                     <span id="count-pink">已選: 0 個</span>
                 </div>
                 <div class="skin-checkbox-list" id="list-pink"></div>
@@ -386,7 +420,7 @@
 
             <div class="pool-group" style="border-left: 4px solid var(--red);">
                 <div class="pool-group-header" style="color: var(--red);">
-                    <span>🔴 紅色隱秘飾品 (自由挑選放入，每件使單抽價格 +$25)</span>
+                    <span>🔴 紅色隱秘飾品 (每件使單抽價格 +$25)</span>
                     <span id="count-red">已選: 0 個</span>
                 </div>
                 <div class="skin-checkbox-list" id="list-red"></div>
@@ -394,7 +428,7 @@
 
             <div class="pool-group" style="border-left: 4px solid var(--gold);">
                 <div class="pool-group-header" style="color: var(--gold);">
-                    <span>🟡 金色罕見飾品 (自由挑選放入，每件使單抽價格 +$75)</span>
+                    <span>🟡 金色罕見飾品 (每件使單抽價格 +$75)</span>
                     <span id="count-gold">已選: 0 個</span>
                 </div>
                 <div class="skin-checkbox-list" id="list-gold"></div>
@@ -402,8 +436,21 @@
         </div>
 
         <div class="machine-box">
-            <h2 id="machine-title">戰術關刀神兵獎池</h2>
-            <p id="machine-cost-desc" style="color: var(--gold); font-weight: bold; margin-bottom: 15px;">單次抽獎：2 金幣</p>
+            <h2 id="machine-title">戰術關刀神兵</h2>
+            <p id="machine-cost-desc" style="color: var(--gold); font-weight: bold; margin-bottom: 10px;">單次抽獎：2 金幣</p>
+
+            <div class="pity-container">
+                <div class="pity-info">
+                    <span>🔴 全機台硬性保底計數器</span>
+                    <span style="color: var(--red); font-weight: bold;" id="pity-percent-text">總抽數: 0 次</span>
+                </div>
+                <div class="pity-bar-bg">
+                    <div class="pity-bar-fill" id="pity-bar-fill"></div>
+                </div>
+                <div style="font-size:11px; color:#fbc02d; text-align:left; margin-top:5px;" id="gold-spend-status">
+                    *累計已消耗金幣: 0 / 800 (達 800 金幣必出金刀)
+                </div>
+            </div>
 
             <div class="roulette-viewport">
                 <div class="pointer"></div>
@@ -432,168 +479,223 @@
     </div>
 
     <div class="fullscreen-modal" id="reward-fullscreen-modal">
-        <div class="reward-title">🔥 恭喜獲得以下自定義配置道具！</div>
+        <div class="reward-title">🔥 恭喜獲得道具！</div>
         <div class="reward-container" id="fullscreen-reward-container"></div>
         <button class="btn" style="padding: 15px 50px; font-size:18px;" onclick="closeFullscreenModal()">收下道具</button>
     </div>
 
     <script>
-        let balance = parseInt(localStorage.getItem('cs_custom_balance')) || 500;
-        let inventory = JSON.parse(localStorage.getItem('cs_custom_inventory')) || [];
+        let balance = parseInt(localStorage.getItem('cs_4pool_balance')) || 500;
+        let inventory = JSON.parse(localStorage.getItem('cs_4pool_inventory')) || [];
+        let totalSpins = parseInt(localStorage.getItem('cs_4pool_spins')) || 0;
+        let totalGoldSpent = parseInt(localStorage.getItem('cs_4pool_gold')) || 0;
+
         let currentMachine = 'swords';
         let isSpinning = false;
         let currentSingleCost = 2;
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
 
-        // 兩大機台可供玩家「自由挑選、勾選放入」的所有備選槍械大倉庫
-        const SKIN_WAREHOUSE = {
+        // 4 個核心機台大數據庫（1、2、4 為固定不變，3 關刀池提供給玩家剔選）
+        const MACHINES_DATA = {
+            guns: {
+                title: "🔫 全系槍械神兵盛典", cost: 2, isCustom: false,
+                grandPrizes: [{ name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Midas", rarity: "rarity-red" }, { name: "AK-47 | PinPoint", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "M4A1-S | Retro", rarity: "rarity-pink" }, { name: "AWP | Typhon", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "Glock-18 | Broken TV", rarity: "rarity-purple" }, { name: "AUG | Overgrowth", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "Nova | Arctic Stripe", rarity: "rarity-blue" }, { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" }, { name: "P250 | Pulse", rarity: "rarity-blue" }]
+            },
+            pink_purple: {
+                title: "🌸 猛男粉紫槍械機台", cost: 3, isCustom: false,
+                grandPrizes: [{ name: "★ Karambit | Violet", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Red Baron", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "Glock-18 | Fuji", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "XM1014 | Koi", rarity: "rarity-purple" }],
+                bluePrizes: [{ name: "Nova | Flutter", rarity: "rarity-blue" }]
+            },
             swords: {
-                blue: ["Nova | Heat", "Glock-18 | PinPoint", "Five-SeveN | Icecap", "P250 | Glacial", "USP-S | Tekko", "MAC-10 | Ivory", "MP9 | Canyon", "P90 | Big Cat", "MAG-7 | Vision7", "Nova | Flutter", "FAMAS | Medic", "Galil AR | Irid", "SG 553 | Frostline"],
-                purple: ["Glock-18 | Broken TV", "P250 | B-250", "Desert Eagle | Paranoia", "Dual Berettas | Tension", "AUG | Hot Rod", "Galil AR | Monochrome", "P90 | Database", "XM1014 | Koi"],
-                pink: ["M4A1-S | Retro", "M4A4 | B-Hop", "Glock-18 | Fuji", "AWP | Typhon", "Desert Eagle | Mercy"],
-                red: ["AK-47 | Midas", "AK-47 | PinPoint", "AK-47 | Red Baron", "M4A1-S | BlackOps", "AWP | High Octane"],
-                gold: ["★ Butterfly Knife | Crimson Web", "★ Butterfly Knife | Doppler", "★ M9 Bayonet | Fade", "★ Huntsman Knife | Tiger Tooth"]
+                title: "⚔️ 戰術關刀神兵", isCustom: true, // 只有它開啟自選
+                // 自選儲備備用庫
+                warehouse: {
+                    blue: ["Nova | Heat", "Glock-18 | PinPoint", "Five-SeveN | Icecap", "P250 | Glacial", "USP-S | Tekko", "MAC-10 | Ivory", "MP9 | Canyon", "P90 | Big Cat", "MAG-7 | Vision7", "Nova | Flutter", "FAMAS | Medic", "Galil AR | Irid"],
+                    purple: ["Glock-18 | Broken TV", "P250 | B-250", "Desert Eagle | Paranoia", "Dual Berettas | Tension", "AUG | Hot Rod", "XM1014 | Koi"],
+                    pink: ["M4A1-S | Retro", "Desert Eagle | Mercy", "Glock-18 | Fuji", "AWP | Typhon"],
+                    red: ["AK-47 | Midas", "AK-47 | PinPoint", "AK-47 | Red Baron"],
+                    gold: ["★ Butterfly Knife | Crimson Web", "★ Butterfly Knife | Doppler", "★ M9 Bayonet | Fade"]
+                }
             },
             karambits: {
-                blue: ["Nova | Arctic Stripe", "P250 | Pulse", "Desert Eagle | Permafrost", "Tec-9 | Striker", "USP-S | Heated", "MAC-10 | Daisies", "P90 | PinPoint", "Negev | Rotary Power", "Nova | Half-One", "XM1014 | Abstract", "AUG | Predator", "FAMAS | Arctic Camo", "SSG 08 | Desert Strike"],
-                purple: ["Five-SeveN | Control", "P250 | Mindspill", "Desert Eagle | Permafrost", "Dual Berettas | Choking Hazard", "AUG | Overgrowth", "XM1014 | Koi", "P90 | Database"],
-                pink: ["M4A1-S | Retro", "Glock-18 | Fuji", "Desert Eagle | Mercy", "XM1014 | Lilies", "SSG 08 | Labyrinth"],
-                red: ["AK-47 | PinPoint", "AK-47 | Red Baron", "M4A1-S | BlackOps", "Desert Eagle | High Octane", "Tec-9 | Medal"],
-                gold: ["★ Karambit | Case Hardened", "★ Karambit | Fade", "★ Karambit | Autotronic", "★ Talon Knife | Marble Fade"]
+                title: "😈 惡魔爪子神刀", cost: 112, isCustom: false, // 鎖死不可自選，採用固定配置與固定價格
+                grandPrizes: [{ name: "★ Karambit | Fade", rarity: "rarity-gold" }],
+                redPrizes: [{ name: "AK-47 | Red Baron", rarity: "rarity-red" }, { name: "M4A1-S | BlackOps", rarity: "rarity-red" }],
+                pinkPrizes: [{ name: "Glock-18 | Fuji", rarity: "rarity-pink" }],
+                purplePrizes: [{ name: "Five-SeveN | Control", rarity: "rarity-purple" }, { name: "P250 | Mindspill", rarity: "rarity-purple" }, { name: "AUG | Overgrowth", rarity: "rarity-purple" }],
+                bluePrizes: [
+                    { name: "Nova | Arctic Stripe", rarity: "rarity-blue" }, { name: "P250 | Pulse", rarity: "rarity-blue" },
+                    { name: "Desert Eagle | Permafrost", rarity: "rarity-blue" }, { name: "Tec-9 | Striker", rarity: "rarity-blue" },
+                    { name: "USP-S | Heated", rarity: "rarity-blue" }, { name: "MAC-10 | Daisies", rarity: "rarity-blue" },
+                    { name: "P90 | PinPoint", rarity: "rarity-blue" }, { name: "Negev | Rotary Power", rarity: "rarity-blue" },
+                    { name: "Nova | Half-One", rarity: "rarity-blue" }, { name: "XM1014 | Abstract", rarity: "rarity-blue" }
+                ]
             }
         };
 
-        // 玩家目前真正打勾、選中的武器池
-        let playerSelectedPool = { blue: [], purple: [], pink: [], red: [], gold: [] };
+        // 玩家針對「戰術關刀」選中的槍支快取池
+        let swordsSelectedPool = { blue: [], purple: [], pink: [], red: [], gold: [] };
 
-        function initData() {
+        function updateUI() {
             document.getElementById('balance-val').innerText = balance + " 金幣";
-            localStorage.setItem('cs_custom_balance', balance);
-            localStorage.setItem('cs_custom_inventory', JSON.stringify(inventory));
+            document.getElementById('pity-percent-text').innerText = `總抽數: ${totalSpins} 次`;
+            document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出金刀)`;
+
+            const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
+            document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
+
+            localStorage.setItem('cs_4pool_balance', balance);
+            localStorage.setItem('cs_4pool_inventory', JSON.stringify(inventory));
+            localStorage.setItem('cs_4pool_spins', totalSpins);
+            localStorage.setItem('cs_4pool_gold', totalGoldSpent);
+
             renderInventory();
         }
 
         function switchMachine(type) {
             if (isSpinning) return;
             currentMachine = type;
-            document.getElementById('tab-swords').classList.remove('active');
-            document.getElementById('tab-karambits').classList.remove('active');
+
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.getElementById(`tab-${type}`).classList.add('active');
 
-            document.getElementById('machine-title').innerText = type === 'swords' ? "⚔️ 戰術關刀神兵獎池" : "😈 惡魔爪子神刀獎池";
-            
-            // 重新加載並刷新新機台的挑選名單
-            buildConfigPanel();
-            calculateCost();
+            const mData = MACHINES_DATA[type];
+            document.getElementById('machine-title').innerText = mData.title;
+
+            const configPanel = document.getElementById('custom-config-panel');
+
+            if (mData.isCustom) {
+                // 如果是戰術關刀池 -> 顯示自選面板，執行自選計價
+                configPanel.style.display = 'block';
+                calculateSwordsCost();
+            } else {
+                // 其他池 -> 隱藏自選面板，使用固定單價
+                configPanel.style.display = 'none';
+                currentSingleCost = mData.cost;
+                document.getElementById('machine-cost-desc').innerText = `單次抽獎：${currentSingleCost} 金幣 | 三連抽：${currentSingleCost * 3} 金幣 | 五連抽：${currentSingleCost * 5} 金幣`;
+            }
+
             setupTrack();
+            updateUI();
         }
 
-        // 動態生成帶有剔選框 (Checkbox) 的槍械清單
-        function buildConfigPanel() {
-            const warehouse = SKIN_WAREHOUSE[currentMachine];
+        // 初始化生成戰術關刀自選 checkbox 清單
+        function buildSwordsConfig() {
+            const w = MACHINES_DATA.swords.warehouse;
             
-            // 為了方便體驗，預設幫玩家勾選好前 10 個藍色同前 3 個紫色（滿足起步基礎盤條件）
-            playerSelectedPool.blue = warehouse.blue.slice(0, 10);
-            playerSelectedPool.purple = warehouse.purple.slice(0, 3);
-            playerSelectedPool.pink = [];
-            playerSelectedPool.red = [];
-            playerSelectedPool.gold = [];
+            // 預設幫玩家剔好 10 藍 3 紫，滿足起步基礎線
+            swordsSelectedPool.blue = w.blue.slice(0, 10);
+            swordsSelectedPool.purple = w.purple.slice(0, 3);
+            swordsSelectedPool.pink = [w.pink[0]]; // 默認勾1個粉，供演示
+            swordsSelectedPool.red = [];
+            swordsSelectedPool.gold = [];
 
             const rarities = ['blue', 'purple', 'pink', 'red', 'gold'];
             rarities.forEach(rarity => {
                 const container = document.getElementById(`list-${rarity}`);
                 container.innerHTML = '';
                 
-                warehouse[rarity].forEach(skinName => {
-                    const isChecked = playerSelectedPool[rarity].includes(skinName);
+                w[rarity].forEach(skinName => {
+                    const isChecked = swordsSelectedPool[rarity].includes(skinName);
                     const label = document.createElement('label');
                     label.className = 'skin-option';
                     label.innerHTML = `
-                        <input type="checkbox" data-rarity="${rarity}" data-name="${skinName}" ${isChecked ? 'checked' : ''} onchange="handleSkinSelect(this)">
+                        <input type="checkbox" data-rarity="${rarity}" data-name="${skinName}" ${isChecked ? 'checked' : ''} onchange="handleSwordsSelect(this)">
                         <span>${skinName}</span>
                     `;
                     container.appendChild(label);
                 });
             });
-            updateCountsUI();
+            updateSwordsCountsUI();
         }
 
-        // 處理玩家點擊勾選/取消勾選槍支事件
-        function handleSkinSelect(checkbox) {
+        function handleSwordsSelect(checkbox) {
             const rarity = checkbox.dataset.rarity;
             const name = checkbox.dataset.name;
 
             if (checkbox.checked) {
-                // 強制卡死限制：藍色剛好10個，紫色剛好3個
-                if (rarity === 'blue' && playerSelectedPool.blue.length >= 10) {
-                    alert("❌ 藍色飾品必須正好是 10 個！如果您想換一架槍，請先取消勾選已選的藍色槍械。");
+                if (rarity === 'blue' && swordsSelectedPool.blue.length >= 10) {
+                    alert("❌ 藍色飾品規定必須剛好是 10 個！若要更換，請先取消現有勾選。");
                     checkbox.checked = false;
                     return;
                 }
-                if (rarity === 'purple' && playerSelectedPool.purple.length >= 3) {
-                    alert("❌ 紫色飾品必須正好是 3 個！請先取消勾選已選的紫色槍械。");
+                if (rarity === 'purple' && swordsSelectedPool.purple.length >= 3) {
+                    alert("❌ 紫色飾品規定必須剛好是 3 個！請先取消現有勾選。");
                     checkbox.checked = false;
                     return;
                 }
-                if (!playerSelectedPool[rarity].includes(name)) {
-                    playerSelectedPool[rarity].push(name);
-                }
+                if (!swordsSelectedPool[rarity].includes(name)) swordsSelectedPool[rarity].push(name);
             } else {
-                playerSelectedPool[rarity] = playerSelectedPool[rarity].filter(n => n !== name);
+                swordsSelectedPool[rarity] = swordsSelectedPool[rarity].filter(n => n !== name);
             }
 
-            updateCountsUI();
-            calculateCost();
+            updateSwordsCountsUI();
+            calculateSwordsCost();
             setupTrack();
         }
 
-        function updateCountsUI() {
-            document.getElementById('count-blue').innerText = `已選: ${playerSelectedPool.blue.length} / 10`;
-            document.getElementById('count-purple').innerText = `已選: ${playerSelectedPool.purple.length} / 3`;
-            document.getElementById('count-pink').innerText = `已選: ${playerSelectedPool.pink.length} 個`;
-            document.getElementById('count-red').innerText = `已選: ${playerSelectedPool.red.length} 個`;
-            document.getElementById('count-gold').innerText = `已選: ${playerSelectedPool.gold.length} 個`;
+        function updateSwordsCountsUI() {
+            document.getElementById('count-blue').innerText = `已選: ${swordsSelectedPool.blue.length} / 10`;
+            document.getElementById('count-purple').innerText = `已選: ${swordsSelectedPool.purple.length} / 3`;
+            document.getElementById('count-pink').innerText = `已選: ${swordsSelectedPool.pink.length} 個`;
+            document.getElementById('count-red').innerText = `已選: ${swordsSelectedPool.red.length} 個`;
+            document.getElementById('count-gold').innerText = `已選: ${swordsSelectedPool.gold.length} 個`;
         }
 
-        // 核心動態算價公式
-        function calculateCost() {
-            let base = 2; // 每抽最少兩蚊起步
-            base += playerSelectedPool.pink.length * 5;  // 每放一個粉色+$5
-            base += playerSelectedPool.red.length * 25;  // 每放一個紅色+$25
-            base += playerSelectedPool.gold.length * 75; // 每放一個金色+$75
+        function calculateSwordsCost() {
+            let cost = 2; // 起步兩蚊
+            cost += swordsSelectedPool.pink.length * 5;
+            cost += swordsSelectedPool.red.length * 25;
+            cost += swordsSelectedPool.gold.length * 75;
 
-            currentSingleCost = base;
+            currentSingleCost = cost;
             document.getElementById('live-cost-status').innerText = `當前單抽價格: $${currentSingleCost} 金幣`;
             document.getElementById('machine-cost-desc').innerText = `單次抽獎：${currentSingleCost} 金幣 | 三連抽：${currentSingleCost * 3} 金幣 | 五連抽：${currentSingleCost * 5} 金幣`;
         }
 
-        function redeemCDK() {
-            const input = document.getElementById('cdk-input').value.trim();
-            if (VALID_CDKS[input]) {
-                const amount = VALID_CDKS[input];
-                balance += amount;
-                alert(`🎉 兌換成功！已成功充值 ${amount} 金幣。`);
-                delete VALID_CDKS[input]; 
-                document.getElementById('cdk-input').value = "";
-                initData();
-            } else {
-                alert("❌ 無效的 CDK，或該代碼已被使用。");
-            }
-        }
+        // 核心算法：抽取道具
+        function rollSkin() {
+            const mData = MACHINES_DATA[currentMachine];
 
-        // 從玩家親自挑選放入的池入面，完全随機取出一個道具（100% 只抽到玩家勾選的物件）
-        function getRandomSkinFromPool() {
-            let activePool = [];
-            playerSelectedPool.blue.forEach(n => activePool.push({name: n, rarity: 'rarity-blue'}));
-            playerSelectedPool.purple.forEach(n => activePool.push({name: n, rarity: 'rarity-purple'}));
-            playerSelectedPool.pink.forEach(n => activePool.push({name: n, rarity: 'rarity-pink'}));
-            playerSelectedPool.red.forEach(n => activePool.push({name: n, rarity: 'rarity-red'}));
-            playerSelectedPool.gold.forEach(n => activePool.push({name: n, rarity: 'rarity-gold'}));
-
-            if (activePool.length === 0) {
-                return {name: "無道具", rarity: 'rarity-blue'};
+            // 800保底機制
+            if (totalGoldSpent >= 800) {
+                totalGoldSpent -= 800;
+                if (mData.isCustom) {
+                    if (swordsSelectedPool.gold.length > 0) {
+                        return { name: swordsSelectedPool.gold[Math.floor(Math.random() * swordsSelectedPool.gold.length)], rarity: 'rarity-gold' };
+                    }
+                } else {
+                    if (mData.grandPrizes.length > 0) return mData.grandPrizes[Math.floor(Math.random() * mData.grandPrizes.length)];
+                }
             }
-            return activePool[Math.floor(Math.random() * activePool.length)];
+
+            // 自選池隨機機制（戰術關刀）
+            if (mData.isCustom) {
+                let activePool = [];
+                swordsSelectedPool.blue.forEach(n => activePool.push({name: n, rarity: 'rarity-blue'}));
+                swordsSelectedPool.purple.forEach(n => activePool.push({name: n, rarity: 'rarity-purple'}));
+                swordsSelectedPool.pink.forEach(n => activePool.push({name: n, rarity: 'rarity-pink'}));
+                swordsSelectedPool.red.forEach(n => activePool.push({name: n, rarity: 'rarity-red'}));
+                swordsSelectedPool.gold.forEach(n => activePool.push({name: n, rarity: 'rarity-gold'}));
+
+                if (activePool.length === 0) return { name: "未配置武器", rarity: "rarity-blue" };
+                return activePool[Math.floor(Math.random() * activePool.length)];
+            }
+
+            // 固定池隨機機制（其餘三個機台）
+            let r = Math.random() * 100;
+            if (r < 0.5 && mData.grandPrizes.length > 0) return mData.grandPrizes[Math.floor(Math.random() * mData.grandPrizes.length)];
+            if (r < 3.5 && mData.redPrizes.length > 0) return mData.redPrizes[Math.floor(Math.random() * mData.redPrizes.length)];
+            if (r < 12.0 && mData.pinkPrizes.length > 0) return mData.pinkPrizes[Math.floor(Math.random() * mData.pinkPrizes.length)];
+            if (r < 30.0 && mData.purplePrizes.length > 0) return mData.purplePrizes[Math.floor(Math.random() * mData.purplePrizes.length)];
+            return mData.bluePrizes[Math.floor(Math.random() * mData.bluePrizes.length)];
         }
 
         function setupTrack() {
@@ -602,7 +704,7 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
             for(let i = 0; i < 40; i++) {
-                track.appendChild(createCard(getRandomSkinFromPool()));
+                track.appendChild(createCard(rollSkin()));
             }
         }
 
@@ -613,14 +715,15 @@
             return card;
         }
 
-        // 啟動開箱
         function startSpin(multiCount = 1) {
             if (isSpinning) return;
 
-            // 嚴格攔截不合規範的自定義獎池
-            if (playerSelectedPool.blue.length !== 10 || playerSelectedPool.purple.length !== 3) {
-                alert("❌ 獎池配置未達標！啟動失敗。你必須在上方勾選清單中，精確勾選好 10個藍色 和 3個紫色 武器！");
-                return;
+            // 如果是戰術關刀，卡死 10 藍 3 紫限制
+            if (MACHINES_DATA[currentMachine].isCustom) {
+                if (swordsSelectedPool.blue.length !== 10 || swordsSelectedPool.purple.length !== 3) {
+                    alert("❌ 獎池配置未符合標準！啟動失敗。您必須為戰術關刀池勾選剛好 10個藍色 與 3個紫色 道具！");
+                    return;
+                }
             }
 
             const totalCost = currentSingleCost * multiCount;
@@ -631,17 +734,17 @@
 
             balance -= totalCost;
 
-            // 預先產生結果
             let sessionPrizes = [];
             for (let k = 0; k < multiCount; k++) {
-                sessionPrizes.push(getRandomSkinFromPool());
+                totalSpins++;
+                totalGoldSpent += currentSingleCost;
+                sessionPrizes.push(rollSkin());
             }
 
-            // 快刷跳過動畫功能
             const isSkip = document.getElementById('skip-animation-checkbox').checked;
             if (isSkip) {
                 sessionPrizes.forEach(p => inventory.push(p));
-                initData();
+                updateUI();
                 showFullscreenReward(sessionPrizes);
                 return;
             }
@@ -654,31 +757,26 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            // 鋪設 50 個滾動卡片，把最後一抽的結果精確定位在第 24 格
             const targetIndex = 24;
             const totalCardsCount = 50;
             for(let i = 0; i < totalCardsCount; i++) {
                 if (i === targetIndex) {
                     track.appendChild(createCard(sessionPrizes[sessionPrizes.length - 1]));
                 } else {
-                    track.appendChild(createCard(getRandomSkinFromPool()));
+                    track.appendChild(createCard(rollSkin()));
                 }
             }
 
-            // 跑馬燈平滑滾動
             setTimeout(() => {
                 track.style.transition = 'transform 3s cubic-bezier(0.1, 0.9, 0.1, 1)';
                 track.style.transform = 'translateX(-2850px)';
             }, 50);
 
-            // 滾完結算
             setTimeout(() => {
                 isSpinning = false;
                 setButtonsDisabled(false);
-
                 sessionPrizes.forEach(p => inventory.push(p));
-                initData();
-
+                updateUI();
                 showFullscreenReward(sessionPrizes);
             }, 3200);
         }
@@ -689,11 +787,25 @@
             document.getElementById('spin-btn-5').disabled = status;
         }
 
+        function redeemCDK() {
+            const input = document.getElementById('cdk-input').value.trim();
+            if (VALID_CDKS[input]) {
+                const amount = VALID_CDKS[input];
+                balance += amount;
+                alert(`🎉 兌換成功！已成功充值 ${amount} 金幣。`);
+                delete VALID_CDKS[input]; 
+                document.getElementById('cdk-input').value = "";
+                updateUI();
+            } else {
+                alert("❌ 無效的 CDK 或該代碼已被使用。");
+            }
+        }
+
         function renderInventory() {
             const grid = document.getElementById('inventory-grid');
             grid.innerHTML = '';
             if (inventory.length === 0) {
-                grid.innerHTML = '<div style="color: #666; font-size:12px; padding: 20px; grid-column: 1/-1; text-align:center;">暫無道具，快去自選槍械並抽獎吧！</div>';
+                grid.innerHTML = '<div style="color: #666; font-size:12px; padding: 20px; grid-column: 1/-1; text-align:center;">暫無道具，快去體驗開箱吧！</div>';
                 return;
             }
             inventory.forEach((item, index) => {
@@ -734,9 +846,9 @@
             setupTrack();
         }
 
-        // 頁面首次加載
+        // 初始化首次啟動
+        buildSwordsConfig();
         switchMachine('swords');
-        initData();
     </script>
 </body>
 </html>

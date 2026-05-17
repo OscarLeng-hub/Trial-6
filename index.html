@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 歐皇神話至尊盲盒 (硬性保底控製版)</title>
+    <title>CS2 歐皇神話至尊盲盒 (RNG滾輪+後台硬保底版)</title>
     <style>
         :root {
             --primary: #ff4e50;
@@ -401,7 +401,7 @@
     <div class="container">
         <div class="notice-banner">
             ⚠️ <b>系統重要公告與服務條款：</b><br>
-            1. 本平台不含任何隨機概率，全面採用<b>「硬性保底計數器」</b>，達到指定抽數/消耗必定掉落。<br>
+            1. 本盲盒滾輪採用<b>「真實RNG隨機演算法」</b>渲染格子，後台則搭載<b>「精準硬性計數保底」</b>以控制最終中獎結果。<br>
             2. 背包內的所有武器飾品<b>「只供提取，不設回收」</b>，請知悉。<br>
             3. 所有道具提取均由<b>「人工客服手動登記發貨」</b>，正常情況下會在 12 小時內完成發送。
         </div>
@@ -469,11 +469,11 @@
 
     <div class="modal" id="prob-modal">
         <div class="modal-content">
-            <h3 style="text-align: center; color: var(--gold); margin-top:0;">📊 全新硬性計數保底規則</h3>
+            <h3 style="text-align: center; color: var(--gold); margin-top:0;">📊 真實RNG滾輪與硬保底規則</h3>
             <hr style="border-color: var(--border-color);">
             <div style="font-size: 12px; line-height: 1.8; text-align: left;">
-                ⚠️ <b>注意：隨機抽出機率已全部調至 0%，唯有達到固定抽數或消耗方可獲得。</b><br><br>
-                🔹 <b>藍色</b>：基礎獎勵 (無觸發保底時 100% 出藍色)<br>
+                ⚠️ <b>機台特性：滾輪跑馬燈為完全隨機(RNG)視覺效果，最終中獎結果完美對齊以下規則：</b><br><br>
+                🔹 <b>藍色</b>：基礎獎勵 (無觸發保底時 100% 獲得藍色)<br>
                 💜 <b>紫色</b>：第 10 ➔ 20 ➔ 10 次抽數循環必出<br>
                 💗 <b>粉色</b>：第 20 ➔ 40 ➔ 20 次抽數循環必出<br>
                 🔴 <b>紅色</b>：第 55 ➔ 75 ➔ 35 次抽數循環必出<br>
@@ -484,25 +484,21 @@
     </div>
 
     <script>
-        // 核心狀態，加入硬性計數器
         let balance = parseInt(localStorage.getItem('cs_balance')) || 500;
         let inventory = JSON.parse(localStorage.getItem('cs_inventory')) || [];
         
-        // 計數器持久化
+        // 核心硬保底計數
         let totalSpins = parseInt(localStorage.getItem('cs_total_spins')) || 0;
         let totalGoldSpent = parseInt(localStorage.getItem('cs_gold_spent')) || 0;
         
-        // 循環陣列索引狀態
         let purpleIndex = parseInt(localStorage.getItem('cs_idx_purple')) || 0;
         let pinkIndex = parseInt(localStorage.getItem('cs_idx_pink')) || 0;
         let redIndex = parseInt(localStorage.getItem('cs_idx_red')) || 0;
 
-        // 當前保底進度計數
         let purpleCounter = parseInt(localStorage.getItem('cs_cnt_purple')) || 0;
         let pinkCounter = parseInt(localStorage.getItem('cs_cnt_pink')) || 0;
         let redCounter = parseInt(localStorage.getItem('cs_cnt_red')) || 0;
 
-        // 循環保底設定
         const PURPLE_LOOP = [10, 20];
         const PINK_LOOP = [20, 40];
         const RED_LOOP = [55, 75, 35];
@@ -510,7 +506,6 @@
         let currentMachine = 'guns';
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
 
-        // 槍械數據庫 (完全與你的截圖對齊)
         const MACHINES = {
             guns: {
                 title: "精選槍械飾品機台", cost: 2,
@@ -557,7 +552,7 @@
             },
             pink_purple: {
                 title: "🌸 猛男粉紫刀槍機台", cost: 3,
-                grandPrizes: [{ name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }], // 全機台硬性共享蝴蝶刀
+                grandPrizes: [{ name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" }],
                 redPrizes: [{ name: "AK-47 | Red Baron", rarity: "rarity-red" }],
                 pinkPrizes: [{ name: "Glock-18 | Fuji", rarity: "rarity-pink" }],
                 purplePrizes: [{ name: "XM1014 | Koi", rarity: "rarity-purple" }],
@@ -586,11 +581,9 @@
             document.getElementById('pity-percent-text').innerText = `總抽數: ${totalSpins} 次`;
             document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出 Butterfly Knife | Naval)`;
 
-            // 進度條顯示 800 金幣進度
             const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
             document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
 
-            // 本地儲存持保存
             localStorage.setItem('cs_balance', balance);
             localStorage.setItem('cs_inventory', JSON.stringify(inventory));
             localStorage.setItem('cs_total_spins', totalSpins);
@@ -634,19 +627,30 @@
             }
         }
 
-        // 默認返回藍色 (因為其餘稀有度隨機機率為 0%)
+        // 用於生成滾輪格子嘅真實 RNG 隨機算法
+        function getRNGRandomSkin() {
+            const m = MACHINES[currentMachine];
+            let r = Math.random() * 100;
+            if (r < 0.2) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)];
+            if (r < 1.5) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
+            if (r < 5.0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
+            if (r < 15.0) return m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
+            return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
+        }
+
         function getBaseBlueSkin() {
             const m = MACHINES[currentMachine];
             return m.bluePrizes[Math.floor(Math.random() * m.bluePrizes.length)];
         }
 
+        // 預先用 RNG 鋪設背景格子，望落更真實
         function setupTrack() {
             const track = document.getElementById('roulette-track');
             track.innerHTML = '';
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
             for(let i = 0; i < 40; i++) {
-                track.appendChild(createCard(getBaseBlueSkin()));
+                track.appendChild(createCard(getRNGRandomSkin()));
             }
         }
 
@@ -673,7 +677,7 @@
             let rollResults = [];
             const m = MACHINES[currentMachine];
 
-            // 逐抽執行，精準計數硬性保底
+            // 1. 後台執行精準保底計算
             for (let k = 0; k < multiCount; k++) {
                 totalSpins++;
                 totalGoldSpent += singleCost;
@@ -684,30 +688,30 @@
 
                 let winSkin = null;
 
-                // 1. 金色保底檢測 (每滿 800 金幣)
+                // 金色保底 (滿 800 金幣)
                 if (totalGoldSpent >= 800) {
-                    winSkin = m.grandPrizes[0]; // 必定抽中 Butterfly Knife | Naval
-                    totalGoldSpent -= 800; // 扣除消耗，開始下一輪 800 循環
+                    winSkin = m.grandPrizes[0]; // 必定且只抽出 Butterfly Knife | Naval
+                    totalGoldSpent -= 800;
                 }
-                // 2. 紅色保底檢測
+                // 紅色保底
                 else if (redCounter >= RED_LOOP[redIndex]) {
                     winSkin = m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
-                    redCounter = 0; // 重置該檔計數器
-                    redIndex = (redIndex + 1) % RED_LOOP.length; // 推進到下一個循環檔位
+                    redCounter = 0;
+                    redIndex = (redIndex + 1) % RED_LOOP.length;
                 }
-                // 3. 粉色保底檢測
+                // 粉色保底
                 else if (pinkCounter >= PINK_LOOP[pinkIndex]) {
                     winSkin = m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
                     pinkCounter = 0;
                     pinkIndex = (pinkIndex + 1) % PINK_LOOP.length;
                 }
-                // 4. 紫色保底檢測
+                // 紫色保底
                 else if (purpleCounter >= PURPLE_LOOP[purpleIndex]) {
                     winSkin = m.purplePrizes[Math.floor(Math.random() * m.purplePrizes.length)];
                     purpleCounter = 0;
                     purpleIndex = (purpleIndex + 1) % PURPLE_LOOP.length;
                 }
-                // 5. 冇觸發任何保底，100% 必出藍色
+                // 冇保底，100% 藍色
                 else {
                     winSkin = getBaseBlueSkin();
                 }
@@ -718,6 +722,7 @@
 
             updateUI();
 
+            // 如果揀左跳過動畫，直接彈窗
             const isSkip = document.getElementById('skip-animation-checkbox').checked;
             if (isSkip) {
                 showFullscreenReward(rollResults);
@@ -734,22 +739,25 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            const winIndex = 25;
-            const finalShowSkin = rollResults[rollResults.length - 1];
+            const winIndex = 25; // 指定第 25 格為指針中獎格
+            const finalShowSkin = rollResults[rollResults.length - 1]; // 跑馬燈停落嚟果抽嘅結果
 
+            // 2. 視覺特效渲染：全車隨機生成，唯獨第 25 格被後台秘密修正為保底道具
             for(let i = 0; i < 35; i++) {
                 if (i === winIndex) {
-                    track.appendChild(createCard(finalShowSkin));
+                    track.appendChild(createCard(finalShowSkin)); // 強制修正指針格
                 } else {
-                    track.appendChild(createCard(getBaseBlueSkin()));
+                    track.appendChild(createCard(getRNGRandomSkin())); // 其他所有格子100%純真隨機RNG
                 }
             }
 
+            // 啟動轉盤動畫
             setTimeout(() => {
                 track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
                 track.style.transform = 'translateX(-2600px)';
             }, 50);
 
+            // 動答完結彈出結果
             setTimeout(() => {
                 isSpinning = false;
                 document.getElementById('spin-btn-1').disabled = false;
@@ -808,7 +816,7 @@
         function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
         function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
 
-        // 初始化
+        // 初始化滾輪
         setupTrack();
         updateUI();
     </script>

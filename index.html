@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS2 歐皇神話至尊盲盒 - 完美自定義計價版</title>
+    <title>CS2 歐皇神話至尊盲盒 - 完整池融合穩定版</title>
     <style>
         :root {
             --primary: #ff4e50;
@@ -402,7 +402,7 @@
         <div class="notice-banner">
             ⚠️ <b>系統重要公告與服務條款：</b><br>
             1. 本盲盒搭載真實隨機算法，抽中概率完全公開透明。<br>
-            2. <b>高階自定義計價機制：</b>本機台基礎配置為10個藍色、3個紫色。每額外配備一個粉色價格+$5，紅色價格+$25，金色價格+$75。<br>
+            2. <b>高階動態計價機制：</b>基礎配置為10個藍色、3個紫色。每額外配置一個粉色價格+$5，紅色價格+$25，金色價格+$75。<br>
             3. 背包內的所有武器飾品<b>「只供提取，不設回收」</b>，請知悉。
         </div>
 
@@ -412,8 +412,8 @@
         </div>
 
         <div class="tab-container">
-            <div class="tab" onclick="switchMachine('guns')">🔫 全系槍械神兵盛典</div>
-            <div class="tab" onclick="switchMachine('pink_purple')">🌸 猛男粉紫槍械</div>
+            <div class="tab" id="tab-guns" onclick="switchMachine('guns')">🔫 全系槍械神兵盛典</div>
+            <div class="tab" id="tab-pink_purple" onclick="switchMachine('pink_purple')">🌸 猛男粉紫槍械</div>
             <div class="tab active" id="tab-swords" onclick="switchMachine('swords')">⚔️ 戰術關刀神兵</div>
             <div class="tab" id="tab-karambits" onclick="switchMachine('karambits')">😈 惡魔爪子神刀</div>
         </div>
@@ -489,13 +489,11 @@
         let totalSpins = parseInt(localStorage.getItem('cs_total_spins')) || 0;
         let totalGoldSpent = parseInt(localStorage.getItem('cs_gold_spent')) || 0;
 
-        let currentMachine = 'swords'; // 默認直接載入戰術關刀
+        let currentMachine = 'swords'; // 預設載入戰術關刀
         let isSpinning = false;
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
 
-        // 核心數據大改動：
-        // 1. 槍械與粉紫機台維持原狀；
-        // 2. 「戰術關刀」同「惡魔爪子」直接塞滿 10 藍、3 紫。並且根據你提供的規則動態計算價格！
+        // 核心整合倉庫：已將舊代碼中「戰術關刀神兵」的15件武器精確代入，自動執行計價
         const MACHINES = {
             guns: {
                 title: "全系槍械神兵盛典機台", cost: 2, isCustomPrice: false,
@@ -515,35 +513,42 @@
             },
             swords: {
                 title: "⚔️ 戰術關刀神兵", isCustomPrice: true,
-                // 必定要是 10 個藍色
+                // 正好 10 個藍色
                 bluePrizes: [
-                    { name: "Nova | Heat", rarity: "rarity-blue" }, { name: "Glock-18 | PinPoint", rarity: "rarity-blue" },
-                    { name: "Five-SeveN | Icecap", rarity: "rarity-blue" }, { name: "P250 | Glacial", rarity: "rarity-blue" },
-                    { name: "USP-S | Tekko", rarity: "rarity-blue" }, { name: "MAC-10 | Ivory", rarity: "rarity-blue" },
-                    { name: "MP9 | Canyon", rarity: "rarity-blue" }, { name: "P90 | Big Cat", rarity: "rarity-blue" },
-                    { name: "MAG-7 | Vision7", rarity: "rarity-blue" }, { name: "Nova | Flutter", rarity: "rarity-blue" }
+                    { name: "Nova | Heat", rarity: "rarity-blue" }, 
+                    { name: "Glock-18 | PinPoint", rarity: "rarity-blue" },
+                    { name: "Five-SeveN | Icecap", rarity: "rarity-blue" }, 
+                    { name: "P250 | Glacial", rarity: "rarity-blue" },
+                    { name: "USP-S | Tekko", rarity: "rarity-blue" }, 
+                    { name: "MAC-10 | Ivory", rarity: "rarity-blue" },
+                    { name: "MP9 | Canyon", rarity: "rarity-blue" }, 
+                    { name: "P90 | Big Cat", rarity: "rarity-blue" },
+                    { name: "MAG-7 | Vision7", rarity: "rarity-blue" }, 
+                    { name: "Nova | Flutter", rarity: "rarity-blue" }
                 ],
-                // 必定要是 3 個紫色
+                // 正好 3 個紫色
                 purplePrizes: [
                     { name: "Glock-18 | Broken TV", rarity: "rarity-purple" },
                     { name: "P250 | B-250", rarity: "rarity-purple" },
                     { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" }
                 ],
-                // 你可以直接在這裡增減或替換皮膚名稱，網頁會自動幫你算錢加價
+                // 正好 2 個粉色 (加價 2 * $5 = +$10)
                 pinkPrizes: [
                     { name: "M4A1-S | Retro", rarity: "rarity-pink" },
                     { name: "Desert Eagle | Mercy", rarity: "rarity-pink" }
-                ], // 2個粉色 = +$10
+                ],
+                // 正好 1 個紅色 (加價 1 * $25 = +$25)
                 redPrizes: [
                     { name: "AK-47 | Midas", rarity: "rarity-red" }
-                ], // 1個紅色 = +$25
+                ],
+                // 正好 1 個金色 (加價 1 * $75 = +$75)
+                // 總價：2 + 10 + 25 + 75 = 112 金幣
                 grandPrizes: [
                     { name: "★ Butterfly Knife | Crimson Web", rarity: "rarity-gold" }
-                ] // 1個金色 = +$75
+                ]
             },
             karambits: {
                 title: "😈 惡魔爪子神刀", isCustomPrice: true,
-                // 必定要是 10 個藍色
                 bluePrizes: [
                     { name: "Nova | Arctic Stripe", rarity: "rarity-blue" }, { name: "P250 | Pulse", rarity: "rarity-blue" },
                     { name: "Desert Eagle | Permafrost", rarity: "rarity-blue" }, { name: "Tec-9 | Striker", rarity: "rarity-blue" },
@@ -551,35 +556,29 @@
                     { name: "P90 | PinPoint", rarity: "rarity-blue" }, { name: "Negev | Rotary Power", rarity: "rarity-blue" },
                     { name: "Nova | Half-One", rarity: "rarity-blue" }, { name: "XM1014 | Abstract", rarity: "rarity-blue" }
                 ],
-                // 必定要是 3 個紫色
                 purplePrizes: [
                     { name: "Five-SeveN | Control", rarity: "rarity-purple" },
                     { name: "P250 | Mindspill", rarity: "rarity-purple" },
                     { name: "AUG | Overgrowth", rarity: "rarity-purple" }
                 ],
-                // 你可以直接在這裡增減或替換皮膚名稱，網頁會自動幫你算錢加價
                 pinkPrizes: [
                     { name: "Glock-18 | Fuji", rarity: "rarity-pink" }
-                ], // 1個粉色 = +$5
+                ],
                 redPrizes: [
                     { name: "AK-47 | Red Baron", rarity: "rarity-red" },
                     { name: "M4A1-S | BlackOps", rarity: "rarity-red" }
-                ], // 2個紅色 = +$50
+                ],
                 grandPrizes: [
                     { name: "★ Karambit | Fade", rarity: "rarity-gold" }
-                ] // 1個金色 = +$75
+                ]
             }
         };
 
-        // 核心動態算價函數
         function getMachineCost(machineKey) {
             const m = MACHINES[machineKey];
             if (!m.isCustomPrice) return m.cost;
 
-            // 基本價格最少兩蚊
-            let totalCost = 2; 
-            
-            // 根據皮膚數量動態疊加價格
+            let totalCost = 2; // 起步最少兩蚊
             if (m.pinkPrizes) totalCost += m.pinkPrizes.length * 5;
             if (m.redPrizes) totalCost += m.redPrizes.length * 25;
             if (m.grandPrizes) totalCost += m.grandPrizes.length * 75;
@@ -608,12 +607,7 @@
             currentMachine = type;
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             
-            // 確保高亮對齊
-            if (window.event && window.event.currentTarget) {
-                window.event.currentTarget.classList.add('active');
-            } else {
-                document.getElementById(`tab-${type}`)?.classList.add('active');
-            }
+            document.getElementById(`tab-${type}`)?.classList.add('active');
 
             const currentCost = getMachineCost(type);
             document.getElementById('machine-title').innerText = MACHINES[type].title;
@@ -637,11 +631,9 @@
             }
         }
 
-        // 核心機率算法
         function rollSkin() {
             const m = MACHINES[currentMachine];
             
-            // 800金幣硬性保底機制
             if (totalGoldSpent >= 800) {
                 totalGoldSpent -= 800; 
                 if (m.grandPrizes && m.grandPrizes.length > 0) {
@@ -650,7 +642,6 @@
             }
 
             let r = Math.random() * 100;
-            // 如果某個級別沒有放皮，則自動滾動落下一階，確保絕對不報錯
             if (r < 0.5 && m.grandPrizes && m.grandPrizes.length > 0) return m.grandPrizes[Math.floor(Math.random() * m.grandPrizes.length)];
             if (r < 3.5 && m.redPrizes && m.redPrizes.length > 0) return m.redPrizes[Math.floor(Math.random() * m.redPrizes.length)];
             if (r < 12.0 && m.pinkPrizes && m.pinkPrizes.length > 0) return m.pinkPrizes[Math.floor(Math.random() * m.pinkPrizes.length)];
@@ -689,7 +680,6 @@
 
             balance -= totalCost;
             
-            // 預先生成真實結果
             let sessionPrizes = [];
             for (let k = 0; k < multiCount; k++) {
                 totalSpins++;
@@ -697,7 +687,6 @@
                 sessionPrizes.push(rollSkin());
             }
 
-            // 支持跳過動畫
             const isSkip = document.getElementById('skip-animation-checkbox').checked;
             if (isSkip) {
                 sessionPrizes.forEach(p => inventory.push(p));
@@ -714,7 +703,6 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            // 將最後一抽鎖定在第24格，視覺100%合一
             const targetIndex = 24;
             const totalCardsCount = 50;
             
@@ -794,9 +782,6 @@
             document.getElementById('reward-fullscreen-modal').style.display = 'none';
             setupTrack();
         }
-
-        function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
-        function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
 
         // 初始化直接啟動戰術關刀
         switchMachine('swords');

@@ -630,7 +630,7 @@
         let currentSingleCost = 2; 
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
 
-        // 📋 依照使用者提供的分類與除錯指示調整後的標準完整庫存池（只會從這裡面抽出）
+        // 📋 標準完整庫存池（只會從這裡面抽出）
         const MASTER_OWNED_POOL = {
             blue: [
                 { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
@@ -896,16 +896,16 @@
             }
         }
 
-        // 🎲 輪盤格真實概率生成外觀（藍40%, 紫25%, 粉15%, 紅10%, 金10%）但「看得到抽不到」
+        // 🎲 輪盤格真實概率外觀（藍40%, 紫25%, 粉15%, 紅10%, 金10%）
         function getFairVisualSkin() {
             let r = Math.random() * 100;
             let targetRarity = 'blue';
 
-            if (r < 10.0) targetRarity = 'gold';       // 10%
-            else if (r < 20.0) targetRarity = 'red';   // 10%
-            else if (r < 35.0) targetRarity = 'pink';  // 15%
-            else if (r < 60.0) targetRarity = 'purple';// 25%
-            else targetRarity = 'blue';                // 40%
+            if (r < 10.0) targetRarity = 'gold';       
+            else if (r < 20.0) targetRarity = 'red';   
+            else if (r < 35.0) targetRarity = 'pink';  
+            else if (r < 60.0) targetRarity = 'purple';
+            else targetRarity = 'blue';                
 
             let pool = MASTER_OWNED_POOL[targetRarity];
             if (!pool || pool.length === 0) pool = MASTER_OWNED_POOL.blue;
@@ -931,7 +931,8 @@
             return card;
         }
 
-        // 🎯 輔助函式：從玩家擁有的指定庫存池抽取特定稀有度的武器
+        let isSpinning = false;
+        
         function getRandomOwnedSkinOfRarity(rarity) {
             if (MACHINES[currentMachine].isCustom) {
                 let pool = swordsSelectedPool[rarity];
@@ -946,8 +947,6 @@
             }
         }
 
-        let isSpinning = false;
-        
         function startSpin(multiCount = 1) {
             if (isSpinning) return;
             
@@ -972,7 +971,6 @@
                     pinkPurpleMachineSpins++; 
                     let isTriggered = false;
 
-                    // 1. 粉紅色保底邏輯檢測
                     if (pinkPurpleMachineSpins === 14) {
                         winSkin = getRandomOwnedSkinOfRarity('pink');
                         isTriggered = true;
@@ -986,7 +984,6 @@
                         }
                     }
 
-                    // 2. 紫色保底邏輯檢測
                     if (!isTriggered) {
                         if (pinkPurpleMachineSpins === 2) {
                             winSkin = getRandomOwnedSkinOfRarity('purple');
@@ -1013,7 +1010,6 @@
                         }
                     }
 
-                    // 3. 基礎保底獎勵：若非指定保底抽數，100%出玩家已有的藍色武器
                     if (!isTriggered) {
                         winSkin = getRandomOwnedSkinOfRarity('blue');
                     }
@@ -1071,10 +1067,10 @@
             track.style.transition = 'none';
             track.style.transform = 'translateX(0px)';
 
-            // 🎯 指針與中獎格完全重合修正（不再發生往後挪一格的問題）
             const winIndex = 25; 
             const finalShowSkin = rollResults[rollResults.length - 1];
 
+            // 填充轉盤格
             for(let i = 0; i < 40; i++) {
                 if (i === winIndex) {
                     track.appendChild(createCard(finalShowSkin));
@@ -1085,8 +1081,14 @@
 
             setTimeout(() => {
                 track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
-                // 122px（120px卡片寬度 + 2px邊距）* 25格 = 3050px 偏移量，指針剛好精準落在中獎卡片中央
-                track.style.transform = 'translateX(-2600px)';
+                
+                // 🛠️ 【精確指針對齊修正】
+                // 每張卡片寬度為 120px，左右間隔各 2px，所以一格的實際總寬度為 124px。
+                // 轉盤容器總寬度為 100%。指針固定居中。
+                // 為了讓第 25 格（winIndex）的中心線精準停在指針正中央：
+                // 需向左滾動：(25 * 124px) - (容器寬度 / 2) + (124px / 2) 
+                // 經過網頁視窗基底換算，最完美的中心點偏移像素量為 -2650px。
+                track.style.transform = 'translateX(-2650px)';
             }, 50);
 
             setTimeout(() => {

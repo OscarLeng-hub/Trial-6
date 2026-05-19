@@ -574,7 +574,7 @@
 
         <div class="inventory-section">
             <h3 style="margin-top: 0; display:flex; justify-content:space-between; align-items:center;">
-                <span>🎒 臨時存存储背包</span>
+                <span>🎒 臨時存儲背包</span>
                 <span style="font-size:11px; color:var(--primary); font-weight:normal;">*道具只供提取，不設回收*</span>
             </h3>
             <div class="inventory-grid" id="inventory-grid"></div>
@@ -592,9 +592,9 @@
             <h3 style="text-align: center; color: var(--gold); margin-top:0;">📊 精選槍械飾品機抽獎機率</h3>
             <hr style="border-color: var(--border-color);">
             <div style="font-size: 12px; line-height: 1.8; text-align: left;" id="prob-modal-text">
-                🔹 <b>藍色軍規飾品</b>：85%<br>
-                💜 <b>紫色受限飾品</b>：10%<br>
-                💗 <b>粉色保密飾品</b>：5%<br>
+                🔹 <b>藍色軍規飾品</b>：90%<br>
+                💜 <b>紫色受限飾品</b>：7%<br>
+                💗 <b>粉色保密飾品</b>：3%<br>
                 🔴 <b>紅色隱秘飾品</b>：0%<br>
                 🟡 <b>金色罕見飾品</b>：累計消耗滿 800 金幣必出一次 (★ Butterfly Knife | Naval)
             </div>
@@ -748,436 +748,721 @@
                 { name: "Flip Knife | Scarlet", rarity: "rarity-gold" },
                 { name: "Flip Knife | Noir", rarity: "rarity-gold" },
                 { name: "Flip Knife | Doodle", rarity: "rarity-gold" },
+                { name: "Flip Knife | Naval", rarity: "rarity-gold" },
                 { name: "Flip Knife | Tiger Stripes", rarity: "rarity-gold" },
-                { name: "M9 Bayonet | Vanilla", rarity: "rarity-gold" },
-                { name: "M9 Bayonet | Midnight", rarity: "rarity-gold" },
-                { name: "M9 Bayonet | Safari", rarity: "rarity-gold" },
-                { name: "M9 Bayonet | Damascus", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Violet", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Vanilla", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Safari", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Doodle", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Naval", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Scarlet", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Woodland", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Rusted", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Whiteout", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Blackwidow", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Midnight", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Damascus", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Fade", rarity: "rarity-gold" },
                 { name: "M9 Bayonet | Woodland", rarity: "rarity-gold" },
-                { name: "M9 Bayonet | Aurora", rarity: "rarity-gold" },
                 { name: "M9 Bayonet | Rusted", rarity: "rarity-gold" },
                 { name: "M9 Bayonet | Whiteout", rarity: "rarity-gold" },
                 { name: "M9 Bayonet | Blackwidow", rarity: "rarity-gold" },
-                { name: "M9 Bayonet | Violet", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Midnight", rarity: "rarity-gold" },
                 { name: "M9 Bayonet | Fade", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Damascus", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Violet", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Vanilla", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Safari", rarity: "rarity-gold" },
                 { name: "M9 Bayonet | Scarlet", rarity: "rarity-gold" },
-                { name: "M9 Bayonet | Noir", rarity: "rarity-gold" },
                 { name: "M9 Bayonet | Doodle", rarity: "rarity-gold" },
-                { name: "M9 Bayonet | Tiger Stripes", rarity: "rarity-gold" },
                 { name: "M9 Bayonet | Naval", rarity: "rarity-gold" },
-                { name: "★ Karambit | Case Hardened", rarity: "rarity-gold" },
-                { name: "★ M9 Bayonet | Doppler Blue Gem", rarity: "rarity-gold" },
-                { name: "★ Butterfly Knife | Crimson Web", rarity: "rarity-gold" }
+                { name: "M9 Bayonet | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Rusted", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Doodle", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Damascus", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Vanilla", rarity: "rarity-gold" },
+                { name: "Gut Knife | Safari", rarity: "rarity-gold" },
+                { name: "Gut Knife | Fade", rarity: "rarity-gold" },
+                { name: "Gut Knife | Frostbite", rarity: "rarity-gold" },
+                { name: "Gut Knife | Damascus", rarity: "rarity-gold" },
+                { name: "Gut Knife | Woodland", rarity: "rarity-gold" },
+                { name: "Gut Knife | Aurora", rarity: "rarity-gold" },
+                { name: "Gut Knife | Rusted", rarity: "rarity-gold" },
+                { name: "Gut Knife | Whiteout", rarity: "rarity-gold" },
+                { name: "Gut Knife | Blackwidow", rarity: "rarity-gold" },
+                { name: "Gut Knife | Midnight", rarity: "rarity-gold" },
+                { name: "Gut Knife | Violet", rarity: "rarity-gold" },
+                { name: "Gut Knife | Vanilla", rarity: "rarity-gold" },
+                { name: "Gut Knife | Scarlet", rarity: "rarity-gold" },
+                { name: "Gut Knife | Noir", rarity: "rarity-gold" },
+                { name: "Gut Knife | Doodle", rarity: "rarity-gold" },
+                { name: "Gut Knife | Naval", rarity: "rarity-gold" },
+                { name: "Gut Knife | Tiger Stripes", rarity: "rarity-gold" }
             ]
         };
 
+        // 玩家真實限制提取庫（不變）
+        const PLAYER_OWNED_POOL = {
+            blue: [
+                "FAMAS | Arctic Camo", "SSG 08 | Desert Strike", "Nova | Heat", "P90 | BigCat", 
+                "Galil AR | Irradiated", "Nova | Flutter", "Negev | Noctiflora", "Tec-9 | Monarch", 
+                "XM1014 | Lilies", "AUG | Overgrowth", "Negev | The Jungle", "Nova | Slime", 
+                "P250 | Frutiger Aero", "USP-S | SpecOps", "Desert Eagle | Turbo", "XM1014 | Koi", 
+                "MP9 | Canyon", "Glock-18 | Broken TV", "P90 | Database", "XM1014 | Splatter", 
+                "AUG | Predator", "MAG-7 | Vision", "Nova | Half-One", "Negev | Rotary Power"
+            ],
+            purple: [
+                "FAMAS | Medic", "MAC-10 | Ivory", "MAC-10 | Dahila", "SSG 08 | Labyrinth", 
+                "Dual Berettas | Vernal", "AUG | Tension", "Sawed-Off | Panthers", "Five-SeveN | Control", 
+                "FAMAS | Wallpaper", "R8 Revolver | Bloody", "Galil AR | Feral", "USP-S | Heated", 
+                "M4A1-S | BlackOps", "AK-47 | Uniki", "MP9 | Paranoia", "Tec-9 | Vice", 
+                "Tec-9 | Striker", "P250 | Pulse", "AUG | Hot Rod", "P250 | X-250", 
+                "Tec-9 | Timeless", "Dual Berettas | Tension", "Dual Berettas | Gilded", "Desert Eagle | Paranoia"
+            ],
+            pink: [
+                "P250 | Zen", "SG 553 | Dynasty", "XM1014 | Office", "Five-SeveN | X-Ray", 
+                "P250 | Mindspill", "USP-S | Ajax", "P90 | Synthwave", "Desert Eagle | Circuit", 
+                "AWP | Railgun", "MP9 | Choke Oil", "MAC-10 | Nailgun", "Desert Eagle | Velocity", 
+                "AWP | Typhon", "MP9 | Graffiti", "Sawed-Off | Improvised", "Dual Berettas | Inked", 
+                "Zeus x27 | Overcharge", "Glock-18 | Fade", "Desert Eagle | Mercy", "Glock-18 | Fuji", 
+                "M4A4 | BubblePop", "Galil AR | Monochrome"
+            ],
+            red: [
+                "SSG 08 | Mindpill", "P90 | Chromatic", "SSG 08 | Onyx", "AK-47 | Sakura", 
+                "M4A1-S | Retro", "M4A4 | B-Hop", "M4A1-S | Orchids", "M4A1-S | Phaseprint", 
+                "Galil AR | Irid", "AWP | Bird Hunt", "FAMAS | Mind", "AK-47 | Luminax", "AK-47 | Red Baron"
+            ],
+            gold: [
+                "★ Butterfly Knife | Naval",
+                "Operator Gloves | Bumblebee",
+                "Operator Gloves | Black Widow",
+                "Operator Gloves | Smoke",
+                "Operator Gloves | Amber Fade",
+                "Operator Gloves | Emerald Widow",
+                "Operator Gloves | Fade",
+                "Operator Gloves | Agent",
+                "Operator Gloves | Hunter",
+                "Operator Gloves | Hellwire",
+                "Operator Gloves | Reinforced",
+                "Hand Wraps | Meander",
+                "Hand Wraps | Snakeskin",
+                "Hand Wraps | Crime Scene",
+                "Hand Wraps | Bandage",
+                "Hand Wraps | Camouflage",
+                "Hand Wraps | Checkers",
+                "Hand Wraps | Carpet",
+                "Hand Wraps | Aztec",
+                "Hand Wraps | Taped",
+                "Hand Wraps | Hunter",
+                "Sports Gloves | Bumblebee",
+                "Sports Gloves | Dune",
+                "Sports Gloves | Blackout",
+                "Sports Gloves | Tidal",
+                "Sports Gloves | Racer",
+                "Sports Gloves | The Ambassador",
+                "Sports Gloves | Labyrinth",
+                "Sports Gloves | Freshmint",
+                "Sports Gloves | Malibu",
+                "Sports Gloves | Imperial",
+                "Sports Gloves | Hunter",
+                "Driver Gloves | Nomad",
+                "Driver Gloves | Cardinal",
+                "Driver Gloves | Gator",
+                "Driver Gloves | Midnight Weave",
+                "Driver Gloves | Tartan",
+                "Driver Gloves | Cardinal Weave",
+                "Driver Gloves | Cobra",
+                "Driver Gloves | Leopard",
+                "Driver Gloves | Snow Leopard",
+                "Driver Gloves | Tuxedo",
+                "Karambit | Vanilla",
+                "Karambit | Scarlet",
+                "Karambit | Noir",
+                "Karambit | Doodle",
+                "Karambit | Naval",
+                "Karambit | Tiger Stripes",
+                "Karambit | Safari",
+                "Karambit | Damascus",
+                "Karambit | Woodland",
+                "Karambit | Aurora",
+                "Karambit | Rusted",
+                "Karambit | Whiteout",
+                "Karambit | Blackwidow",
+                "Karambit | Midnight",
+                "Karambit | Violet",
+                "Skeleton Knife | Fade",
+                "Skeleton Knife | Violet",
+                "Skeleton Knife | Vanilla",
+                "Skeleton Knife | Midnight",
+                "Skeleton Knife | Safari",
+                "Skeleton Knife | Naval",
+                "Skeleton Knife | Scarlet",
+                "Skeleton Knife | Woodland",
+                "Skeleton Knife | Whiteout",
+                "Skeleton Knife | Blackwidow",
+                "Flip Knife | Safari",
+                "Flip Knife | Fade",
+                "Flip Knife | Frostbite",
+                "Flip Knife | Damascus",
+                "Flip Knife | Woodland",
+                "Flip Knife | Aurora",
+                "Flip Knife | Rusted",
+                "Flip Knife | Whiteout",
+                "Flip Knife | Blackwidow",
+                "Flip Knife | Midnight",
+                "Flip Knife | Violet",
+                "Flip Knife | Vanilla",
+                "Flip Knife | Scarlet",
+                "Flip Knife | Noir",
+                "Flip Knife | Doodle",
+                "Flip Knife | Naval",
+                "Flip Knife | Tiger Stripes",
+                "Butterfly Knife | Violet",
+                "Butterfly Knife | Vanilla",
+                "Butterfly Knife | Tiger Stripes",
+                "Butterfly Knife | Safari",
+                "Butterfly Knife | Doodle",
+                "Butterfly Knife | Naval",
+                "Butterfly Knife | Scarlet",
+                "Butterfly Knife | Woodland",
+                "Butterfly Knife | Rusted",
+                "Butterfly Knife | Whiteout",
+                "Butterfly Knife | Blackwidow",
+                "Butterfly Knife | Midnight",
+                "Butterfly Knife | Damascus",
+                "Butterfly Knife | Fade",
+                "M9 Bayonet | Woodland",
+                "M9 Bayonet | Rusted",
+                "M9 Bayonet | Whiteout",
+                "M9 Bayonet | Blackwidow",
+                "M9 Bayonet | Midnight",
+                "M9 Bayonet | Fade",
+                "M9 Bayonet | Damascus",
+                "M9 Bayonet | Violet",
+                "M9 Bayonet | Vanilla",
+                "M9 Bayonet | Safari",
+                "M9 Bayonet | Scarlet",
+                "M9 Bayonet | Doodle",
+                "M9 Bayonet | Naval",
+                "M9 Bayonet | Tiger Stripes",
+                "Stiletto Knife | Rusted",
+                "Stiletto Knife | Tiger Stripes",
+                "Stiletto Knife | Doodle",
+                "Stiletto Knife | Damascus",
+                "Stiletto Knife | Vanilla",
+                "Gut Knife | Safari",
+                "Gut Knife | Fade",
+                "Gut Knife | Frostbite",
+                "Gut Knife | Damascus",
+                "Gut Knife | Woodland",
+                "Gut Knife | Aurora",
+                "Gut Knife | Rusted",
+                "Gut Knife | Whiteout",
+                "Gut Knife | Blackwidow",
+                "Gut Knife | Midnight",
+                "Gut Knife | Violet",
+                "Gut Knife | Vanilla",
+                "Gut Knife | Scarlet",
+                "Gut Knife | Noir",
+                "Gut Knife | Doodle",
+                "Gut Knife | Naval",
+                "Gut Knife | Tiger Stripes"
+            ]
+        };
+
+        // 「精選槍械飾品機」專屬限制指定庫
+        const GUNS_POOL = {
+            blue: [
+                { name: "AUG | Overgrowth", rarity: "rarity-blue" },
+                { name: "Desert Eagle | Permafrost", rarity: "rarity-blue" },
+                { name: "Desert Eagle | Turbo", rarity: "rarity-blue" },
+                { name: "Dual Berettas | Choking Hazard", rarity: "rarity-blue" },
+                { name: "Five-SeveN | Icecap", rarity: "rarity-blue" },
+                { name: "Glock-18 | Broken Tv", rarity: "rarity-blue" },
+                { name: "P250 | B-250", rarity: "rarity-blue" },
+                { name: "P250 | Glacial", rarity: "rarity-blue" },
+                { name: "Tec-9 | Monarch", rarity: "rarity-blue" },
+                { name: "MAC-10 | Daisies", rarity: "rarity-blue" },
+                { name: "MP9 | Canyon", rarity: "rarity-blue" },
+                { name: "P90 | Big Cat", rarity: "rarity-blue" },
+                { name: "P90 | Database", rarity: "rarity-blue" },
+                { name: "MAG-7 | Vision 7", rarity: "rarity-blue" },
+                { name: "Negev | Noctiflora", rarity: "rarity-blue" },
+                { name: "Negev | Rotary Power", rarity: "rarity-blue" },
+                { name: "Negev | The Jungle", rarity: "rarity-blue" },
+                { name: "Nova | Flutter", rarity: "rarity-blue" },
+                { name: "Nova | Half+One", rarity: "rarity-blue" },
+                { name: "Nova | Heat", rarity: "rarity-blue" },
+                { name: "XM1014 | Abstract", rarity: "rarity-blue" },
+                { name: "XM1014 | Koi", rarity: "rarity-blue" },
+                { name: "XM1014 | Lilies", rarity: "rarity-blue" },
+                { name: "AK-47 | PinPoint", rarity: "rarity-blue" },
+                { name: "AUG | Predator", rarity: "rarity-blue" },
+                { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
+                { name: "Galil AR | Irradiated", rarity: "rarity-blue" },
+                { name: "SG 553 | Frostline", rarity: "rarity-blue" },
+                { name: "SSG 08 | Desert Strike", rarity: "rarity-blue" }
+            ],
+            purple: [
+                { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" },
+                { name: "Dual Berettas | Tension", rarity: "rarity-purple" },
+                { name: "Dual Berettas | Vernal", rarity: "rarity-purple" },
+                { name: "Five-SeveN | Control", rarity: "rarity-purple" },
+                { name: "P250 | Pulse", rarity: "rarity-purple" },
+                { name: "Tec-9 | Striker", rarity: "rarity-purple" },
+                { name: "USP-S | Heated", rarity: "rarity-purple" },
+                { name: "MAC-10 | Ivory", rarity: "rarity-purple" },
+                { name: "AUG | Hot Rod", rarity: "rarity-purple" },
+                { name: "FAMAS | Medic", rarity: "rarity-purple" },
+                { name: "M4A1-S | BlackOps", rarity: "rarity-purple" },
+                { name: "SSG 08 | Labyrinth", rarity: "rarity-purple" }
+            ],
+            pink: [
+                { name: "Desert Eagle | Mercy", rarity: "rarity-pink" },
+                { name: "Glock-18 | Fuji", rarity: "rarity-pink" },
+                { name: "P250 | Mindspill", rarity: "rarity-pink" },
+                { name: "AWP | Typhon", rarity: "rarity-pink" },
+                { name: "Galil AR | Monochrome", rarity: "rarity-pink" },
+                { name: "SG 553 | Dynasty", rarity: "rarity-pink" }
+            ],
+            red: [
+                { name: "AK-47 | Red Baron", rarity: "rarity-red" },
+                { name: "Galil AR | Irid", rarity: "rarity-red" },
+                { name: "M4A1-S | Retro", rarity: "rarity-red" },
+                { name: "M4A4 | B-Hop", rarity: "rarity-red" }
+            ],
+            gold: []
+        };
+
+        const MACHINES = {
+            guns: { title: "精選槍械飾品機台", cost: 2, isCustom: false },
+            pink_purple: { title: "🌸 猛藍粉紫刀槍", cost: 4, isCustom: false }, 
+            swords: { title: "⚔️ 戰術關刀神兵機台", cost: 2, isCustom: true },
+            karambits: { title: "😈 惡魔爪子神刀神機台", cost: 10, isCustom: false }
+        };
+
+        let swordsSelectedPool = { blue: [], purple: [], pink: [], red: [], gold: [] };
         let currentMachine = 'guns';
+        let currentSingleCost = 2;
         let isSpinning = false;
 
-        // 戰術關刀自選池狀態記錄
-        let selectedSwordsPool = { blue: [], purple: [], pink: [], red: [], gold: [] };
+        function updateUI() {
+            document.getElementById('balance-val').innerText = balance + " 金幣";
 
-        function updateBalanceUI() {
-            document.getElementById('balance-val').innerText = `${balance} 金幣`;
-        }
+            if (currentMachine === 'pink_purple') {
+                let barProgress = pinkMachineSpins % 20;
+                if (barProgress === 0 && pinkMachineSpins > 0) barProgress = 20;
+                
+                document.getElementById('pity-title-text').innerText = "💗 本機台保底：20次必出粉";
+                document.getElementById('pity-percent-text').innerText = `當前保底進度: ${barProgress} / 20次`;
+                document.getElementById('gold-spend-status').innerText = `*本機台累計總抽數: ${pinkMachineSpins} 次 (全面剔除紅、黃品種)`;
+                document.getElementById('pity-bar-fill').style.width = (barProgress / 20 * 100) + '%';
+            } else if (currentMachine === 'guns') {
+                // 顯示精選槍械機的進度資訊與修改後的精確機率公告
+                document.getElementById('pity-title-text').innerText = "🔴 當前機台機率：藍90% | 紫7% | 粉3% | 紅0%";
+                document.getElementById('pity-percent-text').innerText = `當前總抽數: ${totalSpins}次`;
+                document.getElementById('gold-spend-status').innerText = `*累計金幣消耗: ${totalGoldSpent} / 800 (滿 800 金幣必出金色神刀)`;
+                const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
+                document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
+            } else {
+                document.getElementById('pity-title-text').innerText = "🔴 全機台硬性保底計數器";
+                document.getElementById('pity-percent-text').innerText = `已抽次數: ${totalSpins} 次`;
+                document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出 ★ Butterfly Knife | Naval)`;
+                const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
+                document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
+            }
 
-        function saveState() {
             localStorage.setItem('cs_balance', balance);
             localStorage.setItem('cs_inventory', JSON.stringify(inventory));
             localStorage.setItem('cs_total_spins', totalSpins);
             localStorage.setItem('cs_gold_spent', totalGoldSpent);
             localStorage.setItem('cs_pink_machine_spins', pinkMachineSpins);
+
+            renderInventory();
         }
 
-        function redeemCDK() {
-            const input = document.getElementById('cdk-input').value.trim();
-            if (!input) { alert("請輸入CDK卡密碼！"); return; }
-            if (VALID_CDKS[input]) {
-                const amt = VALID_CDKS[input];
-                balance += amt;
-                alert(`充值成功！獲得 ${amt} 金幣。`);
-                document.getElementById('cdk-input').value = "";
-                updateBalanceUI();
-                saveState();
-                updatePityUI();
-            } else {
-                alert("卡密無效或已被使用！");
-            }
-        }
-
-        function switchMachine(machineKey) {
+        function switchMachine(type) {
             if (isSpinning) return;
-            currentMachine = machineKey;
+            currentMachine = type;
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.getElementById(`tab-${type}`).classList.add('active');
 
-            // 切換Tab高亮
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.getElementById(`tab-${machineKey}`).classList.add('active');
+            const m = MACHINES[type];
+            document.getElementById('machine-title').innerText = m.title;
 
-            // 自選配置面版控制
+            document.getElementById('spin-btn-1').innerText = `單抽 ($${m.cost})`;
+            document.getElementById('spin-btn-3').innerText = `三連抽 ($${m.cost * 3})`;
+            document.getElementById('spin-btn-5').innerText = `五連抽 ($${m.cost * 5})`;
+
             const configPanel = document.getElementById('custom-config-panel');
-            if (machineKey === 'swords') {
+            if (m.isCustom) {
                 configPanel.style.display = 'block';
+                calculateSwordsCost();
             } else {
                 configPanel.style.display = 'none';
+                currentSingleCost = m.cost;
+                document.getElementById('machine-cost-desc').innerText = `單次抽獎：${currentSingleCost} 金幣`;
             }
 
-            // 更新標題及價格描述
-            const titleEl = document.getElementById('machine-title');
-            const costEl = document.getElementById('machine-cost-desc');
-
-            if (machineKey === 'guns') {
-                titleEl.innerText = "精選槍械飾品機台";
-                costEl.innerText = "單次抽獎：2 金幣";
-            } else if (machineKey === 'pink_purple') {
-                titleEl.innerText = "猛藍粉紫刀槍機台";
-                costEl.innerText = "單次抽獎：30 金幣";
-            } else if (machineKey === 'swords') {
-                titleEl.innerText = "戰術關刀神兵機台 (自選獎池)";
-                costEl.innerText = `單次抽獎：${calculateSwordsCost()} 金幣`;
-            } else if (machineKey === 'karambits') {
-                titleEl.innerText = "惡魔爪子神刀機台";
-                costEl.innerText = "單次抽獎：120 金幣";
-            }
-
-            updatePityUI();
-            buildTrackSkins(getVisualPoolForCurrentMachine());
+            setupTrack();
+            updateUI();
         }
 
         function initSwordsConfigPanel() {
+            swordsSelectedPool.blue = PLAYER_OWNED_POOL.blue.slice(0, 10);
+            swordsSelectedPool.purple = PLAYER_OWNED_POOL.purple.slice(0, 3);
+            swordsSelectedPool.pink = [];
+            swordsSelectedPool.red = [];
+            swordsSelectedPool.gold = [];
+
             const rarities = ['blue', 'purple', 'pink', 'red', 'gold'];
-            rarities.forEach(r => {
-                const container = document.getElementById(`list-${r}`);
+            rarities.forEach(rarity => {
+                const container = document.getElementById(`list-${rarity}`);
                 container.innerHTML = '';
-                MASTER_VISUAL_POOL[r].forEach((skin, idx) => {
+                
+                const listData = PLAYER_OWNED_POOL[rarity];
+                listData.forEach(name => {
+                    const isChecked = swordsSelectedPool[rarity].includes(name);
                     const label = document.createElement('label');
                     label.className = 'skin-option';
-                    
-                    const chk = document.createElement('input');
-                    chk.type = 'checkbox';
-                    chk.dataset.rarity = r;
-                    chk.dataset.index = idx;
-
-                    // 藍色前10個，紫色前3個默認勾選
-                    if ((r === 'blue' && idx < 10) || (r === 'purple' && idx < 3)) {
-                        chk.checked = true;
-                        selectedSwordsPool[r].push(skin);
-                    }
-
-                    chk.addEventListener('change', (e) => {
-                        handleSwordsCheckboxChange(e.target, skin);
-                    });
-
-                    label.appendChild(chk);
-                    label.appendChild(document.createTextNode(skin.name));
+                    label.innerHTML = `
+                        <input type="checkbox" data-rarity="${rarity}" data-name="${name}" ${isChecked ? 'checked' : ''} onchange="handleSwordsSelect(this)">
+                        <span>${name}</span>
+                    `;
                     container.appendChild(label);
                 });
             });
             updateSwordsCountsUI();
+            calculateSwordsCost();
         }
 
-        function handleSwordsCheckboxChange(checkbox, skin) {
-            const r = checkbox.dataset.rarity;
-            if (checkbox.checked) {
-                if (!selectedSwordsPool[r].some(s => s.name === skin.name)) {
-                    selectedSwordsPool[r].push(skin);
+        function handleSwordsSelect(checkbox) {
+            const rarity = checkbox.dataset.rarity;
+            const name = checkbox.dataset.name;
+
+            if (!checkbox.checked) {
+                if (rarity === 'blue' && swordsSelectedPool.blue.length <= 10) {
+                    alert("❌ 藍色軍規飾品最少需要保留 10 個！");
+                    checkbox.checked = true;
+                    return;
                 }
+                if (rarity === 'purple' && swordsSelectedPool.purple.length <= 3) {
+                    alert("❌ 紫色受限飾品最少需要保留 3 個！");
+                    checkbox.checked = true;
+                    return;
+                }
+                swordsSelectedPool[rarity] = swordsSelectedPool[rarity].filter(n => n !== name);
             } else {
-                selectedSwordsPool[r] = selectedSwordsPool[r].filter(s => s.name !== skin.name);
+                if (!swordsSelectedPool[rarity].includes(name)) {
+                    swordsSelectedPool[rarity].push(name);
+                }
             }
+
             updateSwordsCountsUI();
-            if (currentMachine === 'swords') {
-                const currentCost = calculateSwordsCost();
-                document.getElementById('machine-cost-desc').innerText = `單次抽獎：${currentCost} 金幣`;
-                buildTrackSkins(getVisualPoolForCurrentMachine());
-            }
+            calculateSwordsCost();
+            setupTrack();
         }
 
         function updateSwordsCountsUI() {
-            const rarities = ['blue', 'purple', 'pink', 'red', 'gold'];
-            rarities.forEach(r => {
-                document.getElementById(`count-${r}`).innerText = `已選: ${selectedSwordsPool[r].length} 個`;
-            });
-            const currentCost = calculateSwordsCost();
-            document.getElementById('live-cost-status').innerText = `當前單抽價格: ${currentCost} 金幣`;
+            document.getElementById('count-blue').innerText = `已選: ${swordsSelectedPool.blue.length} (最少10個)`;
+            document.getElementById('count-purple').innerText = `已選: ${swordsSelectedPool.purple.length} (最少3個)`;
+            document.getElementById('count-pink').innerText = `已選: ${swordsSelectedPool.pink.length} 個`;
+            document.getElementById('count-red').innerText = `已選: ${swordsSelectedPool.red.length} 個`;
+            document.getElementById('count-gold').innerText = `已選: ${swordsSelectedPool.gold.length} 個`;
         }
 
         function calculateSwordsCost() {
-            let base = 2; // 起步基礎費
-            const bLen = selectedSwordsPool.blue.length;
-            const pLen = selectedSwordsPool.purple.length;
-            const piLen = selectedSwordsPool.pink.length;
-            const rLen = selectedSwordsPool.red.length;
-            const gLen = selectedSwordsPool.gold.length;
+            let cost = 2; 
+            let extraBlue = Math.max(0, swordsSelectedPool.blue.length - 10);
+            cost += extraBlue * 1;
+            let extraPurple = Math.max(0, swordsSelectedPool.purple.length - 3);
+            cost += extraPurple * 2;
 
-            if (bLen > 10) base += (bLen - 10) * 1;
-            if (pLen > 3) base += (pLen - 3) * 2;
-            base += piLen * 5;
-            base += rLen * 25;
-            base += gLen * 75;
+            cost += swordsSelectedPool.pink.length * 5;
+            cost += swordsSelectedPool.red.length * 25;
+            cost += swordsSelectedPool.gold.length * 75;
 
-            return base;
+            currentSingleCost = cost;
+            document.getElementById('live-cost-status').innerText = `當前單抽價格: ${currentSingleCost} 金幣`;
+            document.getElementById('machine-cost-desc').innerText = `單次抽獎：${currentSingleCost} 金幣`;
+            
+            document.getElementById('spin-btn-1').innerText = `單抽 ($${currentSingleCost})`;
+            document.getElementById('spin-btn-3').innerText = `三連抽 ($${currentSingleCost * 3})`;
+            document.getElementById('spin-btn-5').innerText = `五連抽 ($${currentSingleCost * 5})`;
         }
 
-        function getVisualPoolForCurrentMachine() {
-            if (currentMachine === 'guns') {
-                return [...MASTER_VISUAL_POOL.blue, ...MASTER_VISUAL_POOL.purple, ...MASTER_VISUAL_POOL.pink];
-            } else if (currentMachine === 'pink_purple') {
-                return [...MASTER_VISUAL_POOL.purple, ...MASTER_VISUAL_POOL.pink, ...MASTER_VISUAL_POOL.red];
-            } else if (currentMachine === 'swords') {
-                let pool = [];
-                ['blue', 'purple', 'pink', 'red', 'gold'].forEach(r => {
-                    pool = pool.concat(selectedSwordsPool[r]);
-                });
-                if (pool.length === 0) {
-                    return [...MASTER_VISUAL_POOL.blue, ...MASTER_VISUAL_POOL.purple];
-                }
-                return pool;
-            } else if (currentMachine === 'karambits') {
-                return [...MASTER_VISUAL_POOL.red, ...MASTER_VISUAL_POOL.gold];
-            }
-            return [];
-        }
-
-        function getMachineCost() {
-            if (currentMachine === 'guns') return 2;
-            if (currentMachine === 'pink_purple') return 30;
-            if (currentMachine === 'swords') return calculateSwordsCost();
-            if (currentMachine === 'karambits') return 120;
-            return 2;
-        }
-
-        function updatePityUI() {
-            const fill = document.getElementById('pity-bar-fill');
-            const titleText = document.getElementById('pity-title-text');
-            const percentText = document.getElementById('pity-percent-text');
-            const statusText = document.getElementById('gold-spend-status');
-            const probText = document.getElementById('prob-modal-text');
-
-            if (currentMachine === 'guns') {
-                titleText.innerText = "🔴 「精選槍械」硬性保底計數器";
-                percentText.innerText = `已消金幣: ${totalGoldSpent} / 800`;
-                let pct = Math.min(100, (totalGoldSpent / 800) * 100);
-                fill.style.width = `${pct}%`;
-                statusText.innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出 ★ Butterfly Knife | Naval)`;
-                probText.innerHTML = `🔹 <b>藍色軍規飾品</b>：85%<br>💜 <b>紫色受限飾品</b>：10%<br>💗 <b>粉色保密飾品</b>：5%<br>🔴 <b>紅色隱秘飾品</b>：0%<br>🟡 <b>金色罕見飾品</b>：累計消耗滿 800 金幣必出一次 (★ Butterfly Knife | Naval)`;
-            } 
-            else if (currentMachine === 'pink_purple') {
-                titleText.innerText = "🌸 「猛藍粉紫」硬性保底計數器";
-                percentText.innerText = `已抽次數: ${pinkMachineSpins} / 60 次`;
-                let pct = Math.min(100, (pinkMachineSpins / 60) * 100);
-                fill.style.width = `${pct}%`;
-                statusText.innerText = `*累計已抽次數: ${pinkMachineSpins} / 60 次 (第 60 抽強制必中隨機 🔴 紅色隱秘級 道具)`;
-                probText.innerHTML = `💜 <b>紫色受限飾品</b>：70%<br>💗 <b>粉色保密飾品</b>：30%<br>🔴 <b>紅色隱秘飾品</b>：第 60 抽必定硬保底掉落一件<br>🟡 <b>金色罕見飾品</b>：0%`;
-            } 
-            else if (currentMachine === 'swords') {
-                titleText.innerText = "⚔️ 「戰術關刀」自選硬保底計數器";
-                percentText.innerText = `已消金幣: ${totalGoldSpent} / 1200`;
-                let pct = Math.min(100, (totalGoldSpent / 1200) * 100);
-                fill.style.width = `${pct}%`;
-                statusText.innerText = `*累計已消耗金幣: ${totalGoldSpent} / 1200 (達 1200 金幣必出自選池內最強的 🟡 金色 / 🔴 紅色 飾品)`;
-                probText.innerHTML = `自選配置公示：根據你打勾的武器進行全計數掉落。<br>基礎機率比例偏向藍色與紫色。累積消耗達到 1200 金幣時觸發終極硬保底控制。`;
-            } 
-            else if (currentMachine === 'karambits') {
-                titleText.innerText = "😈 「惡魔爪子」至尊硬保底計數器";
-                percentText.innerText = `已消金幣: ${totalGoldSpent} / 2500`;
-                let pct = Math.min(100, (totalGoldSpent / 2500) * 100);
-                fill.style.width = `${pct}%`;
-                statusText.innerText = `*累計已消耗金幣: ${totalGoldSpent} / 2500 (達 2500 金幣必出 ★ Karambit | Case Hardened 或頂級金)`;
-                probText.innerHTML = `🔴 <b>紅色隱秘飾品</b>：80%<br>🟡 <b>金色罕見飾品</b>：20%<br>達 2500 金幣必定產出頂級究極神刀。`;
+        function redeemCDK() {
+            const input = document.getElementById('cdk-input').value.trim();
+            if (VALID_CDKS[input]) {
+                const amount = VALID_CDKS[input];
+                balance += amount;
+                alert(`🎉 兌換成功！已成功充值 ${amount} 金幣。`);
+                delete VALID_CDKS[input]; 
+                document.getElementById('cdk-input').value = "";
+                updateUI();
+            } else {
+                alert("❌ 無效的 CDK，或該代碼已被使用。");
             }
         }
 
-        function buildTrackSkins(pool) {
+        function getFairVisualSkin() {
+            let r = Math.random() * 100;
+            let targetRarity = 'blue';
+
+            if (currentMachine === 'pink_purple') {
+                if (r < 25.0) targetRarity = 'pink';
+                else if (r < 60.0) targetRarity = 'purple';
+                else targetRarity = 'blue';
+            } else if (currentMachine === 'guns') {
+                // 精選槍械機滾輪公平隨機顯示機率：藍90% | 紫7% | 粉3%
+                if (r < 3.0) targetRarity = 'pink';
+                else if (r < 10.0) targetRarity = 'purple';
+                else targetRarity = 'blue';
+
+                const pool = GUNS_POOL[targetRarity];
+                const item = pool[Math.floor(Math.random() * pool.length)];
+                return { name: item.name, rarity: item.rarity };
+            } else {
+                if (r < 10.0) targetRarity = 'gold';
+                else if (r < 20.0) targetRarity = 'red';
+                else if (r < 35.0) targetRarity = 'pink';
+                else if (r < 60.0) targetRarity = 'purple';
+                else targetRarity = 'blue';
+            }
+
+            const pool = MASTER_VISUAL_POOL[targetRarity];
+            const item = pool[Math.floor(Math.random() * pool.length)];
+            return { name: item.name, rarity: item.rarity };
+        }
+
+        function setupTrack() {
             const track = document.getElementById('roulette-track');
             track.innerHTML = '';
-            if (!pool || pool.length === 0) return;
-            
-            // 隨機鋪設 60 個卡片做滾輪效果
-            for (let i = 0; i < 60; i++) {
-                const item = pool[Math.floor(Math.random() * pool.length)];
-                const card = document.createElement('div');
-                card.className = `skin-card ${item.rarity}`;
-                card.innerHTML = `<div class="skin-name">${item.name}</div>`;
-                track.appendChild(card);
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0px)';
+            for(let i = 0; i < 40; i++) {
+                track.appendChild(createCard(getFairVisualSkin()));
             }
         }
 
-        function startSpin(times) {
-            if (isSpinning) return;
+        function createCard(item) {
+            const card = document.createElement('div');
+            card.className = `skin-card ${item.rarity}`;
+            card.innerHTML = `<div class="skin-name">${item.name}</div>`;
+            return card;
+        }
 
-            // 戰術關刀前置校驗
-            if (currentMachine === 'swords') {
-                if (selectedSwordsPool.blue.length < 10 || selectedSwordsPool.purple.length < 3) {
-                    alert("⚠️ 戰術關刀機台配置不符規則！必須勾選：最少 10 個藍色、3 個紫色飾品！");
-                    return;
+        function calculatePityWin() {
+            let selectedRarity = 'blue';
+
+            // 1. 優先處理「🌸 猛藍粉紫刀槍」機台 (保持原有設定不變)
+            if (currentMachine === 'pink_purple') {
+                pinkMachineSpins++;
+
+                let triggerPink = false;
+                if (pinkMachineSpins === 14 || pinkMachineSpins === 30) {
+                    triggerPink = true;
+                } else if (pinkMachineSpins > 30 && (pinkMachineSpins - 30) % 20 === 0) {
+                    triggerPink = true;
+                }
+
+                let triggerPurple = false;
+                if (pinkMachineSpins === 2 || pinkMachineSpins === 9 || pinkMachineSpins === 19 || pinkMachineSpins === 25) {
+                    triggerPurple = true;
+                } else if (pinkMachineSpins > 25 && (pinkMachineSpins - 25) % 10 === 0) {
+                    triggerPurple = true;
+                }
+
+                if (triggerPink) selectedRarity = 'pink';
+                else if (triggerPurple) selectedRarity = 'purple';
+                else selectedRarity = 'blue';
+
+                return pickFromPlayerOwned(selectedRarity);
+            }
+
+            // 2. 處理「🔫 精選槍械飾品機」及其他標準自選機台的保底邏輯
+            totalSpins++;
+            totalGoldSpent += currentSingleCost;
+
+            // 金色保底條件：滿 800 金幣必定觸發金色
+            if (totalGoldSpent >= 800) {
+                selectedRarity = 'gold';
+                totalGoldSpent -= 800; // 扣除已消耗保底份額
+                return pickFromPlayerOwned(selectedRarity);
+            }
+
+            // 如果當前玩的是精選槍械飾品機，套用全新的指定概率：藍色90%，紫色7%，粉紅色3%，紅色0%
+            if (currentMachine === 'guns') {
+                let rand = Math.random() * 100;
+                if (rand < 3.0) {
+                    selectedRarity = 'pink';   // 3%
+                } else if (rand < 10.0) {
+                    selectedRarity = 'purple'; // 7% (3% 到 10%)
+                } else {
+                    selectedRarity = 'blue';   // 90% (10% 到 100%)
+                }
+            } else {
+                // 其他非 guns 且非粉紫的機台，保持原本的默認分配
+                let triggerPinkStandard = (totalSpins === 14 || totalSpins === 30 || (totalSpins > 30 && (totalSpins - 30) % 20 === 0));
+                let triggerPurpleStandard = (totalSpins === 2 || totalSpins === 9 || totalSpins === 19 || totalSpins === 25 || (totalSpins > 25 && (totalSpins - 25) % 10 === 0));
+
+                if (triggerPinkStandard) {
+                    selectedRarity = 'pink';
+                } else if (triggerPurpleStandard) {
+                    selectedRarity = 'purple';
+                } else {
+                    let randRed = Math.random() * 100;
+                    if (randRed < 5.0 && PLAYER_OWNED_POOL.red.length > 0) {
+                        selectedRarity = 'red';
+                    } else {
+                        selectedRarity = 'blue';
+                    }
                 }
             }
 
-            const costPerSpin = getMachineCost();
-            const totalCost = costPerSpin * times;
+            return pickFromPlayerOwned(selectedRarity);
+        }
+
+        function pickFromPlayerOwned(rarity) {
+            const m = MACHINES[currentMachine];
+            
+            if (m.isCustom) {
+                let pool = swordsSelectedPool[rarity];
+                if (!pool || pool.length === 0) {
+                    pool = swordsSelectedPool.blue;
+                    rarity = 'blue';
+                }
+                const name = pool[Math.floor(Math.random() * pool.length)];
+                return { name: name, rarity: `rarity-${rarity}` };
+            } else if (currentMachine === 'guns') {
+                // 如果觸發滿金幣消耗 hard pity，則單獨從原有金色池中提取
+                if (rarity === 'gold') {
+                    let pool = PLAYER_OWNED_POOL.gold;
+                    const name = pool[Math.floor(Math.random() * pool.length)];
+                    return { name: name, rarity: `rarity-${rarity}` };
+                }
+                let pool = GUNS_POOL[rarity];
+                if (!pool || pool.length === 0) {
+                    pool = GUNS_POOL.blue;
+                    rarity = 'blue';
+                }
+                const item = pool[Math.floor(Math.random() * pool.length)];
+                return { name: item.name, rarity: `rarity-${rarity}` };
+            } else {
+                let pool = PLAYER_OWNED_POOL[rarity];
+                if (!pool || pool.length === 0) {
+                    pool = PLAYER_OWNED_POOL.blue;
+                    rarity = 'blue';
+                }
+                const name = pool[Math.floor(Math.random() * pool.length)];
+                return { name: name, rarity: `rarity-${rarity}` };
+            }
+        }
+
+        function startSpin(multiCount = 1) {
+            if (isSpinning) return;
+            
+            const totalCost = currentSingleCost * multiCount;
 
             if (balance < totalCost) {
-                alert("❌ 金幣不足，充值後再抽吧！");
+                alert("❌ 金幣餘額不足！請先獲取CDK並在頂部充值。");
                 return;
             }
 
             balance -= totalCost;
-            updateBalanceUI();
+            let rollResults = [];
 
-            let finalRewards = [];
-            for (let i = 0; i < times; i++) {
-                let reward = executeLogicDrop(costPerSpin);
-                finalRewards.push(reward);
-                inventory.push(reward);
+            for (let k = 0; k < multiCount; k++) {
+                let winSkin = calculatePityWin();
+                rollResults.push(winSkin);
+                inventory.push(winSkin);
             }
 
-            saveState();
-            updatePityUI();
+            updateUI();
 
-            const skipAnim = document.getElementById('skip-animation-checkbox').checked;
-            if (skipAnim) {
-                showFullscreenReward(finalRewards);
-                renderInventory();
-                buildTrackSkins(getVisualPoolForCurrentMachine());
-            } else {
-                isSpinning = true;
-                setButtonsDisabled(true);
+            const isSkip = document.getElementById('skip-animation-checkbox').checked;
+            if (isSkip) {
+                showFullscreenReward(rollResults);
+                setupTrack();
+                return;
+            }
 
-                const track = document.getElementById('roulette-track');
-                track.style.transition = 'none';
-                track.style.transform = 'translateX(0px)';
+            isSpinning = true;
+            document.getElementById('spin-btn-1').disabled = true;
+            document.getElementById('spin-btn-3').disabled = true;
+            document.getElementById('spin-btn-5').disabled = true;
 
-                // 重新鋪設滾輪，並將正中央（第45張）設置為最後一抽的結果
-                const pool = getVisualPoolForCurrentMachine();
-                track.innerHTML = '';
-                for (let i = 0; i < 60; i++) {
-                    let item = pool[Math.floor(Math.random() * pool.length)];
-                    if (i === 44) {
-                        item = finalRewards[finalRewards.length - 1];
-                    }
-                    const card = document.createElement('div');
-                    card.className = `skin-card ${item.rarity}`;
-                    card.innerHTML = `<div class="skin-name">${item.name}</div>`;
-                    track.appendChild(card);
+            const track = document.getElementById('roulette-track');
+            track.innerHTML = '';
+            track.style.transition = 'none';
+            track.style.transform = 'translateX(0px)';
+
+            const winIndex = 25; 
+            const finalShowSkin = rollResults[rollResults.length - 1];
+
+            for(let i = 0; i < 38; i++) {
+                if (i === winIndex) {
+                    track.appendChild(createCard(finalShowSkin));
+                } else {
+                    track.appendChild(createCard(getFairVisualSkin()));
                 }
+            }
 
-                setTimeout(() => {
+            setTimeout(() => {
+                const cards = track.querySelectorAll('.skin-card');
+                const targetCard = cards[winIndex];
+                const viewport = document.querySelector('.roulette-viewport');
+                
+                if (targetCard && viewport) {
+                    const cardWidth = targetCard.offsetWidth + 4; 
+                    const viewportWidth = viewport.offsetWidth;
+                    const targetOffset = (winIndex * cardWidth) + (cardWidth / 2) - (viewportWidth / 2);
+                    
                     track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
-                    // 每張卡寬度 120px + 邊距 4px = 124px
-                    // 視窗中心點修正 450 - (124/2) = 388
-                    let targetX = -(44 * 124) + 388;
-                    // 微調中央偏移，模擬真實滾輪指針效果
-                    targetX += (Math.random() * 40 - 20);
-                    track.style.transform = `translateX(${targetX}px)`;
-                }, 50);
-
-                setTimeout(() => {
-                    showFullscreenReward(finalRewards);
-                    renderInventory();
-                    isSpinning = false;
-                    setButtonsDisabled(false);
-                }, 3600);
-            }
-        }
-
-        function executeLogicDrop(cost) {
-            totalSpins++;
-            totalGoldSpent += cost;
-
-            if (currentMachine === 'guns') {
-                // 硬性計數保底滿 800 金幣必出金
-                if (totalGoldSpent >= 800) {
-                    totalGoldSpent -= 800; // 重置硬計數器
-                    return { name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" };
+                    track.style.transform = `translateX(-${targetOffset}px)`;
+                } else {
+                    track.style.transition = 'transform 3.5s cubic-bezier(0.1, 0.9, 0.1, 1)';
+                    track.style.transform = 'translateX(-2538px)';
                 }
-                // 正常隨機抽取
-                let roll = Math.random() * 100;
-                if (roll < 5) return getRandomItemFromPool('pink');
-                if (roll < 15) return getRandomItemFromPool('purple');
-                return getRandomItemFromPool('blue');
-            } 
-            else if (currentMachine === 'pink_purple') {
-                pinkMachineSpins++;
-                // 滿 60 次硬保底必出紅
-                if (pinkMachineSpins >= 60) {
-                    pinkMachineSpins = 0; // 重置次數器
-                    return getRandomItemFromPool('red');
-                }
-                let roll = Math.random() * 100;
-                if (roll < 30) return getRandomItemFromPool('pink');
-                return getRandomItemFromPool('purple');
-            } 
-            else if (currentMachine === 'swords') {
-                // 達到 1200 金幣必出池內最高等道具
-                if (totalGoldSpent >= 1200) {
-                    totalGoldSpent -= 1200;
-                    if (selectedSwordsPool.gold.length > 0) return getRandomFromSelected('gold');
-                    if (selectedSwordsPool.red.length > 0) return getRandomFromSelected('red');
-                    if (selectedSwordsPool.pink.length > 0) return getRandomFromSelected('pink');
-                    return getRandomFromSelected('purple');
-                }
-                // 根據打勾的自選池加權抽取
-                let roll = Math.random() * 100;
-                if (roll < 2 && selectedSwordsPool.gold.length > 0) return getRandomFromSelected('gold');
-                if (roll < 7 && selectedSwordsPool.red.length > 0) return getRandomFromSelected('red');
-                if (roll < 17 && selectedSwordsPool.pink.length > 0) return getRandomFromSelected('pink');
-                if (roll < 45 && selectedSwordsPool.purple.length > 0) return getRandomFromSelected('purple');
-                return getRandomFromSelected('blue');
-            } 
-            else if (currentMachine === 'karambits') {
-                if (totalGoldSpent >= 2500) {
-                    totalGoldSpent -= 2500;
-                    return { name: "★ Karambit | Case Hardened", rarity: "rarity-gold" };
-                }
-                let roll = Math.random() * 100;
-                if (roll < 20) return getRandomItemFromPool('gold');
-                return getRandomItemFromPool('red');
-            }
+            }, 50);
 
-            return { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" };
-        }
-
-        function getRandomItemFromPool(rarityKey) {
-            const arr = MASTER_VISUAL_POOL[rarityKey];
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        function getRandomFromSelected(rarityKey) {
-            const arr = selectedSwordsPool[rarityKey];
-            if (!arr || arr.length === 0) return getRandomItemFromPool(rarityKey);
-            return arr[Math.floor(Math.random() * arr.length)];
-        }
-
-        function setButtonsDisabled(disabled) {
-            document.getElementById('spin-btn-1').disabled = disabled;
-            document.getElementById('spin-btn-3').disabled = disabled;
-            document.getElementById('spin-btn-5').disabled = disabled;
+            setTimeout(() => {
+                isSpinning = false;
+                document.getElementById('spin-btn-1').disabled = false;
+                document.getElementById('spin-btn-3').disabled = false;
+                document.getElementById('spin-btn-5').disabled = false;
+                showFullscreenReward(rollResults);
+                setupTrack();
+            }, 3600);
         }
 
         function renderInventory() {
             const grid = document.getElementById('inventory-grid');
             grid.innerHTML = '';
+            if (inventory.length === 0) {
+                grid.innerHTML = '<div style="color: #666; font-size:12px; padding: 20px; grid-column: 1/-1; text-align:center;">暫無道具，快去體驗開箱吧！</div>';
+                return;
+            }
             inventory.forEach((item, index) => {
-                const box = document.createElement('div');
-                box.className = 'inv-item';
-                box.innerHTML = `
-                    <div class="skin-card ${item.rarity}" style="width:100%; height:75px; margin:0; border-radius:4px;">
-                        <div class="inv-item-name">${item.name}</div>
-                    </div>
+                const div = document.createElement('div');
+                div.className = 'inv-item';
+                div.innerHTML = `
+                    <div class="inv-item-name">${item.name}</div>
                     <div class="inv-actions">
                         <button class="inv-btn btn-withdraw" onclick="withdrawItem(${index})">提取道具</button>
                     </div>
                 `;
-                grid.appendChild(box);
+                grid.appendChild(div);
             });
         }
 
-        function withdrawItem(idx) {
-            const item = inventory[idx];
-            inventory.splice(idx, 1);
-            saveState();
-            renderInventory();
-            alert(`申請成功！請複製抽中道具：\n「${item.name}」\n前往聯絡客服，正常會在12小時內手動發貨！`);
+        function withdrawItem(index) {
+            const item = inventory[index];
+            alert(`申請成功！請複製抽中道具：
+「${item.name}」
+前往聯絡客服，正常會在12小時內手動發貨！`);
         }
 
         function showFullscreenReward(skins) {
@@ -1210,10 +1495,8 @@
         function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
         function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
 
-        updateBalanceUI();
         initSwordsConfigPanel();
         switchMachine('guns');
-        renderInventory();
     </script>
 </body>
 </html>

@@ -296,7 +296,6 @@
         .tag.purple { color: var(--purple); }
         .tag.blue { color: var(--blue); }
 
-        /* 彈窗 */
         .modal {
             position: fixed;
             top:0; left:0; width:100%; height:100%;
@@ -401,11 +400,6 @@
             cursor: pointer;
             font-size: 12px;
         }
-
-        .info-btn:hover {
-            border-color: #666;
-            color: #bbb;
-        }
     </style>
 </head>
 <body>
@@ -418,34 +412,19 @@
     <div class="main-container">
         
         <div class="machine-tabs">
-            <button class="tab-btn active" data-machine="guns" onclick="switchMachine('guns')">槍械盲盒 ($45)</button>
+            <button class="tab-btn active" data-machine="guns" onclick="switchMachine('guns')">精選槍械飾品機 ($45)</button>
             <button class="tab-btn" data-machine="pink_purple" onclick="switchMachine('pink_purple')">保底粉紫盒 ($19)</button>
             <button class="tab-btn" data-machine="swords" onclick="switchMachine('swords')">自訂武器箱</button>
         </div>
 
         <div id="machine-guns" class="machine-section active">
             <div class="config-panel">
-                <div class="config-title">
-                    <span>槍械盲盒內部硬核控制（僅管理員可見）</span>
-                    <button class="info-btn" onclick="showProbInfo()">查看原生機率</button>
-                </div>
+                <div class="config-title"><span>精選槍械飾品機（概率已鎖定）</span></div>
                 <div class="config-row">
-                    <span>當前盲盒累計消費金額：</span>
+                    <span>當前累計總消費：</span>
                     <span style="color:var(--gold); font-weight:bold;">$<span id="stat-guns-spent">0</span></span>
                 </div>
-                <div class="config-row">
-                    <span>金色隱秘硬性保底門檻（累計消費）：</span>
-                    <span style="color:var(--gold); font-weight:bold;">$800</span>
-                </div>
-                <div class="config-row">
-                    <span>紅色保底機制：</span>
-                    <span>每抽 <input type="number" id="cfg-guns-red-rate" value="10"> % 機率觸發必中紅</span>
-                </div>
-                <div class="config-row">
-                    <span style="color:#aaa; font-size:12px;">* 說明：系統在每一抽時，若累計消費達到 $800 且未出過金，將進行硬性強制截胡發放金色道具！</span>
-                </div>
             </div>
-
             <div class="display-wall">
                 <div class="wall-title">本箱包含獎池道具一覽</div>
                 <div class="item-grid" id="grid-guns"></div>
@@ -459,10 +438,6 @@
                     <span>當前已連黑抽數（未中粉色）：</span>
                     <span style="color:var(--pink); font-weight:bold;"><span id="stat-pp-badluck">0</span> 抽</span>
                 </div>
-                <div class="config-row">
-                    <span>硬性保底設定（多少抽必中粉色）：</span>
-                    <span><input type="number" id="cfg-pp-limit" value="5"> 抽</span>
-                </div>
             </div>
             <div class="display-wall">
                 <div class="wall-title">粉紫盲盒獎池一覽</div>
@@ -472,7 +447,7 @@
 
         <div id="machine-swords" class="machine-section">
             <div class="config-panel">
-                <div class="config-title">動態自訂終極武器箱設定</div>
+                <div class="config-title">自訂武器箱設定</div>
                 <div id="swords-dynamic-config"></div>
             </div>
             <div class="display-wall">
@@ -489,66 +464,84 @@
         </div>
 
         <div class="history-panel">
-            <div class="history-header">
-                <span>即時抽獎歷史記錄</span>
-                <span style="color:#666; font-size:12px;">僅顯示最新5條</span>
-            </div>
+            <div class="history-header"><span>即時抽獎歷史記錄</span></div>
             <div class="history-list" id="history-container">
                 <div style="color:#555; text-align:center; padding:10px;">暫無抽獎記錄</div>
             </div>
-        </div>
-
-    </div>
-
-    <div id="prob-modal" class="modal">
-        <div class="modal-content">
-            <h3 style="color:var(--gold); margin-top:0;">盲盒原生基礎機率公示</h3>
-            <table style="width:100%; border-collapse:collapse; margin:20px 0; text-align:left; font-size:14px;">
-                <tr style="border-bottom:1px solid #333;"><th style="padding:8px;">級別</th><th style="padding:8px;">槍械盒</th><th style="padding:8px;">粉紫盒</th></tr>
-                <tr style="color:var(--gold); border-bottom:1px solid #222;"><td style="padding:8px;">金色 (隱秘)</td><td style="padding:8px;">0.26%</td><td style="padding:8px;">--</td></tr>
-                <tr style="color:var(--red); border-bottom:1px solid #222;"><td style="padding:8px;">紅色 (保密)</td><td style="padding:8px;">3.00%</td><td style="padding:8px;">--</td></tr>
-                <tr style="color:var(--pink); border-bottom:1px solid #222;"><td style="padding:8px;">粉色 (受限)</td><td style="padding:8px;">15.00%</td><td style="padding:8px;">25.00%</td></tr>
-                <tr style="color:var(--purple); border-bottom:1px solid #222;"><td style="padding:8px;">紫色 (軍規)</td><td style="padding:8px;">35.00%</td><td style="padding:8px;">75.00%</td></tr>
-                <tr style="color:var(--blue);"><td style="padding:8px;">藍色 (工業)</td><td style="padding:8px;">46.74%</td><td style="padding:8px;">--</td></tr>
-            </table>
-            <p style="font-size:12px; color:#777; text-align:left; line-height:1.4;">* 注意：當控制台觸發「硬性保底機制」時，系統會無視上述原生機率，強制為特定抽數或金額發放對應的高級獎勵。</p>
-            <button class="modal-btn" onclick="closeProbModal()">確定</button>
         </div>
     </div>
 
     <div id="reward-fullscreen-modal" class="fullscreen-reward-modal">
         <div class="reward-title" id="reward-title-main">恭喜獲得以下道具</div>
         <div class="fullscreen-reward-container" id="fullscreen-reward-container"></div>
-        <div>
-            <button class="modal-btn" onclick="closeFullscreenModal()">收下道具</button>
-        </div>
+        <div><button class="modal-btn" onclick="closeFullscreenModal()">收下道具</button></div>
     </div>
 
     <script>
-        // 全域核心數據
         let balance = 50000;
         let currentMachine = 'guns';
+        let totalGunsSpent = 0;
+        let hasWonGold = false; 
+        let pinkPurpleBadLuck = 0;
 
-        // 統計控制變數
-        let totalGunsSpent = 0;       // 槍械盲盒累計消費金額
-        let hasWonGold = false;       // 是否已經出過金色（用於重置或截胡邏輯判斷）
-        let pinkPurpleBadLuck = 0;   // 粉紫盲盒連黑抽數
-
-        // 價格配置
         const prices = { guns: 45, pink_purple: 19, swords: 30 };
 
-        // 獎池數據配置
+        // 精選槍械飾品機獎池：藍90%, 紫7%, 粉3%, 紅0%
         const gunsPool = [
-            { name: "M4A1-S | 消音型 | 獅子之皇 (金色)", rarity: "gold", prob: 0.0026 },
-            { name: "AWP | 永恆之槍 (紅色)", rarity: "red", prob: 0.01 },
-            { name: "AK-47 | 火神 (紅色)", rarity: "red", prob: 0.02 },
-            { name: "M4A4 | 咆哮 (紅色)", rarity: "red", prob: 0.00 },
-            { name: "USP-S | 獵戶 (粉色)", rarity: "pink", prob: 0.05 },
-            { name: "Glock-18 | 漸層迪斯可 (粉色)", rarity: "pink", prob: 0.10 },
-            { name: "Desert Eagle | 密碼鎖 (紫色)", rarity: "purple", prob: 0.15 },
-            { name: "MAC-10 | 霓虹騎士 (紫色)", rarity: "purple", prob: 0.20 },
-            { name: "SG 553 | 意航員 (藍色)", rarity: "blue", prob: 0.25 },
-            { name: "Galil AR | 冷石 (藍色)", rarity: "blue", prob: 0.2174 }
+            { name: "AUG | Overgrowth", rarity: "blue", prob: 0.90 },
+            { name: "Desert Eagle | Mercy", rarity: "blue", prob: 0.00 },
+            { name: "Desert Eagle | Paranoia", rarity: "blue", prob: 0.00 },
+            { name: "Desert Eagle | Permafrost", rarity: "blue", prob: 0.00 },
+            { name: "Desert Eagle | Turbo", rarity: "blue", prob: 0.00 },
+            { name: "Dual Berettas | Choking Hazard", rarity: "blue", prob: 0.00 },
+            { name: "Dual Berettas | Tension", rarity: "blue", prob: 0.00 },
+            { name: "Dual Berettas | Vernal", rarity: "blue", prob: 0.00 },
+            { name: "Five-SeveN | Control", rarity: "blue", prob: 0.00 },
+            { name: "Five-SeveN | Icecap", rarity: "blue", prob: 0.00 },
+            { name: "Glock-18 | Broken Tv", rarity: "blue", prob: 0.00 },
+            { name: "Glock-18 | Fuji", rarity: "blue", prob: 0.00 },
+            { name: "P250 | B-250", rarity: "blue", prob: 0.00 },
+            { name: "P250 | Glacial", rarity: "blue", prob: 0.00 },
+            { name: "P250 | Mindspill", rarity: "blue", prob: 0.00 },
+            { name: "P250 | Pulse", rarity: "blue", prob: 0.00 },
+            { name: "Tec-9 | Monarch", rarity: "blue", prob: 0.00 },
+            { name: "Tec-9 | Striker", rarity: "blue", prob: 0.00 },
+            { name: "USP-S | Heated", rarity: "blue", prob: 0.00 },
+            { name: "MAC-10 | Daisies", rarity: "blue", prob: 0.00 },
+            { name: "MAC-10 | Ivory", rarity: "blue", prob: 0.00 },
+            { name: "MP9 | Canyon", rarity: "blue", prob: 0.00 },
+            { name: "P90 | Big Cat", rarity: "blue", prob: 0.00 },
+            { name: "P90 | Database", rarity: "blue", prob: 0.00 },
+            { name: "MAG-7 | Vision 7", rarity: "blue", prob: 0.00 },
+            { name: "Negev | Noctiflora", rarity: "blue", prob: 0.00 },
+            { name: "Negev | Rotary Power", rarity: "blue", prob: 0.00 },
+            { name: "Negev | The Jungle", rarity: "blue", prob: 0.00 },
+            { name: "Nova | Flutter", rarity: "blue", prob: 0.00 },
+            { name: "Nova | Half+One", rarity: "blue", prob: 0.00 },
+            { name: "Nova | Heat", rarity: "blue", prob: 0.00 },
+            { name: "XM1014 | Abstract", rarity: "blue", prob: 0.00 },
+            { name: "XM1014 | Koi", rarity: "blue", prob: 0.00 },
+            { name: "XM1014 | Lilies", rarity: "blue", prob: 0.00 },
+            
+            { name: "AK-47 | PinPoint", rarity: "purple", prob: 0.07 },
+            { name: "AK-47 | Red Baron", rarity: "purple", prob: 0.00 },
+            { name: "AUG | Hot Rod", rarity: "purple", prob: 0.00 },
+            { name: "AUG | Predator", rarity: "purple", prob: 0.00 },
+            { name: "AWP | Typhon", rarity: "purple", prob: 0.00 },
+            { name: "FAMAS | Arctic Camo", rarity: "purple", prob: 0.00 },
+            { name: "FAMAS | Medic", rarity: "purple", prob: 0.00 },
+            { name: "Galil AR | Irid", rarity: "purple", prob: 0.00 },
+            { name: "Galil AR | Irradiated", rarity: "purple", prob: 0.00 },
+            { name: "Galil AR | Monochrome", rarity: "purple", prob: 0.00 },
+            { name: "M4A1-S | BlackOps", rarity: "purple", prob: 0.00 },
+            { name: "M4A1-S | Retro", rarity: "purple", prob: 0.00 },
+            { name: "M4A4 | B-Hop", rarity: "purple", prob: 0.00 },
+            { name: "SG 553 | Dynasty", rarity: "purple", prob: 0.00 },
+            { name: "SG 553 | Frostline", rarity: "purple", prob: 0.00 },
+            { name: "SSG 08 | Desert Strike", rarity: "purple", prob: 0.00 },
+            { name: "SSG 08 | Labyrinth", rarity: "purple", prob: 0.00 },
+
+            { name: "M4A1-S | 隱秘金飾", rarity: "pink", prob: 0.03 }
         ];
 
         const pinkPurplePool = [
@@ -564,137 +557,68 @@
             { name: "⭐ 流浪者刀 | 表面淬火", rarity: "purple", prob: 0.50 }
         ];
 
-        // 初始化渲染獎池牆
         function renderPoolGrid(pool, gridId) {
             const container = document.getElementById(gridId);
             container.innerHTML = '';
             pool.forEach(item => {
-                const card = document.createElement('div');
-                card.className = `item-card ${item.rarity}`;
-                card.innerHTML = `
-                    <div class="item-name">${item.name}</div>
-                    <div class="item-prob">權重/原生: ${(item.prob * 100).toFixed(2)}%</div>
-                `;
-                container.appendChild(card);
+                if (item.prob > 0) {
+                    const card = document.createElement('div');
+                    card.className = `item-card ${item.rarity}`;
+                    card.innerHTML = `<div class="item-name">${item.name}</div><div class="item-prob">機率: ${(item.prob * 100).toFixed(0)}%</div>`;
+                    container.appendChild(card);
+                }
             });
         }
 
         renderPoolGrid(gunsPool, 'grid-guns');
         renderPoolGrid(pinkPurplePool, 'grid-pink_purple');
+        renderPoolGrid(swordsPool, 'grid-swords');
 
-        function initSwordsConfigPanel() {
-            renderPoolGrid(swordsPool, 'grid-swords');
-            const container = document.getElementById('swords-dynamic-config');
-            container.innerHTML = '';
-            swordsPool.forEach((item, index) => {
-                const row = document.createElement('div');
-                row.className = 'config-row';
-                row.innerHTML = `
-                    <span class="tag ${item.rarity}">${item.name}</span>
-                    <div>
-                        分配概率: <input type="number" step="1" id="cfg-sword-p-${index}" value="${item.prob * 100}" onchange="updateSwordsProb(${index}, this.value)"> %
-                    </div>
-                `;
-                container.appendChild(row);
-            });
-        }
-
-        function updateSwordsProb(index, val) {
-            swordsPool[index].prob = parseFloat(val) / 100;
-            renderPoolGrid(swordsPool, 'grid-swords');
-        }
-
-        // 切換盲盒機台
         function switchMachine(type) {
             currentMachine = type;
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelector(`.tab-btn[data-machine="${type}"]`).classList.add('active');
-
             document.querySelectorAll('.machine-section').forEach(sec => sec.classList.remove('active'));
             document.getElementById(`machine-${type}`).classList.add('active');
-
             const sBtn = document.getElementById('btn-single');
             const tBtn = document.getElementById('btn-ten');
-
-            sBtn.className = `draw-btn btn-${type}`;
-            tBtn.className = `draw-btn btn-${type}`;
-
             sBtn.innerText = `單抽 ($${prices[type]})`;
             tBtn.innerText = type === 'swords' ? '自訂五連抽' : '十連抽';
         }
 
-        // 核心抽卡邏輯
         function executeDraw(times) {
-            if (currentMachine === 'swords' && times === 10) times = 5; // 自訂箱改為5連抽
+            if (currentMachine === 'swords' && times === 10) times = 5;
             const cost = prices[currentMachine] * times;
-
-            if (balance < cost) {
-                alert('您的餘額不足，請聯絡客服儲值！');
-                return;
-            }
-
+            if (balance < cost) { alert('餘額不足'); return; }
             balance -= cost;
             document.getElementById('user-balance').innerText = balance;
-
             let results = [];
-
             for (let i = 0; i < times; i++) {
                 let reward = null;
-
                 if (currentMachine === 'guns') {
-                    // 每次扣費時，將單抽價格 ($45) 累加到總消費中
                     totalGunsSpent += prices.guns;
                     document.getElementById('stat-guns-spent').innerText = totalGunsSpent;
-
-                    // 硬性金色保底控制：累計消費達到或超過 $800 且從未出過金
                     if (totalGunsSpent >= 800 && !hasWonGold) {
-                        const golds = gunsPool.filter(x => x.rarity === 'gold');
-                        reward = golds[Math.floor(Math.random() * golds.length)];
-                        hasWonGold = true; // 標記已中過金，隨後解鎖正常隨機
-                    } else {
-                        // 否則進入普通的紅色保底或原生隨機邏輯
-                        const redCtrl = parseFloat(document.getElementById('cfg-guns-red-rate').value) / 100;
-                        if (Math.random() < redCtrl) {
-                            const reds = gunsPool.filter(x => x.rarity === 'red');
-                            reward = reds[Math.floor(Math.random() * reds.length)];
-                        } else {
-                            reward = getRandomItem(gunsPool);
-                        }
-                    }
-
-                    // 如果在正常隨機中意外抽到了金色，也將 hasWonGold 設為 true
-                    if (reward && reward.rarity === 'gold') {
+                        reward = { name: "★ 隱秘金槍 (保底)", rarity: "gold" };
                         hasWonGold = true;
+                    } else {
+                        reward = getRandomItem(gunsPool);
+                        if (reward.rarity === 'gold') hasWonGold = true;
                     }
-
                 } else if (currentMachine === 'pink_purple') {
                     pinkPurpleBadLuck++;
-                    const ppLimit = parseInt(document.getElementById('cfg-pp-limit').value) || 5;
-
-                    if (pinkPurpleBadLuck >= ppLimit) {
-                        const pinks = pinkPurplePool.filter(x => x.rarity === 'pink');
-                        reward = pinks[Math.floor(Math.random() * pinks.length)];
-                        pinkPurpleBadLuck = 0;
-                    } else {
-                        reward = getRandomItem(pinkPurplePool);
-                        if (reward.rarity === 'pink') {
-                            pinkPurpleBadLuck = 0;
-                        }
-                    }
+                    reward = getRandomItem(pinkPurplePool);
+                    if (reward.rarity === 'pink') pinkPurpleBadLuck = 0;
                     document.getElementById('stat-pp-badluck').innerText = pinkPurpleBadLuck;
-
-                } else if (currentMachine === 'swords') {
-                    reward = getRandomItemByWeight(swordsPool);
+                } else {
+                    reward = getRandomItem(swordsPool);
                 }
-
                 results.push(reward);
                 addHistoryLog(reward);
             }
-
             showFullscreenReward(results);
         }
 
-        // 基礎概率隨機算法
         function getRandomItem(pool) {
             let r = Math.random();
             let sum = 0;
@@ -702,82 +626,33 @@
                 sum += item.prob;
                 if (r <= sum) return item;
             }
-            return pool[pool.length - 1];
+            return pool[0];
         }
 
-        // 權重隨機算法 (自訂箱使用)
-        function getRandomItemByWeight(pool) {
-            let totalWeight = pool.reduce((acc, el) => acc + el.prob, 0);
-            let r = Math.random() * totalWeight;
-            let sum = 0;
-            for (let item of pool) {
-                sum += item.prob;
-                if (r <= sum) return item;
-            }
-            return pool[pool.length - 1];
-        }
-
-        // 添加歷史記錄
         function addHistoryLog(item) {
             const container = document.getElementById('history-container');
-            if (container.innerHTML.includes('暫無抽獎記錄')) {
-                container.innerHTML = '';
-            }
-
+            if (container.innerHTML.includes('暫無抽獎記錄')) container.innerHTML = '';
             const log = document.createElement('div');
             log.className = 'history-item';
-            const timeStr = new Date().toLocaleTimeString();
-            
-            let typeName = "槍械盒";
-            if (currentMachine === 'pink_purple') typeName = "粉紫盒";
-            if (currentMachine === 'swords') typeName = "自訂箱";
-
-            log.innerHTML = `
-                <span>[${timeStr}] ${typeName}</span>
-                <span class="tag ${item.rarity}">${item.name}</span>
-            `;
-
+            log.innerHTML = `<span>抽中</span><span class="tag ${item.rarity}">${item.name}</span>`;
             container.insertBefore(log, container.firstChild);
-
-            if (container.children.length > 5) {
-                container.removeChild(container.lastChild);
-            }
+            if (container.children.length > 5) container.removeChild(container.lastChild);
         }
 
         function showFullscreenReward(skins) {
             const modal = document.getElementById('reward-fullscreen-modal');
             const container = document.getElementById('fullscreen-reward-container');
             container.innerHTML = '';
-
-            if (currentMachine === 'pink_purple') {
-                document.getElementById('reward-title-main').style.color = "var(--pink)";
-            } else if (currentMachine === 'guns' && skins.some(s => s.rarity === 'gold')) {
-                document.getElementById('reward-title-main').style.color = "var(--gold)";
-            } else {
-                document.getElementById('reward-title-main').style.color = "var(--red)";
-            }
-
             skins.forEach((skin, idx) => {
                 const card = document.createElement('div');
                 card.className = `reward-card ${skin.rarity}`;
-                card.innerHTML = `
-                    <div style=\"font-size:10px; color:#aaa;\">第 ${idx + 1} 抽</div>
-                    <div class=\"reward-card-name\">${skin.name}</div>
-                `;
+                card.innerHTML = `<div class="reward-card-name">${skin.name}</div>`;
                 container.appendChild(card);
             });
             modal.style.display = 'flex';
         }
 
-        function closeFullscreenModal() {
-            document.getElementById('reward-fullscreen-modal').style.display = 'none';
-        }
-
-        function showProbInfo() { document.getElementById('prob-modal').style.display = 'flex'; }
-        function closeProbModal() { document.getElementById('prob-modal').style.display = 'none'; }
-
-        initSwordsConfigPanel();
-        switchMachine('guns');
+        function closeFullscreenModal() { document.getElementById('reward-fullscreen-modal').style.display = 'none'; }
     </script>
 </body>
 </html>

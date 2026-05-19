@@ -592,9 +592,9 @@
             <h3 style="text-align: center; color: var(--gold); margin-top:0;">📊 精選槍械飾品機抽獎機率</h3>
             <hr style="border-color: var(--border-color);">
             <div style="font-size: 12px; line-height: 1.8; text-align: left;" id="prob-modal-text">
-                🔹 <b>藍色軍規飾品</b>：90%<br>
-                💜 <b>紫色受限飾品</b>：7%<br>
-                💗 <b>粉色保密飾品</b>：3%<br>
+                🔹 <b>藍色軍規飾品</b>：85%<br>
+                💜 <b>紫色受限飾品</b>：10%<br>
+                💗 <b>粉色保密飾品</b>：5%<br>
                 🔴 <b>紅色隱秘飾品</b>：0%<br>
                 🟡 <b>金色罕見飾品</b>：累計消耗滿 800 金幣必出一次 (★ Butterfly Knife | Naval)
             </div>
@@ -972,70 +972,6 @@
             ]
         };
 
-        // 「精選槍械飾品機」專屬限制指定庫
-        const GUNS_POOL = {
-            blue: [
-                { name: "AUG | Overgrowth", rarity: "rarity-blue" },
-                { name: "Desert Eagle | Permafrost", rarity: "rarity-blue" },
-                { name: "Desert Eagle | Turbo", rarity: "rarity-blue" },
-                { name: "Dual Berettas | Choking Hazard", rarity: "rarity-blue" },
-                { name: "Five-SeveN | Icecap", rarity: "rarity-blue" },
-                { name: "Glock-18 | Broken Tv", rarity: "rarity-blue" },
-                { name: "P250 | B-250", rarity: "rarity-blue" },
-                { name: "P250 | Glacial", rarity: "rarity-blue" },
-                { name: "Tec-9 | Monarch", rarity: "rarity-blue" },
-                { name: "MAC-10 | Daisies", rarity: "rarity-blue" },
-                { name: "MP9 | Canyon", rarity: "rarity-blue" },
-                { name: "P90 | Big Cat", rarity: "rarity-blue" },
-                { name: "P90 | Database", rarity: "rarity-blue" },
-                { name: "MAG-7 | Vision 7", rarity: "rarity-blue" },
-                { name: "Negev | Noctiflora", rarity: "rarity-blue" },
-                { name: "Negev | Rotary Power", rarity: "rarity-blue" },
-                { name: "Negev | The Jungle", rarity: "rarity-blue" },
-                { name: "Nova | Flutter", rarity: "rarity-blue" },
-                { name: "Nova | Half+One", rarity: "rarity-blue" },
-                { name: "Nova | Heat", rarity: "rarity-blue" },
-                { name: "XM1014 | Abstract", rarity: "rarity-blue" },
-                { name: "XM1014 | Koi", rarity: "rarity-blue" },
-                { name: "XM1014 | Lilies", rarity: "rarity-blue" },
-                { name: "AK-47 | PinPoint", rarity: "rarity-blue" },
-                { name: "AUG | Predator", rarity: "rarity-blue" },
-                { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
-                { name: "Galil AR | Irradiated", rarity: "rarity-blue" },
-                { name: "SG 553 | Frostline", rarity: "rarity-blue" },
-                { name: "SSG 08 | Desert Strike", rarity: "rarity-blue" }
-            ],
-            purple: [
-                { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" },
-                { name: "Dual Berettas | Tension", rarity: "rarity-purple" },
-                { name: "Dual Berettas | Vernal", rarity: "rarity-purple" },
-                { name: "Five-SeveN | Control", rarity: "rarity-purple" },
-                { name: "P250 | Pulse", rarity: "rarity-purple" },
-                { name: "Tec-9 | Striker", rarity: "rarity-purple" },
-                { name: "USP-S | Heated", rarity: "rarity-purple" },
-                { name: "MAC-10 | Ivory", rarity: "rarity-purple" },
-                { name: "AUG | Hot Rod", rarity: "rarity-purple" },
-                { name: "FAMAS | Medic", rarity: "rarity-purple" },
-                { name: "M4A1-S | BlackOps", rarity: "rarity-purple" },
-                { name: "SSG 08 | Labyrinth", rarity: "rarity-purple" }
-            ],
-            pink: [
-                { name: "Desert Eagle | Mercy", rarity: "rarity-pink" },
-                { name: "Glock-18 | Fuji", rarity: "rarity-pink" },
-                { name: "P250 | Mindspill", rarity: "rarity-pink" },
-                { name: "AWP | Typhon", rarity: "rarity-pink" },
-                { name: "Galil AR | Monochrome", rarity: "rarity-pink" },
-                { name: "SG 553 | Dynasty", rarity: "rarity-pink" }
-            ],
-            red: [
-                { name: "AK-47 | Red Baron", rarity: "rarity-red" },
-                { name: "Galil AR | Irid", rarity: "rarity-red" },
-                { name: "M4A1-S | Retro", rarity: "rarity-red" },
-                { name: "M4A4 | B-Hop", rarity: "rarity-red" }
-            ],
-            gold: []
-        };
-
         const MACHINES = {
             guns: { title: "精選槍械飾品機台", cost: 2, isCustom: false },
             pink_purple: { title: "🌸 猛藍粉紫刀槍", cost: 4, isCustom: false }, 
@@ -1056,12 +992,12 @@
                 if (barProgress === 0 && pinkMachineSpins > 0) barProgress = 20;
                 
                 document.getElementById('pity-title-text').innerText = "💗 本機台保底：20次必出粉";
-                document.getElementById('pity-percent-text').innerText = `當前保底進度: ${barProgress} / 20次`;
+                document.getElementById('pity-percent-text').innerText = `當前保底進度: ${barProgress} / 20 次`;
                 document.getElementById('gold-spend-status').innerText = `*本機台累計總抽數: ${pinkMachineSpins} 次 (全面剔除紅、黃品種)`;
                 document.getElementById('pity-bar-fill').style.width = (barProgress / 20 * 100) + '%';
             } else if (currentMachine === 'guns') {
-                // 顯示精選槍械機的進度資訊與修改後的精確機率公告
-                document.getElementById('pity-title-text').innerText = "🔴 當前機台機率：藍90% | 紫7% | 粉3% | 紅0%";
+                // 顯示精選槍械機的進度資訊
+                document.getElementById('pity-title-text').innerText = "🔴 當前機台機率：藍85% | 紫10% | 粉5% | 紅0%";
                 document.getElementById('pity-percent-text').innerText = `當前總抽數: ${totalSpins}次`;
                 document.getElementById('gold-spend-status').innerText = `*累計金幣消耗: ${totalGoldSpent} / 800 (滿 800 金幣必出金色神刀)`;
                 const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
@@ -1216,14 +1152,9 @@
                 else if (r < 60.0) targetRarity = 'purple';
                 else targetRarity = 'blue';
             } else if (currentMachine === 'guns') {
-                // 精選槍械機滾輪公平隨機顯示機率：藍90% | 紫7% | 粉3%
-                if (r < 3.0) targetRarity = 'pink';
-                else if (r < 10.0) targetRarity = 'purple';
+                if (r < 5.0) targetRarity = 'pink';
+                else if (r < 15.0) targetRarity = 'purple';
                 else targetRarity = 'blue';
-
-                const pool = GUNS_POOL[targetRarity];
-                const item = pool[Math.floor(Math.random() * pool.length)];
-                return { name: item.name, rarity: item.rarity };
             } else {
                 if (r < 10.0) targetRarity = 'gold';
                 else if (r < 20.0) targetRarity = 'red';
@@ -1254,6 +1185,7 @@
             return card;
         }
 
+        // 核心抽象機制改動：精選槍械飾品機專屬概率邏輯
         function calculatePityWin() {
             let selectedRarity = 'blue';
 
@@ -1293,15 +1225,15 @@
                 return pickFromPlayerOwned(selectedRarity);
             }
 
-            // 如果當前玩的是精選槍械飾品機，套用全新的指定概率：藍色90%，紫色7%，粉紅色3%，紅色0%
+            // 如果當前玩的是精選槍械飾品機，套用指定的概率：藍色85%，紫色10%，粉紅色5%，紅色0%
             if (currentMachine === 'guns') {
                 let rand = Math.random() * 100;
-                if (rand < 3.0) {
-                    selectedRarity = 'pink';   // 3%
-                } else if (rand < 10.0) {
-                    selectedRarity = 'purple'; // 7% (3% 到 10%)
+                if (rand < 5.0) {
+                    selectedRarity = 'pink';   // 5%
+                } else if (rand < 15.0) {
+                    selectedRarity = 'purple'; // 10% (5% 到 15%)
                 } else {
-                    selectedRarity = 'blue';   // 90% (10% 到 100%)
+                    selectedRarity = 'blue';   // 85% (15% 到 100%)
                 }
             } else {
                 // 其他非 guns 且非粉紫的機台，保持原本的默認分配
@@ -1336,20 +1268,6 @@
                 }
                 const name = pool[Math.floor(Math.random() * pool.length)];
                 return { name: name, rarity: `rarity-${rarity}` };
-            } else if (currentMachine === 'guns') {
-                // 如果觸發滿金幣消耗 hard pity，則單獨從原有金色池中提取
-                if (rarity === 'gold') {
-                    let pool = PLAYER_OWNED_POOL.gold;
-                    const name = pool[Math.floor(Math.random() * pool.length)];
-                    return { name: name, rarity: `rarity-${rarity}` };
-                }
-                let pool = GUNS_POOL[rarity];
-                if (!pool || pool.length === 0) {
-                    pool = GUNS_POOL.blue;
-                    rarity = 'blue';
-                }
-                const item = pool[Math.floor(Math.random() * pool.length)];
-                return { name: item.name, rarity: `rarity-${rarity}` };
             } else {
                 let pool = PLAYER_OWNED_POOL[rarity];
                 if (!pool || pool.length === 0) {

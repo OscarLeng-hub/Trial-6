@@ -589,16 +589,14 @@
 
     <div class="modal" id="prob-modal">
         <div class="modal-content">
-            <h3 style="text-align: center; color: var(--gold); margin-top:0;">📊 全新硬性計數保底規則</h3>
+            <h3 style="text-align: center; color: var(--gold); margin-top:0;">📊 精選槍械飾品機抽獎機率</h3>
             <hr style="border-color: var(--border-color);">
             <div style="font-size: 12px; line-height: 1.8; text-align: left;" id="prob-modal-text">
-                ⚠️ <b>注意：除精選槍械飾品機外，其餘中獎格機率已全部調至 0%，唯有達到固定抽數或消耗方可獲得。</b><br><br>
-                🔫 <b>精選槍械飾品機機率</b>：藍色 90% | 紫色 7% | 粉色 3% | 紅色 0%<br>
-                🔹 <b>藍色</b>：基礎獎勵 (無觸發保底時 100% 出藍色)<br>
-                💜 <b>紫色</b>：精選槍械飾品機全新隨機機率 / 其他機台「每 13 次」必出一件<br>
-                💗 <b>粉色</b>：精選槍械飾品機全新隨機機率 / 其他機台「每 30 次」必出一件<br>
-                🔴 <b>紅色</b>：其他機台「每 70 次」必出一件<br>
-                🟡 <b>金色</b>：精選機台<b>累計消耗滿 800 金幣</b>必出一次 (★ Butterfly Knife | Naval)
+                🔹 <b>藍色軍規飾品</b>：85%<br>
+                💜 <b>紫色受限飾品</b>：10%<br>
+                💗 <b>粉色保密飾品</b>：5%<br>
+                🔴 <b>紅色隱秘飾品</b>：0%<br>
+                🟡 <b>金色罕見飾品</b>：累計消耗滿 800 金幣必出一次 (★ Butterfly Knife | Naval)
             </div>
             <button class="btn" style="width:100%; margin-top:15px;" onclick="closeProbModal()">確定</button>
         </div>
@@ -836,112 +834,141 @@
                 "M4A1-S | Retro", "M4A4 | B-Hop", "M4A1-S | Orchids", "M4A1-S | Phaseprint", 
                 "Galil AR | Irid", "AWP | Bird Hunt", "FAMAS | Mind", "AK-47 | Luminax", "AK-47 | Red Baron"
             ],
-            gold: PLAYER_OWNED_POOL_OLD_GOLD_REFERENCE = [
-                "★ Butterfly Knife | Naval", "Operator Gloves | Bumblebee", "Operator Gloves | Black Widow", 
-                "Operator Gloves | Smoke", "Operator Gloves | Amber Fade", "Operator Gloves | Emerald Widow", 
-                "Operator Gloves | Fade", "Operator Gloves | Agent", "Operator Gloves | Hunter", 
-                "Operator Gloves | Hellwire", "Operator Gloves | Reinforced", "Hand Wraps | Meander", 
-                "Hand Wraps | Snakeskin", "Hand Wraps | Crime Scene", "Hand Wraps | Bandage", 
-                "Hand Wraps | Camouflage", "Hand Wraps | Checkers", "Hand Wraps | Carpet", 
-                "Hand Wraps | Aztec", "Hand Wraps | Taped", "Hand Wraps | Hunter", "Sports Gloves | Bumblebee", 
-                "Sports Gloves | Dune", "Sports Gloves | Blackout", "Sports Gloves | Tidal", "Sports Gloves | Racer", 
-                "Sports Gloves | The Ambassador", "Sports Gloves | Labyrinth", "Sports Gloves | Freshmint", 
-                "Sports Gloves | Malibu", "Sports Gloves | Imperial", "Sports Gloves | Hunter", "Driver Gloves | Nomad", 
-                "Driver Gloves | Cardinal", "Driver Gloves | Gator", "Driver Gloves | Midnight Weave", 
-                "Driver Gloves | Tartan", "Driver Gloves | Cardinal Weave", "Driver Gloves | Cobra", 
-                "Driver Gloves | Leopard", "Driver Gloves | Snow Leopard", "Driver Gloves | Tuxedo", 
-                "Karambit | Vanilla", "Karambit | Scarlet", "Karambit | Noir", "Karambit | Doodle", 
-                "Karambit | Naval", "Karambit | Tiger Stripes", "Karambit | Safari", "Karambit | Damascus", 
-                "Karambit | Woodland", "Karambit | Aurora", "Karambit | Rusted", "Karambit | Whiteout", 
-                "Karambit | Blackwidow", "Karambit | Midnight", "Karambit | Violet", "Skeleton Knife | Fade", 
-                "Skeleton Knife | Violet", "Skeleton Knife | Vanilla", "Skeleton Knife | Midnight", 
-                "Skeleton Knife | Safari", "Skeleton Knife | Naval", "Skeleton Knife | Scarlet", 
-                "Skeleton Knife | Woodland", "Skeleton Knife | Whiteout", "Skeleton Knife | Blackwidow", 
-                "Flip Knife | Safari", "Flip Knife | Fade", "Flip Knife | Frostbite", "Flip Knife | Damascus", 
-                "Flip Knife | Woodland", "Flip Knife | Aurora", "Flip Knife | Rusted", "Flip Knife | Whiteout", 
-                "Flip Knife | Blackwidow", "Flip Knife | Midnight", "Flip Knife | Violet", "Flip Knife | Vanilla", 
-                "Flip Knife | Scarlet", "Flip Knife | Noir", "Flip Knife | Doodle", "Flip Knife | Naval", 
-                "Flip Knife | Tiger Stripes", "Butterfly Knife | Violet", "Butterfly Knife | Vanilla", 
-                "Butterfly Knife | Tiger Stripes", "Butterfly Knife | Safari", "Butterfly Knife | Doodle", 
-                "Butterfly Knife | Naval", "Butterfly Knife | Scarlet", "Butterfly Knife | Woodland", 
-                "Butterfly Knife | Rusted", "Butterfly Knife | Whiteout", "Butterfly Knife | Blackwidow", 
-                "Butterfly Knife | Midnight", "Butterfly Knife | Damascus", "Butterfly Knife | Fade", 
-                "M9 Bayonet | Woodland", "M9 Bayonet | Rusted", "M9 Bayonet | Whiteout", "M9 Bayonet | Blackwidow", 
-                "M9 Bayonet | Midnight", "M9 Bayonet | Fade", "M9 Bayonet | Damascus", "M9 Bayonet | Violet", 
-                "M9 Bayonet | Vanilla", "M9 Bayonet | Safari", "M9 Bayonet | Scarlet", "M9 Bayonet | Doodle", 
-                "M9 Bayonet | Naval", "M9 Bayonet | Tiger Stripes", "Stiletto Knife | Rusted", 
-                "Stiletto Knife | Tiger Stripes", "Stiletto Knife | Doodle", "Stiletto Knife | Damascus", 
-                "Stiletto Knife | Vanilla", "Gut Knife | Safari", "Gut Knife | Fade", "Gut Knife | Frostbite", 
-                "Gut Knife | Damascus", "Gut Knife | Woodland", "Gut Knife | Aurora", "Gut Knife | Rusted", 
-                "Gut Knife | Whiteout", "Gut Knife | Blackwidow", "Gut Knife | Midnight", "Gut Knife | Violet", 
-                "Gut Knife | Vanilla", "Gut Knife | Scarlet", "Gut Knife | Noir", "Gut Knife | Doodle", 
-                "Gut Knife | Naval", "Gut Knife | Tiger Stripes"
-            ]
-        };
-
-        // 精選槍械飾品機專用池（限定清單）
-        const GUNS_MACHINE_POOL = {
-            blue: [
-                "AUG | Overgrowth", "Desert Eagle | Turbo", "Glock-18 | Broken Tv", "Tec-9 | Monarch",
-                "MP9 | Canyon", "P90 | Big Cat", "P90 | Database", "MAG-7 | Vision 7",
-                "Negev | Noctiflora", "Negev | Rotary Power", "Negev | The Jungle", "Nova | Flutter",
-                "Nova | Half+One", "Nova | Heat", "XM1014 | Koi", "XM1014 | Lilies",
-                "AUG | Predator", "FAMAS | Arctic Camo", "Galil AR | Irradiated", "SSG 08 | Desert Strike",
-                "Desert Eagle | Permafrost", "Dual Berettas | Choking Hazard", "Five-SeveN | Icecap", "P250 | B-250",
-                "P250 | Glacial", "MAC-10 | Daisies", "XM1014 | Abstract", "SG 553 | Frostline"
-            ],
-            purple: [
-                "Desert Eagle | Paranoia", "Dual Berettas | Tension", "Dual Berettas | Vernal", "Five-SeveN | Control",
-                "P250 | Pulse", "Tec-9 | Striker", "USP-S | Heated", "MAC-10 | Ivory",
-                "AUG | Hot Rod", "FAMAS | Medic", "M4A1-S | BlackOps", "SSG 08 | Labyrinth"
-            ],
-            pink: [
-                "Desert Eagle | Mercy", "Glock-18 | Fuji", "P250 | Mindspill", "AWP | Typhon",
-                "Galil AR | Monochrome", "SG 553 | Dynasty", "AK-47 | PinPoint"
-            ],
-            red: [
-                "AK-47 | Red Baron", "Galil AR | Irid", "M4A1-S | Retro", "M4A4 | B-Hop"
-            ],
             gold: [
-                "★ Butterfly Knife | Naval", "Operator Gloves | Bumblebee", "Operator Gloves | Black Widow", 
-                "Operator Gloves | Smoke", "Operator Gloves | Amber Fade", "Operator Gloves | Emerald Widow", 
-                "Operator Gloves | Fade", "Operator Gloves | Agent", "Operator Gloves | Hunter", 
-                "Operator Gloves | Hellwire", "Operator Gloves | Reinforced", "Hand Wraps | Meander", 
-                "Hand Wraps | Snakeskin", "Hand Wraps | Crime Scene", "Hand Wraps | Bandage", 
-                "Hand Wraps | Camouflage", "Hand Wraps | Checkers", "Hand Wraps | Carpet", 
-                "Hand Wraps | Aztec", "Hand Wraps | Taped", "Hand Wraps | Hunter", "Sports Gloves | Bumblebee", 
-                "Sports Gloves | Dune", "Sports Gloves | Blackout", "Sports Gloves | Tidal", "Sports Gloves | Racer", 
-                "Sports Gloves | The Ambassador", "Sports Gloves | Labyrinth", "Sports Gloves | Freshmint", 
-                "Sports Gloves | Malibu", "Sports Gloves | Imperial", "Sports Gloves | Hunter", "Driver Gloves | Nomad", 
-                "Driver Gloves | Cardinal", "Driver Gloves | Gator", "Driver Gloves | Midnight Weave", 
-                "Driver Gloves | Tartan", "Driver Gloves | Cardinal Weave", "Driver Gloves | Cobra", 
-                "Driver Gloves | Leopard", "Driver Gloves | Snow Leopard", "Driver Gloves | Tuxedo", 
-                "Karambit | Vanilla", "Karambit | Scarlet", "Karambit | Noir", "Karambit | Doodle", 
-                "Karambit | Naval", "Karambit | Tiger Stripes", "Karambit | Safari", "Karambit | Damascus", 
-                "Karambit | Woodland", "Karambit | Aurora", "Karambit | Rusted", "Karambit | Whiteout", 
-                "Karambit | Blackwidow", "Karambit | Midnight", "Karambit | Violet", "Skeleton Knife | Fade", 
-                "Skeleton Knife | Violet", "Skeleton Knife | Vanilla", "Skeleton Knife | Midnight", 
-                "Skeleton Knife | Safari", "Skeleton Knife | Naval", "Skeleton Knife | Scarlet", 
-                "Skeleton Knife | Woodland", "Skeleton Knife | Whiteout", "Skeleton Knife | Blackwidow", 
-                "Flip Knife | Safari", "Flip Knife | Fade", "Flip Knife | Frostbite", "Flip Knife | Damascus", 
-                "Flip Knife | Woodland", "Flip Knife | Aurora", "Flip Knife | Rusted", "Flip Knife | Whiteout", 
-                "Flip Knife | Blackwidow", "Flip Knife | Midnight", "Flip Knife | Violet", "Flip Knife | Vanilla", 
-                "Flip Knife | Scarlet", "Flip Knife | Noir", "Flip Knife | Doodle", "Flip Knife | Naval", 
-                "Flip Knife | Tiger Stripes", "Butterfly Knife | Violet", "Butterfly Knife | Vanilla", 
-                "Butterfly Knife | Tiger Stripes", "Butterfly Knife | Safari", "Butterfly Knife | Doodle", 
-                "Butterfly Knife | Naval", "Butterfly Knife | Scarlet", "Butterfly Knife | Woodland", 
-                "Butterfly Knife | Rusted", "Butterfly Knife | Whiteout", "Butterfly Knife | Blackwidow", 
-                "Butterfly Knife | Midnight", "Butterfly Knife | Damascus", "Butterfly Knife | Fade", 
-                "M9 Bayonet | Woodland", "M9 Bayonet | Rusted", "M9 Bayonet | Whiteout", "M9 Bayonet | Blackwidow", 
-                "M9 Bayonet | Midnight", "M9 Bayonet | Fade", "M9 Bayonet | Damascus", "M9 Bayonet | Violet", 
-                "M9 Bayonet | Vanilla", "M9 Bayonet | Safari", "M9 Bayonet | Scarlet", "M9 Bayonet | Doodle", 
-                "M9 Bayonet | Naval", "M9 Bayonet | Tiger Stripes", "Stiletto Knife | Rusted", 
-                "Stiletto Knife | Tiger Stripes", "Stiletto Knife | Doodle", "Stiletto Knife | Damascus", 
-                "Stiletto Knife | Vanilla", "Gut Knife | Safari", "Gut Knife | Fade", "Gut Knife | Frostbite", 
-                "Gut Knife | Damascus", "Gut Knife | Woodland", "Gut Knife | Aurora", "Gut Knife | Rusted", 
-                "Gut Knife | Whiteout", "Gut Knife | Blackwidow", "Gut Knife | Midnight", "Gut Knife | Violet", 
-                "Gut Knife | Vanilla", "Gut Knife | Scarlet", "Gut Knife | Noir", "Gut Knife | Doodle", 
-                "Gut Knife | Naval", "Gut Knife | Tiger Stripes"
+                "★ Butterfly Knife | Naval",
+                "Operator Gloves | Bumblebee",
+                "Operator Gloves | Black Widow",
+                "Operator Gloves | Smoke",
+                "Operator Gloves | Amber Fade",
+                "Operator Gloves | Emerald Widow",
+                "Operator Gloves | Fade",
+                "Operator Gloves | Agent",
+                "Operator Gloves | Hunter",
+                "Operator Gloves | Hellwire",
+                "Operator Gloves | Reinforced",
+                "Hand Wraps | Meander",
+                "Hand Wraps | Snakeskin",
+                "Hand Wraps | Crime Scene",
+                "Hand Wraps | Bandage",
+                "Hand Wraps | Camouflage",
+                "Hand Wraps | Checkers",
+                "Hand Wraps | Carpet",
+                "Hand Wraps | Aztec",
+                "Hand Wraps | Taped",
+                "Hand Wraps | Hunter",
+                "Sports Gloves | Bumblebee",
+                "Sports Gloves | Dune",
+                "Sports Gloves | Blackout",
+                "Sports Gloves | Tidal",
+                "Sports Gloves | Racer",
+                "Sports Gloves | The Ambassador",
+                "Sports Gloves | Labyrinth",
+                "Sports Gloves | Freshmint",
+                "Sports Gloves | Malibu",
+                "Sports Gloves | Imperial",
+                "Sports Gloves | Hunter",
+                "Driver Gloves | Nomad",
+                "Driver Gloves | Cardinal",
+                "Driver Gloves | Gator",
+                "Driver Gloves | Midnight Weave",
+                "Driver Gloves | Tartan",
+                "Driver Gloves | Cardinal Weave",
+                "Driver Gloves | Cobra",
+                "Driver Gloves | Leopard",
+                "Driver Gloves | Snow Leopard",
+                "Driver Gloves | Tuxedo",
+                "Karambit | Vanilla",
+                "Karambit | Scarlet",
+                "Karambit | Noir",
+                "Karambit | Doodle",
+                "Karambit | Naval",
+                "Karambit | Tiger Stripes",
+                "Karambit | Safari",
+                "Karambit | Damascus",
+                "Karambit | Woodland",
+                "Karambit | Aurora",
+                "Karambit | Rusted",
+                "Karambit | Whiteout",
+                "Karambit | Blackwidow",
+                "Karambit | Midnight",
+                "Karambit | Violet",
+                "Skeleton Knife | Fade",
+                "Skeleton Knife | Violet",
+                "Skeleton Knife | Vanilla",
+                "Skeleton Knife | Midnight",
+                "Skeleton Knife | Safari",
+                "Skeleton Knife | Naval",
+                "Skeleton Knife | Scarlet",
+                "Skeleton Knife | Woodland",
+                "Skeleton Knife | Whiteout",
+                "Skeleton Knife | Blackwidow",
+                "Flip Knife | Safari",
+                "Flip Knife | Fade",
+                "Flip Knife | Frostbite",
+                "Flip Knife | Damascus",
+                "Flip Knife | Woodland",
+                "Flip Knife | Aurora",
+                "Flip Knife | Rusted",
+                "Flip Knife | Whiteout",
+                "Flip Knife | Blackwidow",
+                "Flip Knife | Midnight",
+                "Flip Knife | Violet",
+                "Flip Knife | Vanilla",
+                "Flip Knife | Scarlet",
+                "Flip Knife | Noir",
+                "Flip Knife | Doodle",
+                "Flip Knife | Naval",
+                "Flip Knife | Tiger Stripes",
+                "Butterfly Knife | Violet",
+                "Butterfly Knife | Vanilla",
+                "Butterfly Knife | Tiger Stripes",
+                "Butterfly Knife | Safari",
+                "Butterfly Knife | Doodle",
+                "Butterfly Knife | Naval",
+                "Butterfly Knife | Scarlet",
+                "Butterfly Knife | Woodland",
+                "Butterfly Knife | Rusted",
+                "Butterfly Knife | Whiteout",
+                "Butterfly Knife | Blackwidow",
+                "Butterfly Knife | Midnight",
+                "Butterfly Knife | Damascus",
+                "Butterfly Knife | Fade",
+                "M9 Bayonet | Woodland",
+                "M9 Bayonet | Rusted",
+                "M9 Bayonet | Whiteout",
+                "M9 Bayonet | Blackwidow",
+                "M9 Bayonet | Midnight",
+                "M9 Bayonet | Fade",
+                "M9 Bayonet | Damascus",
+                "M9 Bayonet | Violet",
+                "M9 Bayonet | Vanilla",
+                "M9 Bayonet | Safari",
+                "M9 Bayonet | Scarlet",
+                "M9 Bayonet | Doodle",
+                "M9 Bayonet | Naval",
+                "M9 Bayonet | Tiger Stripes",
+                "Stiletto Knife | Rusted",
+                "Stiletto Knife | Tiger Stripes",
+                "Stiletto Knife | Doodle",
+                "Stiletto Knife | Damascus",
+                "Stiletto Knife | Vanilla",
+                "Gut Knife | Safari",
+                "Gut Knife | Fade",
+                "Gut Knife | Frostbite",
+                "Gut Knife | Damascus",
+                "Gut Knife | Woodland",
+                "Gut Knife | Aurora",
+                "Gut Knife | Rusted",
+                "Gut Knife | Whiteout",
+                "Gut Knife | Blackwidow",
+                "Gut Knife | Midnight",
+                "Gut Knife | Violet",
+                "Gut Knife | Vanilla",
+                "Gut Knife | Scarlet",
+                "Gut Knife | Noir",
+                "Gut Knife | Doodle",
+                "Gut Knife | Naval",
+                "Gut Knife | Tiger Stripes"
             ]
         };
 
@@ -969,8 +996,8 @@
                 document.getElementById('gold-spend-status').innerText = `*本機台累計總抽數: ${pinkMachineSpins} 次 (全面剔除紅、黃品種)`;
                 document.getElementById('pity-bar-fill').style.width = (barProgress / 20 * 100) + '%';
             } else if (currentMachine === 'guns') {
-                // 修改精選槍械機的進度面板文字顯示
-                document.getElementById('pity-title-text').innerText = "📊 本機台機率：藍90% | 紫7% | 粉3% | 紅0%";
+                // 顯示精選槍械機的進度資訊
+                document.getElementById('pity-title-text').innerText = "🔴 當前機台機率：藍85% | 紫10% | 粉5% | 紅0%";
                 document.getElementById('pity-percent-text').innerText = `當前總抽數: ${totalSpins}次`;
                 document.getElementById('gold-spend-status').innerText = `*累計金幣消耗: ${totalGoldSpent} / 800 (滿 800 金幣必出金色神刀)`;
                 const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
@@ -1125,9 +1152,8 @@
                 else if (r < 60.0) targetRarity = 'purple';
                 else targetRarity = 'blue';
             } else if (currentMachine === 'guns') {
-                // 為精選槍械機台設計對應的視覺滾輪機率分配
-                if (r < 3.0) targetRarity = 'pink';
-                else if (r < 10.0) targetRarity = 'purple';
+                if (r < 5.0) targetRarity = 'pink';
+                else if (r < 15.0) targetRarity = 'purple';
                 else targetRarity = 'blue';
             } else {
                 if (r < 10.0) targetRarity = 'gold';
@@ -1137,15 +1163,9 @@
                 else targetRarity = 'blue';
             }
 
-            if (currentMachine === 'guns') {
-                const pool = GUNS_MACHINE_POOL[targetRarity];
-                const name = pool[Math.floor(Math.random() * pool.length)];
-                return { name: name, rarity: `rarity-${targetRarity}` };
-            } else {
-                const pool = MASTER_VISUAL_POOL[targetRarity];
-                const item = pool[Math.floor(Math.random() * pool.length)];
-                return { name: item.name, rarity: item.rarity };
-            }
+            const pool = MASTER_VISUAL_POOL[targetRarity];
+            const item = pool[Math.floor(Math.random() * pool.length)];
+            return { name: item.name, rarity: item.rarity };
         }
 
         function setupTrack() {
@@ -1165,26 +1185,17 @@
             return card;
         }
 
+        // 核心抽象機制改動：精選槍械飾品機專屬概率邏輯与保底重置修復
         function calculatePityWin() {
             let selectedRarity = 'blue';
 
-            // 1. 優先處理「🌸 猛藍粉紫刀槍」機台 (保持原有設定不變)
+            // 1. 優先處理「🌸 猛藍粉紫刀槍」機台
             if (currentMachine === 'pink_purple') {
                 pinkMachineSpins++;
 
-                let triggerPink = false;
-                if (pinkMachineSpins === 14 || pinkMachineSpins === 30) {
-                    triggerPink = true;
-                } else if (pinkMachineSpins > 30 && (pinkMachineSpins - 30) % 20 === 0) {
-                    triggerPink = true;
-                }
-
-                let triggerPurple = false;
-                if (pinkMachineSpins === 2 || pinkMachineSpins === 9 || pinkMachineSpins === 19 || pinkMachineSpins === 25) {
-                    triggerPurple = true;
-                } else if (pinkMachineSpins > 25 && (pinkMachineSpins - 25) % 10 === 0) {
-                    triggerPurple = true;
-                }
+                // 修正為每達 20 次與 10 次保底即觸發並完美循環重置進度
+                let triggerPink = (pinkMachineSpins % 20 === 0);
+                let triggerPurple = (pinkMachineSpins % 10 === 0);
 
                 if (triggerPink) selectedRarity = 'pink';
                 else if (triggerPurple) selectedRarity = 'purple';
@@ -1193,32 +1204,31 @@
                 return pickFromPlayerOwned(selectedRarity);
             }
 
-            // 2. 處理「🔫 精選槍械飾品機」及其他標準自選機台的保底與隨機邏輯
+            // 2. 處理「🔫 精選槍械飾品機」及其他標準自選機台的保底邏輯
             totalSpins++;
             totalGoldSpent += currentSingleCost;
 
-            // 金色保底條件：滿 800 金幣必定觸發金色 (所有機台共用，保持不變)
+            // 金色保底條件：滿 800 金幣必定觸發金色（觸發後自動扣除 800 以實現重置）
             if (totalGoldSpent >= 800) {
                 selectedRarity = 'gold';
-                totalGoldSpent -= 800; 
+                totalGoldSpent -= 800; // 扣除已消耗保底份額，完成重置
                 return pickFromPlayerOwned(selectedRarity);
             }
 
-            // 如果當前玩的是精選槍械飾品機，套用全新的獨立隨機機率規則
+            // 如果當前玩的是精選槍械飾品機，套用指定的概率：藍色85%，紫色10%，粉紅色5%，紅色0%
             if (currentMachine === 'guns') {
-                let rInt = Math.random() * 100;
-                if (rInt < 3.0) {
-                    selectedRarity = 'pink';    // 3% 抽中粉色
-                } else if (rInt < 10.0) {
-                    selectedRarity = 'purple';  // 7% 抽中紫色
+                let rand = Math.random() * 100;
+                if (rand < 5.0) {
+                    selectedRarity = 'pink';   // 5%
+                } else if (rand < 15.0) {
+                    selectedRarity = 'purple'; // 10% (5% 到 15%)
                 } else {
-                    selectedRarity = 'blue';    // 90% 抽中藍色
+                    selectedRarity = 'blue';   // 85% (15% 到 100%)
                 }
-                // 紅色抽獎機率為 0%，故不進行判定
             } else {
-                // 其他非 guns 且非粉紫的機台，保持原本的默認分配
-                let triggerPinkStandard = (totalSpins === 14 || totalSpins === 30 || (totalSpins > 30 && (totalSpins - 30) % 20 === 0));
-                let triggerPurpleStandard = (totalSpins === 2 || totalSpins === 9 || totalSpins === 19 || totalSpins === 25 || (totalSpins > 25 && (totalSpins - 25) % 10 === 0));
+                // 其他非 guns 且非粉紫的機台，保持標準保底循環重置
+                let triggerPinkStandard = (totalSpins % 20 === 0);
+                let triggerPurpleStandard = (totalSpins % 10 === 0);
 
                 if (triggerPinkStandard) {
                     selectedRarity = 'pink';
@@ -1244,15 +1254,6 @@
                 let pool = swordsSelectedPool[rarity];
                 if (!pool || pool.length === 0) {
                     pool = swordsSelectedPool.blue;
-                    rarity = 'blue';
-                }
-                const name = pool[Math.floor(Math.random() * pool.length)];
-                return { name: name, rarity: `rarity-${rarity}` };
-            } else if (currentMachine === 'guns') {
-                // 當前為精選槍械飾品機時，嚴格只從自訂的武器名單中抽取
-                let pool = GUNS_MACHINE_POOL[rarity];
-                if (!pool || pool.length === 0) {
-                    pool = GUNS_MACHINE_POOL.blue;
                     rarity = 'blue';
                 }
                 const name = pool[Math.floor(Math.random() * pool.length)];
@@ -1367,7 +1368,9 @@
 
         function withdrawItem(index) {
             const item = inventory[index];
-            alert(`申請成功！請複製抽中道具：\n「${item.name}」\n前往聯絡客服，正常會在12小時內手動發貨！`);
+            alert(`申請成功！請複製抽中道具：
+「${item.name}」
+前往聯絡客服，正常會在12小時內手動發貨！`);
         }
 
         function showFullscreenReward(skins) {

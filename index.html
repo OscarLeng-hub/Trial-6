@@ -107,7 +107,7 @@
 
         .tab-container {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 8px;
             margin-bottom: 20px;
         }
@@ -476,7 +476,7 @@
             1. 本平台不含任何隨機概率，全面採用<b>「硬性保底計數器」</b>，達到指定抽數/消耗必定掉落。<br>
             2. 背包內的所有武器飾品<b>「只供提取，不設回收」</b>，請知悉。<br>
             3. 所有道具提取均由<b>「人工客服手動登記發貨」</b>，正常情況下會在 12 小時內完成發送。<br>
-            4. <b>戰術關刀神兵獎池（自選）：</b>最少選擇 10 個藍色、3 個紫色。藍色每多選一個 +$1，紫色每多選一個 +$2，粉色 +$5，紅色 +$25，金色 +$75。
+            4. <b>戰術關刀神兵獎池（自選）：</b>最少選擇 10 個藍色、3 個紫色。藍色每多選一個 +$1，紫色每多選一個 +$2，粉色 +$5，紅色 +$13，金色 +$25。
         </div>
 
         <div class="cdk-section">
@@ -488,7 +488,6 @@
             <div class="tab active" id="tab-guns" onclick="switchMachine('guns')">🔫 精選槍械飾品機</div>
             <div class="tab" id="tab-pink_purple" onclick="switchMachine('pink_purple')">🌸 猛藍粉紫刀槍</div>
             <div class="tab" id="tab-swords" onclick="switchMachine('swords')">⚔️ 戰術關刀神兵</div>
-            <div class="tab" id="tab-karambits" onclick="switchMachine('karambits')">😈 惡魔爪子神刀</div>
         </div>
 
         <div class="config-box" id="custom-config-panel">
@@ -523,7 +522,7 @@
 
             <div class="pool-group" style="border-left: 4px solid var(--red);">
                 <div class="pool-group-header" style="color: var(--red);">
-                    <span>🔴 紅色隱秘飾品 (自由挑選，每件 +$25)</span>
+                    <span>🔴 紅色隱秘飾品 (自由挑選，每件 +$13)</span>
                     <span id="count-red">已選: 0 個</span>
                 </div>
                 <div class="skin-checkbox-list" id="list-red"></div>
@@ -531,7 +530,7 @@
 
             <div class="pool-group" style="border-left: 4px solid var(--gold);">
                 <div class="pool-group-header" style="color: var(--gold);">
-                    <span>🟡 金色罕見飾品 (自由挑選，每件 +$75)</span>
+                    <span>🟡 金色罕見飾品 (自由挑選，每件 +$25)</span>
                     <span id="count-gold">已選: 0 個</span>
                 </div>
                 <div class="skin-checkbox-list" id="list-gold"></div>
@@ -589,15 +588,16 @@
 
     <div class="modal" id="prob-modal">
         <div class="modal-content">
-            <h3 style="text-align: center; color: var(--gold); margin-top:0;">📊 全新硬性計數保底規則</h3>
+            <h3 style="text-align: center; color: var(--gold); margin-top:0;">📊 規則公示</h3>
             <hr style="border-color: var(--border-color);">
-            <div style="font-size: 12px; line-height: 1.8; text-align: left;" id="prob-modal-text">
-                ⚠️ <b>注意：中獎格機率已全部調至 0%，唯有達到固定抽數或消耗方可獲得。</b><br><br>
-                🔹 <b>藍色</b>：基礎獎勵 (無觸發保底時 100% 出藍色)<br>
-                💜 <b>紫色</b>：精選槍械飾品機「每 13 次」必出一件<br>
-                💗 <b>粉色</b>：精選槍械飾品機「每 30 次」必出一件<br>
-                🔴 <b>紅色</b>：精選槍械飾品機「每 70 次」必出一件<br>
-                🟡 <b>金色</b>：精選機台<b>累計消耗滿 800 金幣</b>必出一次金色特殊物品
+            <div style="font-size: 14px; line-height: 1.8; text-align: left;" id="prob-modal-text">
+                1. 若發現玩家有任何修改或不誠實的行為，全部物品將不會發送。<br><br>
+                <b>中獎機率表</b><br>
+                🔹 藍色：65.79%<br>
+                💜 紫色：20.88%<br>
+                💗 粉紅色：6.55%<br>
+                🔴 紅色：4.97%<br>
+                🟡 金色：1.81%
             </div>
             <button class="btn" style="width:100%; margin-top:15px;" onclick="closeProbModal()">確定</button>
         </div>
@@ -614,7 +614,6 @@
 
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
 
-        // 畫面展示庫 (MASTER_VISUAL_POOL)：已為您全部補上您指定的金刀與金手套，跑滾輪與展示時可見
         const MASTER_VISUAL_POOL = {
             blue: [
                 { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
@@ -847,7 +846,6 @@
             ]
         };
 
-        // 精選槍械機台(ALLOWED_GUNS_POOL)：嚴格限制實際能被玩家抽中的 51 把槍械，金刀金手套絕不包含在此
         const ALLOWED_GUNS_POOL = {
             blue: [
                 "AUG | Overgrowth", "Desert Eagle | Turbo", "Dual Berettas | Vernal", "Glock-18 | Broken Tv",
@@ -875,8 +873,7 @@
         const MACHINES = {
             guns: { title: "精選槍械飾品機台", cost: 2, isCustom: false },
             pink_purple: { title: "🌸 猛藍粉紫刀槍", cost: 4, isCustom: false },
-            swords: { title: "⚔️ 戰術關刀神兵機台", cost: 2, isCustom: true },
-            karambits: { title: "😈 惡魔爪子神刀", cost: 10, isCustom: false }
+            swords: { title: "⚔️ 戰術關刀神兵機台", cost: 2, isCustom: true }
         };
 
         let swordsSelectedPool = { blue: [], purple: [], pink: [], red: [], gold: [] };
@@ -887,7 +884,7 @@
         function updateUI() {
             document.getElementById('balance-val').innerText = balance + " 金幣";
             if (currentMachine === 'pink_purple') {
-                document.getElementById('pity-title-text').innerText = "🌸 保底進度：藍(每2抽) | 紫(每5抽) | 粉(每15抽)";
+                document.getElementById('pity-title-text').innerText = "🌸 保底進度控制系統";
                 document.getElementById('pity-percent-text').innerText = `當前粉紫抽數: ${pinkMachineSpins}次`;
                 document.getElementById('gold-spend-status').innerText = `*累計金幣消耗: ${totalGoldSpent} / 800 (滿 800 金幣必出金色神爪)`;
                 const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
@@ -896,12 +893,6 @@
                 document.getElementById('pity-title-text').innerText = "⚔️ 自選神兵池：硬性保底機制同主機台";
                 document.getElementById('pity-percent-text').innerText = `當前總抽數: ${totalSpins}次`;
                 document.getElementById('gold-spend-status').innerText = `*累計金幣消耗: ${totalGoldSpent} / 800 (滿 800 金幣必出金色自選獎勵)`;
-                const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
-                document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
-            } else if (currentMachine === 'karambits') {
-                document.getElementById('pity-title-text').innerText = "🔴 保底進度：紫(每13抽) | 粉(每30抽) | 紅(每70抽)";
-                document.getElementById('pity-percent-text').innerText = `當前總抽數: ${totalSpins}次`;
-                document.getElementById('gold-spend-status').innerText = `*累計金幣消耗: ${totalGoldSpent} / 800 (滿 800 金幣必出金色神刀)`;
                 const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
                 document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
             } else {
@@ -974,8 +965,8 @@
             const pLen = swordsSelectedPool.purple.length;
             if (pLen > 3) cost += (pLen - 3) * 2;
             cost += swordsSelectedPool.pink.length * 5;
-            cost += swordsSelectedPool.red.length * 25;
-            cost += swordsSelectedPool.gold.length * 75;
+            cost += swordsSelectedPool.red.length * 13;
+            cost += swordsSelectedPool.gold.length * 25;
             currentSingleCost = cost;
 
             document.getElementById('live-cost-status').innerText = `當前單抽價格: ${currentSingleCost} 金幣`;
@@ -1029,44 +1020,44 @@
             let selectedRarity = 'blue';
 
             if (currentMachine === 'pink_purple') {
-                if (pinkMachineSpins % 15 === 0) {
-                    selectedRarity = 'pink';
-                } else if (pinkMachineSpins % 5 === 0) {
-                    selectedRarity = 'purple';
-                } else if (pinkMachineSpins % 2 === 0) {
-                    selectedRarity = 'blue';
-                } else {
-                    selectedRarity = 'blue';
-                }
-            } else if (currentMachine === 'guns') {
-                let triggerRed = (totalSpins % 70 === 0);
-                let triggerPink = (totalSpins % 30 === 0);
-                let triggerPurple = (totalSpins % 13 === 0);
+                let triggerPink = false;
+                let triggerPurple = false;
 
-                if (triggerRed) {
-                    selectedRarity = 'red';
-                } else if (triggerPink) {
+                if (pinkMachineSpins === 14 || pinkMachineSpins === 30) {
+                    triggerPink = true;
+                } else if (pinkMachineSpins > 30 && (pinkMachineSpins - 30) % 20 === 0) {
+                    triggerPink = true;
+                }
+
+                if (!triggerPink) {
+                    if (pinkMachineSpins === 2 || pinkMachineSpins === 9 || pinkMachineSpins === 19 || pinkMachineSpins === 25) {
+                        triggerPurple = true;
+                    } else if (pinkMachineSpins > 25 && (pinkMachineSpins - 25) % 10 === 0) {
+                        triggerPurple = true;
+                    }
+                }
+
+                if (triggerPink) {
                     selectedRarity = 'pink';
                 } else if (triggerPurple) {
                     selectedRarity = 'purple';
                 } else {
                     selectedRarity = 'blue';
                 }
-            } else {
-                let triggerPinkStandard = (totalSpins === 14 || totalSpins === 30 || (totalSpins > 30 && (totalSpins - 30) % 20 === 0));
-                let triggerPurpleStandard = (totalSpins === 2 || totalSpins === 9 || totalSpins === 19 || totalSpins === 25 || (totalSpins > 25 && (totalSpins - 25) % 10 === 0));
 
-                if (triggerPinkStandard) {
+            } else {
+                let triggerRed = (totalSpins % 70 === 0);
+                let triggerPinkStandard = (totalSpins % 30 === 0);
+                let triggerPurpleStandard = (totalSpins % 13 === 0);
+
+                if (triggerRed) {
+                    selectedRarity = 'red';
+                } else if (triggerPinkStandard) {
                     selectedRarity = 'pink';
                 } else if (triggerPurpleStandard) {
                     selectedRarity = 'purple';
                 } else {
-                    let randRed = Math.random() * 100;
-                    if (randRed < 5.0) {
-                        selectedRarity = 'red';
-                    } else {
-                        selectedRarity = 'blue';
-                    }
+                    selectedRarity = 'blue';
                 }
             }
 
@@ -1092,7 +1083,6 @@
                     finalName = currentPool[Math.floor(Math.random() * currentPool.length)];
                 }
             } else if (currentMachine === 'guns') {
-                // 精選槍械飾品機專用硬性隔離：金刀金手套在這裡絕對無法抽出，100% 只在 51 把特定槍內提取
                 let allowedList = ALLOWED_GUNS_POOL[selectedRarity];
                 if (!allowedList || allowedList.length === 0) {
                     allowedList = ALLOWED_GUNS_POOL['blue'];
@@ -1100,7 +1090,6 @@
                 }
                 finalName = allowedList[Math.floor(Math.random() * allowedList.length)];
             } else {
-                // 其他展示或特殊機台，若觸發特定稀有度，從原本的池內取用
                 let ownedPool = MASTER_VISUAL_POOL[selectedRarity];
                 if (!ownedPool || ownedPool.length === 0) {
                     ownedPool = MASTER_VISUAL_POOL['blue'];

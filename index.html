@@ -551,7 +551,7 @@
                     <div class="pity-bar-fill" id="pity-bar-fill"></div>
                 </div>
                 <div style="font-size:11px; color:#fbc02d; text-align:left; margin-top:5px;" id="gold-spend-status">
-                    *累計已消耗金幣: 0 / 800 (達 800 金幣必出 ★ Butterfly Knife | Naval)
+                    *累計已消耗金幣: 0 / 800 (達 800 金幣必出金色飾品)
                 </div>
             </div>
 
@@ -597,7 +597,7 @@
                 💜 <b>紫色</b>：精選槍械飾品機「每 13 次」必出一件<br>
                 💗 <b>粉色</b>：精選槍械飾品機「每 30 次」必出一件<br>
                 🔴 <b>紅色</b>：精選槍械飾品機「每 70 次」必出一件<br>
-                🟡 <b>金色</b>：精選機台<b>累計消耗滿 800 金幣</b>必出一次 (★ Butterfly Knife | Naval)
+                🟡 <b>金色</b>：精選機台<b>累計消耗滿 800 金幣</b>必出一次金色特殊物品
             </div>
             <button class="btn" style="width:100%; margin-top:15px;" onclick="closeProbModal()">確定</button>
         </div>
@@ -614,7 +614,7 @@
 
         const VALID_CDKS = { "CS2-TEST-10": 10, "CS2-TEST-50": 50, "CS2-TEST-100": 100, "CS2-TEST-200": 200 };
 
-        // 完美保留您原先所有的槍枝清單（用來前端顯示、跑滾輪圖標、供玩家查看）
+        // 畫面展示庫 (MASTER_VISUAL_POOL)：已為您全部補上您指定的金刀與金手套，跑滾輪與展示時可見
         const MASTER_VISUAL_POOL = {
             blue: [
                 { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
@@ -711,118 +711,143 @@
                 { name: "AK-47 | Luminax", rarity: "rarity-red" }
             ],
             gold: [
-                { name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" },
-                { name: "★ Karambit | Vanilla", rarity: "rarity-gold" },
-                { name: "★ Skeleton Knife | Fade", rarity: "rarity-gold" },
-                { name: "★ M9 Bayonet | Midnight", rarity: "rarity-gold" }
+                { name: "Karambit | Vanilla", rarity: "rarity-gold" },
+                { name: "Karambit | Scarlet", rarity: "rarity-gold" },
+                { name: "Karambit | Noir", rarity: "rarity-gold" },
+                { name: "Karambit | Doodle", rarity: "rarity-gold" },
+                { name: "Karambit | Naval", rarity: "rarity-gold" },
+                { name: "Karambit | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Karambit | Safari", rarity: "rarity-gold" },
+                { name: "Karambit | Damascus", rarity: "rarity-gold" },
+                { name: "Karambit | Woodland", rarity: "rarity-gold" },
+                { name: "Karambit | Aurora", rarity: "rarity-gold" },
+                { name: "Karambit | Rusted", rarity: "rarity-gold" },
+                { name: "Karambit | Whiteout", rarity: "rarity-gold" },
+                { name: "Karambit | Blackwidow", rarity: "rarity-gold" },
+                { name: "Karambit | Midnight", rarity: "rarity-gold" },
+                { name: "Karambit | Violet", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Fade", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Violet", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Vanilla", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Midnight", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Safari", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Naval", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Scarlet", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Woodland", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Whiteout", rarity: "rarity-gold" },
+                { name: "Skeleton Knife | Blackwidow", rarity: "rarity-gold" },
+                { name: "Flip Knife | Safari", rarity: "rarity-gold" },
+                { name: "Flip Knife | Fade", rarity: "rarity-gold" },
+                { name: "Flip Knife | Frostbite", rarity: "rarity-gold" },
+                { name: "Flip Knife | Damascus", rarity: "rarity-gold" },
+                { name: "Flip Knife | Woodland", rarity: "rarity-gold" },
+                { name: "Flip Knife | Aurora", rarity: "rarity-gold" },
+                { name: "Flip Knife | Rusted", rarity: "rarity-gold" },
+                { name: "Flip Knife | Whiteout", rarity: "rarity-gold" },
+                { name: "Flip Knife | Blackwidow", rarity: "rarity-gold" },
+                { name: "Flip Knife | Midnight", rarity: "rarity-gold" },
+                { name: "Flip Knife | Violet", rarity: "rarity-gold" },
+                { name: "Flip Knife | Vanilla", rarity: "rarity-gold" },
+                { name: "Flip Knife | Scarlet", rarity: "rarity-gold" },
+                { name: "Flip Knife | Noir", rarity: "rarity-gold" },
+                { name: "Flip Knife | Doodle", rarity: "rarity-gold" },
+                { name: "Flip Knife | Naval", rarity: "rarity-gold" },
+                { name: "Flip Knife | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Violet", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Vanilla", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Safari", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Doodle", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Naval", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Scarlet", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Woodland", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Rusted", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Whiteout", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Blackwidow", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Midnight", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Damascus", rarity: "rarity-gold" },
+                { name: "Butterfly Knife | Fade", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Woodland", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Rusted", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Whiteout", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Blackwidow", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Midnight", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Fade", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Damascus", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Violet", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Vanilla", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Safari", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Scarlet", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Doodle", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Naval", rarity: "rarity-gold" },
+                { name: "M9 Bayonet | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Rusted", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Doodle", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Damascus", rarity: "rarity-gold" },
+                { name: "Stiletto Knife | Vanilla", rarity: "rarity-gold" },
+                { name: "Gut Knife | Safari", rarity: "rarity-gold" },
+                { name: "Gut Knife | Fade", rarity: "rarity-gold" },
+                { name: "Gut Knife | Frostbite", rarity: "rarity-gold" },
+                { name: "Gut Knife | Damascus", rarity: "rarity-gold" },
+                { name: "Gut Knife | Woodland", rarity: "rarity-gold" },
+                { name: "Gut Knife | Aurora", rarity: "rarity-gold" },
+                { name: "Gut Knife | Rusted", rarity: "rarity-gold" },
+                { name: "Gut Knife | Whiteout", rarity: "rarity-gold" },
+                { name: "Gut Knife | Blackwidow", rarity: "rarity-gold" },
+                { name: "Gut Knife | Midnight", rarity: "rarity-gold" },
+                { name: "Gut Knife | Violet", rarity: "rarity-gold" },
+                { name: "Gut Knife | Vanilla", rarity: "rarity-gold" },
+                { name: "Gut Knife | Scarlet", rarity: "rarity-gold" },
+                { name: "Gut Knife | Noir", rarity: "rarity-gold" },
+                { name: "Gut Knife | Doodle", rarity: "rarity-gold" },
+                { name: "Gut Knife | Naval", rarity: "rarity-gold" },
+                { name: "Gut Knife | Tiger Stripes", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Bumblebee", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Black Widow", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Smoke", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Amber Fade", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Emerald Widow", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Fade", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Agent", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Hunter", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Hellwire", rarity: "rarity-gold" },
+                { name: "Operator Gloves | Reinforced", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Meander", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Snakeskin", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Crime Scene", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Bandage", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Camouflage", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Checkers", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Carpet", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Aztec", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Taped", rarity: "rarity-gold" },
+                { name: "Hand Wraps | Hunter", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Bumblebee", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Dune", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Blackout", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Tidal", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Racer", rarity: "rarity-gold" },
+                { name: "Sports Gloves | The Ambassador", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Labyrinth", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Freshmint", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Malibu", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Imperial", rarity: "rarity-gold" },
+                { name: "Sports Gloves | Hunter", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Nomad", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Cardinal", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Gator", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Midnight Weave", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Tartan", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Cardinal Weave", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Cobra", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Leopard", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Snow Leopard", rarity: "rarity-gold" },
+                { name: "Driver Gloves | Tuxedo", rarity: "rarity-gold" }
             ]
         };
 
-        // 後台提取控制庫：完美保留您原本的所有內容（完全沒刪除你本來的槍），但在精選機台提取時，限定為這51把槍
-        const PLAYER_OWNED_POOL = {
-            blue: [
-                { name: "FAMAS | Arctic Camo", rarity: "rarity-blue" },
-                { name: "SSG 08 | Desert Strike", rarity: "rarity-blue" },
-                { name: "Nova | Heat", rarity: "rarity-blue" },
-                { name: "P90 | BigCat", rarity: "rarity-blue" },
-                { name: "Galil AR | Irradiated", rarity: "rarity-blue" },
-                { name: "Nova | Flutter", rarity: "rarity-blue" },
-                { name: "Negev | Noctiflora", rarity: "rarity-blue" },
-                { name: "Tec-9 | Monarch", rarity: "rarity-blue" },
-                { name: "XM1014 | Lilies", rarity: "rarity-blue" },
-                { name: "AUG | Overgrowth", rarity: "rarity-blue" },
-                { name: "Negev | The Jungle", rarity: "rarity-blue" },
-                { name: "Nova | Slime", rarity: "rarity-blue" },
-                { name: "P250 | Frutiger Aero", rarity: "rarity-blue" },
-                { name: "USP-S | SpecOps", rarity: "rarity-blue" },
-                { name: "Desert Eagle | Turbo", rarity: "rarity-blue" },
-                { name: "XM1014 | Koi", rarity: "rarity-blue" },
-                { name: "MP9 | Canyon", rarity: "rarity-blue" },
-                { name: "Clock-18 | Broken TV", rarity: "rarity-blue" },
-                { name: "P90 | Database", rarity: "rarity-blue" },
-                { name: "AK-47 | Red Baron", rarity: "rarity-blue" },
-                { name: "XM1014 | Splatter", rarity: "rarity-blue" },
-                { name: "AUG | Predator", rarity: "rarity-blue" },
-                { name: "MAC-7 | Vision", rarity: "rarity-blue" },
-                { name: "Nova | Half-One", rarity: "rarity-blue" },
-                { name: "Negev | Rotary Power", rarity: "rarity-blue" }
-            ],
-            purple: [
-                { name: "FAMAS | Medic", rarity: "rarity-purple" },
-                { name: "MAC-10 | Ivory", rarity: "rarity-purple" },
-                { name: "MAC-10 | Dahila", rarity: "rarity-purple" },
-                { name: "SSG 08 | Labyrinth", rarity: "rarity-purple" },
-                { name: "Dual Berettas | Vernal", rarity: "rarity-purple" },
-                { name: "AUG | Tension", rarity: "rarity-purple" },
-                { name: "Sawed-Off | Panthers", rarity: "rarity-purple" },
-                { name: "Five-SeveN | Control", rarity: "rarity-purple" },
-                { name: "FAMAS | Wallpaper", rarity: "rarity-purple" },
-                { name: "R8 Revolver | Bloody", rarity: "rarity-purple" },
-                { name: "Galil AR | Feral", rarity: "rarity-purple" },
-                { name: "USP-S | Heated", rarity: "rarity-purple" },
-                { name: "M4A1-S | BlackOps", rarity: "rarity-purple" },
-                { name: "AK-47 | Uniki", rarity: "rarity-purple" },
-                { name: "MP9 | Paranoia", rarity: "rarity-purple" },
-                { name: "Tec-9 | Vice", rarity: "rarity-purple" },
-                { name: "Tec-9 | Striker", rarity: "rarity-purple" },
-                { name: "P250 | Pulse", rarity: "rarity-purple" },
-                { name: "AUG | Hot Rod", rarity: "rarity-purple" },
-                { name: "P250 | X-250", rarity: "rarity-purple" },
-                { name: "Tec-9 | Timeless", rarity: "rarity-purple" },
-                { name: "MAC-10 | Nailgun", rarity: "rarity-purple" },
-                { name: "Desert Eagle | Velocity", rarity: "rarity-purple" },
-                { name: "MP9 | Graffiti", rarity: "rarity-purple" },
-                { name: "Desert Eagle | Paranoia", rarity: "rarity-purple" },
-                { name: "Dual Berettas | Tension", rarity: "rarity-purple" },
-                { name: "Dual Berettas | Gilded", rarity: "rarity-purple" }
-            ],
-            pink: [
-                { name: "P250 | Zen", rarity: "rarity-pink" },
-                { name: "SG 553 | Dynasty", rarity: "rarity-pink" },
-                { name: "XM1014 | Office", rarity: "rarity-pink" },
-                { name: "Five-SeveN | X-Ray", rarity: "rarity-pink" },
-                { name: "P250 | Mindspill", rarity: "rarity-pink" },
-                { name: "USP-S | Ajax", rarity: "rarity-pink" },
-                { name: "P90 | Synthwave", rarity: "rarity-pink" },
-                { name: "Desert Eagle | Circuit", rarity: "rarity-pink" },
-                { name: "AWP | Railgun", rarity: "rarity-pink" },
-                { name: "MP9 | Choke Oil", rarity: "rarity-pink" },
-                { name: "MAC-10 | Nailgun", rarity: "rarity-pink" },
-                { name: "Desert Eagle | Velocity", rarity: "rarity-pink" },
-                { name: "AWP | Typhon", rarity: "rarity-pink" },
-                { name: "MP9 | Graffiti", rarity: "rarity-pink" },
-                { name: "Sawed-Off | Improvised", rarity: "rarity-pink" },
-                { name: "Dual Berettas | Inked", rarity: "rarity-pink" },
-                { name: "Zeus x27 | Overcharge", rarity: "rarity-pink" },
-                { name: "Glock-18 | Fade", rarity: "rarity-pink" },
-                { name: "Desert Eagle | Meicy", rarity: "rarity-pink" },
-                { name: "Glock-18 | Fuji", rarity: "rarity-pink" },
-                { name: "M4A4 | BubblePop", rarity: "rarity-pink" },
-                { name: "Gail AR| Monochrome", rarity: "rarity-pink" }
-            ],
-            red: [
-                { name: "SSG 08 | Mindpill", rarity: "rarity-red" },
-                { name: "P90 | Chromatic", rarity: "rarity-red" },
-                { name: "SSG 08 | Onyx", rarity: "rarity-red" },
-                { name: "AK-47 | Sakura", rarity: "rarity-red" },
-                { name: "M4A1-S | Retro", rarity: "rarity-red" },
-                { name: "M4A4 | B-Hop", rarity: "rarity-red" },
-                { name: "M4A1-S | Orchids", rarity: "rarity-red" },
-                { name: "M4A1-S | Phaseprint", rarity: "rarity-red" },
-                { name: "Galil AR | Irid", rarity: "rarity-red" },
-                { name: "AWP | Bird Hunt", rarity: "rarity-red" },
-                { name: "FAMAS | Mind", rarity: "rarity-red" },
-                { name: "AK-47 | Luminax", rarity: "rarity-red" }
-            ],
-            gold: [
-                { name: "★ Butterfly Knife | Naval", rarity: "rarity-gold" },
-                { name: "★ Karambit | Vanilla", rarity: "rarity-gold" },
-                { name: "★ Skeleton Knife | Fade", rarity: "rarity-gold" },
-                { name: "★ M9 Bayonet | Midnight", rarity: "rarity-gold" }
-            ]
-        };
-
-        // 限定抽中的 51 把槍械白名單清單（嚴格按照您提供的表格分類）
+        // 精選槍械機台(ALLOWED_GUNS_POOL)：嚴格限制實際能被玩家抽中的 51 把槍械，金刀金手套絕不包含在此
         const ALLOWED_GUNS_POOL = {
             blue: [
                 "AUG | Overgrowth", "Desert Eagle | Turbo", "Dual Berettas | Vernal", "Glock-18 | Broken Tv",
@@ -851,7 +876,7 @@
             guns: { title: "精選槍械飾品機台", cost: 2, isCustom: false },
             pink_purple: { title: "🌸 猛藍粉紫刀槍", cost: 4, isCustom: false },
             swords: { title: "⚔️ 戰術關刀神兵機台", cost: 2, isCustom: true },
-            karambits: { title: "😈 惡魔爪子神刀神機台", cost: 10, isCustom: false }
+            karambits: { title: "😈 惡魔爪子神刀", cost: 10, isCustom: false }
         };
 
         let swordsSelectedPool = { blue: [], purple: [], pink: [], red: [], gold: [] };
@@ -882,7 +907,7 @@
             } else {
                 document.getElementById('pity-title-text').innerText = "🔴 全機台硬性保底計數器";
                 document.getElementById('pity-percent-text').innerText = `已抽次數: ${totalSpins} 次`;
-                document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出 ★ Butterfly Knife | Naval)`;
+                document.getElementById('gold-spend-status').innerText = `*累計已消耗金幣: ${totalGoldSpent} / 800 (達 800 金幣必出金色飾品)`;
                 const goldPercent = Math.min((totalGoldSpent / 800) * 100, 100).toFixed(0);
                 document.getElementById('pity-bar-fill').style.width = goldPercent + '%';
             }
@@ -1055,7 +1080,7 @@
                 let currentPool = swordsSelectedPool[selectedRarity];
                 if (!currentPool || currentPool.length === 0) {
                     if (selectedRarity === 'gold') {
-                        finalName = "★ Butterfly Knife | Naval";
+                        finalName = "★ Karambit | Vanilla";
                     } else {
                         let fallbackRarity = 'blue';
                         if (swordsSelectedPool[fallbackRarity].length === 0) fallbackRarity = 'purple';
@@ -1067,7 +1092,7 @@
                     finalName = currentPool[Math.floor(Math.random() * currentPool.length)];
                 }
             } else if (currentMachine === 'guns') {
-                // 如果目前是「精選槍械飾品機」，嚴格控制只會抽到您指定的 51 把槍中對應稀有度的道具
+                // 精選槍械飾品機專用硬性隔離：金刀金手套在這裡絕對無法抽出，100% 只在 51 把特定槍內提取
                 let allowedList = ALLOWED_GUNS_POOL[selectedRarity];
                 if (!allowedList || allowedList.length === 0) {
                     allowedList = ALLOWED_GUNS_POOL['blue'];
@@ -1075,10 +1100,10 @@
                 }
                 finalName = allowedList[Math.floor(Math.random() * allowedList.length)];
             } else {
-                // 其他機台照常使用原本大庫
-                let ownedPool = PLAYER_OWNED_POOL[selectedRarity];
+                // 其他展示或特殊機台，若觸發特定稀有度，從原本的池內取用
+                let ownedPool = MASTER_VISUAL_POOL[selectedRarity];
                 if (!ownedPool || ownedPool.length === 0) {
-                    ownedPool = PLAYER_OWNED_POOL['blue'];
+                    ownedPool = MASTER_VISUAL_POOL['blue'];
                     selectedRarity = 'blue';
                 }
                 finalName = ownedPool[Math.floor(Math.random() * ownedPool.length)].name;
